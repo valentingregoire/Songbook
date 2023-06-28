@@ -12,19 +12,25 @@ app.use(express.json({ limit: "1mb", strict: false }));
 
 app.get(`${SONGBOOKS_NAMESPACE}/:songbook`, (req, res) => {
   const songbook = req.params["songbook"];
-  const data = JSON.parse(fs.readFileSync(`${SONGBOOKS_PATH}/${songbook}.json`).toString());
+  const data = JSON.parse(
+    fs.readFileSync(`${SONGBOOKS_PATH}/${songbook}.json`).toString()
+  );
   res.json(data);
 });
 
 app.get(SONGBOOKS_NAMESPACE, (req, res) => {
-  const songbooks = fs.readdirSync(SONGBOOKS_PATH, { withFileTypes: true })
-    .filter(item => !item.isDirectory())
-    .map(item => item.name.split(".")[0]);
+  const songbooks = fs
+    .readdirSync(SONGBOOKS_PATH, { withFileTypes: true })
+    .filter((item) => !item.isDirectory())
+    .map((item) => item.name.split(".")[0]);
   res.json(songbooks);
 });
 
 app.post(`${SONGBOOKS_NAMESPACE}/:songbook`, (req, res) => {
-  fs.writeFileSync(`./src/songbooks/${req.params["songbook"]}.json`, JSON.stringify(req.body, null, 2));
+  fs.writeFileSync(
+    `./src/songbooks/${req.params["songbook"]}.json`,
+    JSON.stringify(req.body, null, 2)
+  );
   res.send(`Songbook ${req.params["songbook"]} saved.`);
 });
 
