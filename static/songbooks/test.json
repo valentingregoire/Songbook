@@ -1,82 +1,86 @@
-[
-  {
-    "name": "3",
-    "type": null,
-    "pages": 0
-  },
-  {
-    "name": "duece",
-    "pages": "1",
-    "type": "jpg"
-  },
-  {
-    "name": "666",
-    "pages": "1",
-    "type": "svg"
-  },
-  {
-    "name": "111",
-    "pages": "0",
-    "type": ""
-  },
-  {
-    "name": "777",
-    "pages": "1",
-    "type": "svg"
-  },
-  {
-    "name": "acht",
-    "pages": "1",
-    "type": "svg"
-  },
-  {
-    "name": "dire",
-    "pages": "0",
-    "type": ""
-  },
-  {
-    "name": "sadf",
-    "pages": "1",
-    "type": "svg"
-  },
-  {
-    "name": "negen",
-    "pages": "1",
-    "type": "svg"
-  },
-  {
-    "name": "tiene",
-    "pages": "1",
-    "type": "svg"
-  },
-  {
-    "name": "tiene",
-    "pages": "1",
-    "type": "svg"
-  },
-  {
-    "name": "twaalf",
-    "pages": "1",
-    "type": "svg"
-  },
-  {
-    "name": "dertien",
-    "pages": "1",
-    "type": "svg"
-  },
-  {
-    "name": "14",
-    "pages": "1",
-    "type": "svg"
-  },
-  {
-    "name": "15",
-    "pages": "1",
-    "type": "svg"
-  },
-  {
-    "name": "16",
-    "pages": "1",
-    "type": "svg"
-  }
-]
+{
+  "name": "Test Songbook",
+  "default": true,
+  "songs": [
+    {
+      "name": "3",
+      "type": null,
+      "pages": 0
+    },
+    {
+      "name": "duece",
+      "pages": "1",
+      "type": "jpg"
+    },
+    {
+      "name": "666",
+      "pages": "1",
+      "type": "svg"
+    },
+    {
+      "name": "111",
+      "pages": "0",
+      "type": ""
+    },
+    {
+      "name": "777",
+      "pages": "1",
+      "type": "svg"
+    },
+    {
+      "name": "acht",
+      "pages": "1",
+      "type": "svg"
+    },
+    {
+      "name": "dire",
+      "pages": "0",
+      "type": ""
+    },
+    {
+      "name": "sadf",
+      "pages": "1",
+      "type": "svg"
+    },
+    {
+      "name": "negen",
+      "pages": "1",
+      "type": "svg"
+    },
+    {
+      "name": "tiene",
+      "pages": "1",
+      "type": "svg"
+    },
+    {
+      "name": "tiene",
+      "pages": "1",
+      "type": "svg"
+    },
+    {
+      "name": "twaalf",
+      "pages": "1",
+      "type": "svg"
+    },
+    {
+      "name": "dertien",
+      "pages": "1",
+      "type": "svg"
+    },
+    {
+      "name": "14",
+      "pages": "1",
+      "type": "svg"
+    },
+    {
+      "name": "15",
+      "pages": "1",
+      "type": "svg"
+    },
+    {
+      "name": "16",
+      "pages": "1",
+      "type": "svg"
+    }
+  ]
+}

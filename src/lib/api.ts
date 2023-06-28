@@ -1,7 +1,8 @@
 import { error } from "@sveltejs/kit";
+import type { Songbook } from "../models/songbook.model";
 
 const BACK_END_URL = "http://localhost:3000";
-const SONGBOOKS_NAMESPACE = "/songbooks";
+export const SONGBOOKS_NAMESPACE = "/songbooks";
 
 async function send(
   method: string = "GET",
@@ -32,10 +33,10 @@ async function send(
   throw error(response.status);
 }
 
-export function get(path: string) {
+export function get(path: string): Promise<any> {
   return send("GET", path);
 }
 
-export function post(path: string, body: Object) {
+export function post(path: string, body: Songbook): Promise<any> {
   return send("POST", path, body);
 }

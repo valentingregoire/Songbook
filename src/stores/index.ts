@@ -2,13 +2,22 @@ import { derived, writable } from "svelte/store";
 import type { Songbook } from "../models/songbook.model";
 
 // export let settings = writable({});
-export let songbooks = writable<Songbook[]>([]);
-
-export let currentSongbook = writable<Songbook>();
-export let currentSongIndex = writable<number>(0);
-export let currentSong = derived(
+export const songbooks = writable<Songbook[]>([]);
+// export let songbookNames = writable<string[]>([]);
+// export let currentSongbook = writable<Songbook>();
+export const currentSongbook = derived(songbooks, ($songbooks) => {
+  return $songbooks.find((songbook) => songbook.default)
+});
+export const currentSongIndex = writable<number>(0);
+export const currentPage = writable<number>(1);
+export const currentSong = derived(
   [currentSongbook, currentSongIndex],
-  ([$currentSongbook, $currentSongIndex]) =>
-    $currentSongbook.songs[$currentSongIndex]
+  ([$currentSongbook, $currentSongIndex]) => {
+    console.log("---", $currentSongbook, $currentSongIndex);
+    return $currentSongbook?.songs[$currentSongIndex];
+  }
 );
-export let currentPage = writable<number>(1);
+
+// function getDefaultSongbook() Vjj{
+//   return songbooks.get().find((songbook) => songbook.default);
+// }

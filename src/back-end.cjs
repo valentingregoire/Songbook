@@ -19,10 +19,18 @@ app.get(`${SONGBOOKS_NAMESPACE}/:songbook`, (req, res) => {
 });
 
 app.get(SONGBOOKS_NAMESPACE, (req, res) => {
-  const songbooks = fs
+  let songbooks = [];
+  const songbookNames = fs
     .readdirSync(SONGBOOKS_PATH, { withFileTypes: true })
     .filter((item) => !item.isDirectory())
     .map((item) => item.name.split(".")[0]);
+  songbookNames.forEach((songbookName) => {
+    const songbook = JSON.parse(
+      fs.readFileSync(`${SONGBOOKS_PATH}/${songbookName}.json`).toString()
+    );
+    songbooks.push(songbook);
+    console.log(songbook);
+  });
   res.json(songbooks);
 });
 
