@@ -3,10 +3,10 @@
   import StatusBar from "$lib/StatusBar/StatusBar.svelte";
   import { onMount } from "svelte";
   import { getSongbooks } from "../services/service.js";
-  import { songbooks } from "../stores";
+  import { songbooksStore } from "../stores";
 
   onMount(async () => {
-    songbooks.set(await getSongbooks());
+    songbooksStore.set(await getSongbooks());
   });
 </script>
 

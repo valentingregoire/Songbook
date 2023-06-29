@@ -3,84 +3,84 @@
   "default": true,
   "songs": [
     {
-      "name": "3",
-      "type": null,
-      "pages": 0
+      "title": "Liedje1",
+      "fileType": "jpeg",
+      "pages": 1
     },
     {
-      "name": "duece",
+      "title": "duece",
       "pages": "1",
-      "type": "jpg"
+      "fileType": "jpg"
     },
     {
-      "name": "666",
+      "title": "666",
       "pages": "1",
-      "type": "svg"
+      "fileType": "svg"
     },
     {
-      "name": "111",
+      "title": "111",
       "pages": "0",
-      "type": ""
+      "fileType": ""
     },
     {
-      "name": "777",
+      "title": "777",
       "pages": "1",
-      "type": "svg"
+      "fileType": "svg"
     },
     {
-      "name": "acht",
+      "title": "acht",
       "pages": "1",
-      "type": "svg"
+      "fileType": "svg"
     },
     {
-      "name": "dire",
+      "title": "dire",
       "pages": "0",
-      "type": ""
+      "fileType": ""
     },
     {
-      "name": "sadf",
+      "title": "sadf",
       "pages": "1",
-      "type": "svg"
+      "fileType": "svg"
     },
     {
-      "name": "negen",
+      "title": "negen",
       "pages": "1",
-      "type": "svg"
+      "fileType": "svg"
     },
     {
-      "name": "tiene",
+      "title": "tiene",
       "pages": "1",
-      "type": "svg"
+      "fileType": "svg"
     },
     {
-      "name": "tiene",
+      "title": "tiene",
       "pages": "1",
-      "type": "svg"
+      "fileType": "svg"
     },
     {
-      "name": "twaalf",
+      "title": "twaalf",
       "pages": "1",
-      "type": "svg"
+      "fileType": "svg"
     },
     {
-      "name": "dertien",
+      "title": "dertien",
       "pages": "1",
-      "type": "svg"
+      "fileType": "svg"
     },
     {
-      "name": "14",
+      "title": "14",
       "pages": "1",
-      "type": "svg"
+      "fileType": "svg"
     },
     {
-      "name": "15",
+      "title": "15",
       "pages": "1",
-      "type": "svg"
+      "fileType": "svg"
     },
     {
-      "name": "16",
+      "title": "16",
       "pages": "1",
-      "type": "svg"
+      "fileType": "svg"
     }
   ]
 }
