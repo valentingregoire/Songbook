@@ -8,6 +8,7 @@ export const songbooksStore = writable<Songbook[]>([]);
 export const currentSongbookStore = derived(songbooksStore, ($songbooks) => {
   return $songbooks.find((songbook) => songbook.default)
 });
+export const currentSongbookSizeStore = derived(currentSongbookStore, $currentSongbook => $currentSongbook?.songs?.length);
 export const currentSongIndexStore = writable<number>(0);
 export const currentPageStore = writable<number>(1);
 export const currentSongStore = derived(

@@ -2,43 +2,48 @@
   import SideButton from "$lib/Viewer/SideButton.svelte";
   import BottomButton from "$lib/Viewer/BottomButton.svelte";
   import Sheet from "$lib/Viewer/Sheet.svelte";
-  import { currentPageStore, currentSongStore, currentSongbookStore, currentSongIndexStore } from "../../stores";
+  import { currentPageStore, currentSongbookSizeStore, currentSongIndexStore, currentSongStore } from "../../stores";
 
   let page: number = 1;
   let currentSongIndex = 0;
-  let currentSongbook;
+  let currentSongbookSize;
   let currentSong;
 
   currentPageStore.subscribe((value) => page = value);
   currentSongIndexStore.subscribe((value) => currentSongIndex = value);
-  currentSongbookStore.subscribe((s) => currentSongbook = s);
+  currentSongbookSizeStore.subscribe((s) => currentSongbookSize = s);
   currentSongStore.subscribe((s) => currentSong = s);
 
   function previousPage() {
-    // if (page > 1) {
-    //   page--;
-    // } else if (currentSongIndexLocal > 0) {
-    //   currentSongIndex.update((value) => value - 1);
-    //   currentPage.update((value) => value + 1);
-    // }
-    currentPageStore.update((value) => value - 1);
+    if (page == 1) {
+      currentSongIndexStore.update(value => (value + currentSongbookSize - 1) % currentSongbookSize);
+      currentPageStore.set(currentSong.pages);
+    } else {
+      currentPageStore.update(value => (value + currentSong.pages - 1) % currentSong.pages);
+    }
   }
 
   function nextPage() {
-    currentPageStore.update((value) => value + 1);
+    if (page == currentSong.pages) {
+      nextSong();
+    } else {
+      currentPageStore.update(value => value + 1);
+    }
   }
 
   function previousSong() {
-    currentSongIndexStore.update((value) => value - 1);
+    currentSongIndexStore.update(value => (value + currentSongbookSize - 1) % currentSongbookSize);
+    currentPageStore.set(1);
   }
 
   function nextSong() {
-    currentSongIndexStore.update((value) => value + 1);
+    currentSongIndexStore.update(value => (value + 1) % currentSongbookSize);
+    currentPageStore.set(1);
   }
 </script>
 
 <div class="flex h-full justify-center content-center">
-  <Sheet {page} {currentSong}/>
+  <Sheet {page} {currentSong} />
   <SideButton
     classes="top-0 left-0"
     on:click={previousSong}>

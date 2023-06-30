@@ -8,7 +8,7 @@
 
 {#if currentSong && page}
   <img
-    class="w-auto h-full"
+    class="w-full h-full object-contain"
     src="scores/{currentSong.title}/{currentSong?.title}-{page}.{currentSong?.fileType}"
     alt={currentSong?.title}
   />
