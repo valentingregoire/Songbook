@@ -1,3 +1,3 @@
-<div class="flex self-start justify-left">
+<div class="flex max-w-[50%] self-start justify-left">
   <slot />
 </div>
