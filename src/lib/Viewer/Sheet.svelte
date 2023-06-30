@@ -8,8 +8,8 @@
 
 {#if currentSong && page}
   <img
-    class="w-full h-auto"
-    src="static/scores/{currentSong.title}/{currentSong?.title}-{page}.{currentSong?.fileType}"
+    class="w-auto h-full"
+    src="scores/{currentSong.title}/{currentSong?.title}-{page}.{currentSong?.fileType}"
     alt={currentSong?.title}
   />
 {/if}

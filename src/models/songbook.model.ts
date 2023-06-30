@@ -1,19 +1,25 @@
 export class Song {
   title: string;
-  artist?: string;
   pages: number = 1;
   fileType: string = "svg";
+  artist?: string;
+  bpm?: number;
+  key?: string;
 
   constructor(
     title: string,
+    pages: number,
+    fileType: string = "svg",
     artist?: string,
-    pages?: number,
-    fileType?: string
+    bpm?: number,
+    key?: string
   ) {
     this.title = title;
+    this.pages = pages;
+    this.fileType = fileType;
     this.artist = artist;
-    if (pages) this.pages = pages;
-    if (fileType) this.fileType = fileType;
+    this.bpm = bpm;
+    this.key = key;
   }
 }
 

@@ -5,7 +5,10 @@
     {
       "title": "Liedje1",
       "fileType": "jpeg",
-      "pages": 1
+      "pages": 1,
+      "artist": "ikzelf lol",
+      "bpm": 120,
+      "key": "C#m"
     },
     {
       "title": "duece",
