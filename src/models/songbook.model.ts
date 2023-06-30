@@ -1,7 +1,7 @@
 export class Song {
   title: string;
   pages: number = 1;
-  fileType: string = "svg";
+  fileType?: string;
   artist?: string;
   bpm?: number;
   key?: string;
@@ -10,7 +10,7 @@ export class Song {
   constructor(
     title: string,
     pages: number,
-    fileType: string = "svg",
+    fileType?: string,
     artist?: string,
     bpm?: number,
     key?: string,

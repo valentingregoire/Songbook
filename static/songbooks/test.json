@@ -13,13 +13,13 @@
     },
     {
       "title": "duece",
-      "pages": 2,
-      "fileType": "jpg"
+      "artist": "Some Artist",
+      "pages": 2
     },
     {
       "title": "666",
       "pages": 4,
-      "fileType": "svg"
+      "fileType": null
     },
     {
       "title": "111",
