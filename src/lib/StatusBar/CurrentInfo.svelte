@@ -1,21 +1,16 @@
 <script lang="ts">
   import type { Song } from "../../models/songbook.model";
   import { Songbook } from "../../models/songbook.model";
+  import Info from "$lib/StatusBar/Info.svelte";
 
   export let currentSongbook: Songbook;
   export let currentSong: Song;
 </script>
 
-<div class="absolute top-0 left-0">
-  <span class="px-1">📕 {currentSongbook?.name}</span>
-  {#if currentSong?.artist}
-    <span class="px-1">👨‍ {currentSong?.artist}</span>
-  {/if}
-  <span class="px-1">🎵 {currentSong?.title}</span>
-  {#if currentSong?.bpm}
-    <span class="px-1">⏱️ {currentSong?.bpm}</span>
-  {/if}
-  {#if currentSong?.key}
-    <span class="px-1">🎼 {currentSong?.key}</span>
-  {/if}
+<div class="absolute top-0 left-0 flex">
+  <Info icon="📕" label={currentSongbook?.name} />
+  <Info icon="👨‍" label={currentSong?.artist} optional />
+  <Info icon="🎵" label={currentSong?.title} />
+  <Info icon="⏱️" label={currentSong?.bpm} optional />
+  <Info icon="🎼" label={currentSong?.key} optional />
 </div>

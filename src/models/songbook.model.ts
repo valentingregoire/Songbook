@@ -5,6 +5,7 @@ export class Song {
   artist?: string;
   bpm?: number;
   key?: string;
+  info?: string;
 
   constructor(
     title: string,
@@ -12,7 +13,8 @@ export class Song {
     fileType: string = "svg",
     artist?: string,
     bpm?: number,
-    key?: string
+    key?: string,
+    info?: string
   ) {
     this.title = title;
     this.pages = pages;
@@ -20,6 +22,7 @@ export class Song {
     this.artist = artist;
     this.bpm = bpm;
     this.key = key;
+    this.info = info;
   }
 }
 
