@@ -7,7 +7,8 @@
   export let currentSong: Song;
 </script>
 
-<div class="absolute top-0 left-0 flex">
+<!--<div class="absolute top-0 left-0 flex">-->
+<div class="flex">
   <Info icon="📕" label={currentSongbook?.name} />
   <Info icon="👨‍" label={currentSong?.artist} optional />
   <Info icon="🎵" label={currentSong?.title} />

@@ -6,7 +6,7 @@
   export let page: number;
 </script>
 
-<div class="place-content-end place-items-end place-self-end justify-end justify-items-end justify-self-end content-end items-end self-end">
+<div class="flex">
   <Info icon="📄" label={`${page}/${currentSong?.pages}`} />
 </div>
 <!--<span>📄 {page}/{currentSong?.pages}</span>-->

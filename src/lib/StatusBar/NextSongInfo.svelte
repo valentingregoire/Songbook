@@ -8,7 +8,7 @@
   $: nextSong = currentSongbook?.songs[(currentSongIndex + 1) % currentSongbook?.songs?.length];
 </script>
 
-<div>
+<div class="flex">
   <Info icon="➡️" label={nextSong?.title} />
 </div>
 <!--<div>➡️ {nextSong?.title}</div>-->

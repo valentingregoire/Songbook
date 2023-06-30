@@ -5,6 +5,9 @@
   import CurrentInfo from "$lib/StatusBar/CurrentInfo.svelte";
   import { currentPageStore, currentSongStore, currentSongbookStore, currentSongIndexStore } from "../../stores";
   import ExtraInfo from "./ExtraInfo.svelte";
+  import LeftPart from "$lib/StatusBar/LeftPart.svelte";
+  import RightPart from "$lib/StatusBar/RightPart.svelte";
+  import MiddlePart from "./MiddlePart.svelte";
 
   let page: number = 1;
   let currentSongIndex = 0;
@@ -17,10 +20,16 @@
   currentSongStore.subscribe((s) => currentSong = s);
 </script>
 
-<div class="flex absolute top-0 left-0 w-full">
-  <CurrentInfo {currentSong} {currentSongbook}/>
-  <ExtraInfo {currentSong} />
-  <NextSongInfo {currentSongIndex} {currentSongbook}/>
-  <SongNumber {currentSongIndex} {currentSongbook}/>
-  <PageNumber {currentSong} {page}/>
+<div class="flex justify-between absolute top-0 left-0 w-full">
+  <LeftPart>
+    <CurrentInfo {currentSong} {currentSongbook}/>
+  </LeftPart>
+  <MiddlePart>
+    <ExtraInfo {currentSong} />
+  </MiddlePart>
+  <RightPart>
+    <NextSongInfo {currentSongIndex} {currentSongbook}/>
+    <SongNumber {currentSongIndex} {currentSongbook}/>
+    <PageNumber {currentSong} {page}/>
+  </RightPart>
 </div>

@@ -6,5 +6,5 @@ export let currentSong: Song;
 </script>
 
 <div>
-  <Info icon="ℹ️" label={currentSong?.info} optional />
+  <Info icon="📝" label={currentSong?.info} optional />
 </div>

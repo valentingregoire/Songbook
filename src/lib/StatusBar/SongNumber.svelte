@@ -5,4 +5,6 @@
   export let currentSongbook: Songbook;
 </script>
 
-<span>🎵 {currentSongIndex + 1}/{currentSongbook?.songs?.length}</span>
+<div class="flex">
+  <span>🎵 {currentSongIndex + 1}/{currentSongbook?.songs?.length}</span>
+</div>
