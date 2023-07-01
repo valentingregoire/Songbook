@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { Songbook } from "../../models/songbook.model";
-  import Info from "$lib/StatusBar/Info.svelte";
+  import Info from "./Info.svelte";
+  import type { Songbook } from "../../../../models/songbook.model";
 
   export let currentSongIndex: number = 0;
   export let currentSongbook: Songbook;
@@ -11,4 +11,3 @@
 <div class="flex">
   <Info icon="➡️" label={nextSong?.title} />
 </div>
-<!--<div>➡️ {nextSong?.title}</div>-->

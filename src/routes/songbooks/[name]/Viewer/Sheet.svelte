@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { Song } from "../../models/songbook.model";
-  import H1 from "../Font/H1.svelte";
+  import type { Song } from "../../../../models/songbook.model";
+  import H1 from "../../../../lib/Font/H1.svelte";
 
   export let currentSong: Song;
   export let page: number;

@@ -1,13 +1,13 @@
 <script lang="ts">
-  import NextSongInfo from "$lib/StatusBar/NextSongInfo.svelte";
-  import SongNumber from "$lib/StatusBar/SongNumber.svelte";
-  import PageNumber from "$lib/StatusBar/PageNumber.svelte";
-  import CurrentInfo from "$lib/StatusBar/CurrentInfo.svelte";
-  import { currentPageStore, currentSongStore, currentSongbookStore, currentSongIndexStore } from "../../stores";
   import ExtraInfo from "./ExtraInfo.svelte";
-  import LeftPart from "$lib/StatusBar/LeftPart.svelte";
-  import RightPart from "$lib/StatusBar/RightPart.svelte";
   import MiddlePart from "./MiddlePart.svelte";
+  import LeftPart from "./LeftPart.svelte";
+  import CurrentInfo from "./CurrentInfo.svelte";
+  import RightPart from "./RightPart.svelte";
+  import NextSongInfo from "./NextSongInfo.svelte";
+  import SongNumber from "./SongNumber.svelte";
+  import PageNumber from "./PageNumber.svelte";
+  import { currentPageStore, currentSongbookStore, currentSongIndexStore, currentSongStore } from "../../../../stores";
 
   let page: number = 1;
   let currentSongIndex = 0;

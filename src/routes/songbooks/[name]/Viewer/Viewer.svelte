@@ -1,8 +1,13 @@
 <script lang="ts">
-  import SideButton from "$lib/Viewer/SideButton.svelte";
-  import BottomButton from "$lib/Viewer/BottomButton.svelte";
-  import Sheet from "$lib/Viewer/Sheet.svelte";
-  import { currentPageStore, currentSongbookSizeStore, currentSongIndexStore, currentSongStore } from "../../stores";
+  import {
+    currentPageStore,
+    currentSongbookSizeStore,
+    currentSongIndexStore,
+    currentSongStore
+  } from "../../../../stores";
+  import Sheet from "./Sheet.svelte";
+  import SideButton from "./SideButton.svelte";
+  import BottomButton from "./BottomButton.svelte";
 
   let page: number = 1;
   let currentSongIndex = 0;

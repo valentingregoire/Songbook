@@ -1,7 +1,7 @@
 <script lang="ts">
-  import type { Song } from "../../models/songbook.model";
-  import { Songbook } from "../../models/songbook.model";
-  import Info from "$lib/StatusBar/Info.svelte";
+  import Info from "./Info.svelte";
+  import type { Songbook } from "../../../../models/songbook.model";
+  import { Song } from "../../../../models/songbook.model";
 
   export let currentSongbook: Songbook;
   export let currentSong: Song;
