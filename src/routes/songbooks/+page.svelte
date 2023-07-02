@@ -1,46 +1,28 @@
 <script lang="ts">
   import type { Songbook } from "../../models/songbook.model";
+  import { songbooksStore } from "../../stores";
+  import { onMount } from "svelte";
+  import { getSongbooks } from "../../services/service";
 
   let songbooks: Songbook[];
+  songbooksStore.subscribe(s => songbooks = s);
 
-  async function getStuff() {
-    const response = await fetch("/songbooks", {
-      method: "POST",
-      body: JSON.stringify({
-        "name": "some name lol",
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+  onMount(async () => {
+    const songbooks = await getSongbooks();
+    songbooksStore.set(songbooks);
+  });
 
-    const data = await response.json();
-    console.log("data", data);
-
-  }
-
-  async function getSongbooks() {
-    const response = await fetch("/songbooks", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    const data = await response.json();
-    console.log("songbooks", data);
-    songbooks = data;
-  }
 </script>
 
 <h1>Songbooks</h1>
-<button on:click={getStuff}>Get Stuff</button>
-<button class="btn btn-primary" on:click={getSongbooks}>Get Songbooks</button>
 
 {#if songbooks}
   <ul>
     {#each songbooks as songbook}
-      <li>{songbook.name}</li>
+      <li>
+        <a href={`songbooks/${songbook.name}`}>📘📕 {songbook.name}</a>
+      </li>
+
     {/each}
   </ul>
 {/if}

@@ -4,8 +4,10 @@
   import { songbooksStore } from "../stores";
 
   onMount(async () => {
-    songbooksStore.set(await getSongbooks());
+    // songbooksStore.set(await getSongbooks());
+    window.location = "/home";
   });
+
 </script>
 
 <div class="h-screen">

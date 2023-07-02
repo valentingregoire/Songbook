@@ -1,8 +1,8 @@
 import { error } from "@sveltejs/kit";
 import type { Songbook } from "../models/songbook.model";
 
-const BACK_END_URL = "http://localhost:3000";
-export const SONGBOOKS_NAMESPACE = "/songbooks";
+// const BACK_END_URL = "http://localhost:3000";
+export const SONGBOOKS_NAMESPACE = "/api/songbooks";
 
 async function send(
   method: string = "GET",
@@ -12,19 +12,14 @@ async function send(
   let options: any = {
     method,
     headers: {
+      "Accept": "application/json",
       "Content-Type": "application/json",
     },
   };
   if (body) {
-    options.options["body"] = JSON.stringify(body);
+    options["body"] = JSON.stringify(body);
   }
-  const response = await fetch(`${BACK_END_URL}${path}`, {
-    method,
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(body),
-  });
+  const response = await fetch(path, options);
 
   if (response.ok) {
     return response.json();

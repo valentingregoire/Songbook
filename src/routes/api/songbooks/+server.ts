@@ -1,17 +1,17 @@
 import { json } from "@sveltejs/kit";
 import fs from "fs";
-import type { Songbook } from "../../models/songbook.model";
+import type { Songbook } from "../../../models/songbook.model";
 
 const SONGBOOKS_PATH = "static/songbooks/";
 
+/** @type {import('../../../../.svelte-kit/types/src/routes').RequestHandler} */
 export async function POST({ request }) {
-  const requestJson = await request.json();
-  console.log("json", requestJson);
-  const name: string = requestJson.name;
+  console.log(typeof request);
+  const name = await request.json();
   return json(name.toUpperCase());
 }
 
-export async function PUT() {
+export async function GET() {
   let songbooks: Songbook[] = [];
   const songbookNames = fs
     .readdirSync(SONGBOOKS_PATH, { withFileTypes: true })
@@ -22,7 +22,6 @@ export async function PUT() {
       fs.readFileSync(`${SONGBOOKS_PATH}/${songbookName}.json`).toString()
     );
     songbooks.push(songbook);
-    console.log(songbook);
   });
   return json(songbooks);
 }
