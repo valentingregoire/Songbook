@@ -4,12 +4,6 @@ import type { Songbook } from "../../../models/songbook.model";
 
 const SONGBOOKS_PATH = "static/songbooks/";
 
-export async function POST({ request }) {
-  console.log(typeof request);
-  const name = await request.json();
-  return json(name.toUpperCase());
-}
-
 export async function GET() {
   let songbooks: Songbook[] = [];
   const songbookNames = fs

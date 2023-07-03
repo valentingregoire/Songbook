@@ -1,18 +1,10 @@
 <script lang="ts">
   import type { Songbook } from "../../models/songbook.model";
   import { songbooksStore } from "../../stores";
-  import { onMount } from "svelte";
-  import { getSongbooks } from "../../services/service";
   import H1 from "../../lib/Font/H1.svelte";
 
   let songbooks: Songbook[];
   songbooksStore.subscribe(s => songbooks = s);
-
-  onMount(async () => {
-    const songbooks = await getSongbooks();
-    songbooksStore.set(songbooks);
-  });
-
 </script>
 
 <div>
@@ -24,8 +16,9 @@
         <li>
           <a href={`songbooks/${songbook.name}`}>📘 {songbook.name}</a>
         </li>
-
       {/each}
     </ul>
+  {:else}
+    <h2>No songbooks found...</h2>
   {/if}
 </div>
