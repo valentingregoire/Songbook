@@ -1,6 +1,6 @@
 {
   "name": "Test Songbook",
-  "default": true,
+  "default": false,
   "songs": [
     {
       "title": "Liedje1",

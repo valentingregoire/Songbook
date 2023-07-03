@@ -9,7 +9,7 @@
 
 <!--<div class="absolute top-0 left-0 flex">-->
 <div class="flex">
-  <Info icon="📕" label={currentSongbook?.name} />
+  <Info icon="📘" label={currentSongbook?.name} />
   <Info icon="👨‍" label={currentSong?.artist} optional />
   <Info icon="🎵" label={currentSong?.title} />
   <Info icon="⏱️" label={currentSong?.bpm} optional />
