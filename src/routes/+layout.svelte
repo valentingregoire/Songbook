@@ -3,7 +3,7 @@
 </script>
 
 <main>
-  <div class="flex h-screen w-full justify-center items-center">
+  <div class="flex h-screen w-full justify-around items-center content-around flex-wrap">
     <slot />
   </div>
 </main>

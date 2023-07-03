@@ -4,5 +4,15 @@ export default {
   theme: {
     extend: {},
   },
-  plugins: [],
+  plugins: [require("daisyui")],
+  daisyui: {
+    themes: ["light", "dark", "cupcake"],
+  },
 };
+
+// module.exports = {
+//   //...
+//   daisyui: {
+//     themes: ["light", "dark", "cupcake"],
+//   },
+// }

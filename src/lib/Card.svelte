@@ -1,13 +1,17 @@
-<div class="rounded-xl shadow-lg">
-  <div class="px-6 py-4">
-    <div class="font-bold text-xl mb-2">
-      <slot name="header" />
-    </div>
-    <div class="text-base">
-      <slot name="body" />
-    </div>
+<script lang="ts">
+  export let classes = "";
+</script>
+
+<div
+  class="flex justify-around justify-items-center items-center content-around rounded-xl shadow-lg m-2 p-4 {classes}"
+  on:click>
+  <div class="font-bold text-xl mb-2">
+    <slot name="header" />
   </div>
-  <div class="px-6 pt-4 pb-2">
+  <div class="">
+    <slot name="body" />
+  </div>
+  <div class="">
     <slot name="footer" />
   </div>
 </div>

@@ -12,6 +12,11 @@
       name: "Settings",
       icon: "⚙️",
       link: "/settings"
+    },
+    {
+      name: "About",
+      icon: "ℹ️",
+      link: "/about"
     }
   ];
 
@@ -20,13 +25,12 @@
   }
 </script>
 
-<div class="flex">
   {#each menu as item}
-    <Card>
-      <div class="flex flex-col min-w-[20%] cursor-pointer" slot="body" on:click={() => navigate(item)}>
-        <span class="min-w-full text-center text-8xl p-8">{item.icon}</span>
-        <span class="min-w-full text-center text-5xl">{item.name}</span>
-      </div>
-    </Card>
+<!--    <Card classes="w-80 h-80 cursor-pointer" on:click={() => navigate(item)}>-->
+<!--      <div class="flex flex-col" slot="body">-->
+<!--        <span class="text-center text-8xl p-8">{item.icon}</span>-->
+<!--        <span class="text-center text-5xl">{item.name}</span>-->
+<!--      </div>-->
+<!--    </Card>-->
+    <button class="btn btn-primary rounded-full" on:click={() => navigate(item)}>{item.name}</button>
   {/each}
-</div>

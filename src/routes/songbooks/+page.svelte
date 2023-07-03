@@ -3,6 +3,7 @@
   import { songbooksStore } from "../../stores";
   import { onMount } from "svelte";
   import { getSongbooks } from "../../services/service";
+  import H1 from "../../lib/Font/H1.svelte";
 
   let songbooks: Songbook[];
   songbooksStore.subscribe(s => songbooks = s);
@@ -14,15 +15,17 @@
 
 </script>
 
-<h1>Songbooks</h1>
+<div>
+  <H1>Songbooks</H1>
 
-{#if songbooks}
-  <ul>
-    {#each songbooks as songbook}
-      <li>
-        <a href={`songbooks/${songbook.name}`}>📘📕 {songbook.name}</a>
-      </li>
+  {#if songbooks}
+    <ul>
+      {#each songbooks as songbook}
+        <li>
+          <a href={`songbooks/${songbook.name}`}>📘 {songbook.name}</a>
+        </li>
 
-    {/each}
-  </ul>
-{/if}
+      {/each}
+    </ul>
+  {/if}
+</div>

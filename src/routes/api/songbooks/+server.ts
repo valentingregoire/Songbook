@@ -4,7 +4,6 @@ import type { Songbook } from "../../../models/songbook.model";
 
 const SONGBOOKS_PATH = "static/songbooks/";
 
-/** @type {import('../../../../.svelte-kit/types/src/routes').RequestHandler} */
 export async function POST({ request }) {
   console.log(typeof request);
   const name = await request.json();
