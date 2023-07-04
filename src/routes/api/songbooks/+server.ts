@@ -6,13 +6,10 @@ const SONGBOOKS_PATH = "static/songbooks/";
 
 export async function GET() {
   let songbooks: Songbook[] = [];
-  const songbookNames = fs
-    .readdirSync(SONGBOOKS_PATH, { withFileTypes: true })
-    .filter((item) => !item.isDirectory())
-    .map((item) => item.name.split(".")[0]);
+  const songbookNames = fs.readdirSync(SONGBOOKS_PATH)
   songbookNames.forEach((songbookName: string) => {
     const songbook = JSON.parse(
-      fs.readFileSync(`${SONGBOOKS_PATH}/${songbookName}.json`).toString()
+      fs.readFileSync(`${SONGBOOKS_PATH}/${songbookName}`).toString()
     );
     songbooks.push(songbook);
   });

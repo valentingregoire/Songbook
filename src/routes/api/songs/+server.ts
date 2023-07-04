@@ -1,11 +1,12 @@
 import { json } from "@sveltejs/kit";
 import fs from "fs";
 import Song from "../../../models/song.model";
+import type SongMap from "../../../models/song.model";
 
 const SONGS_PATH = "static/songs/";
 
 export async function GET() {
-  let songs: Song[] = [];
+  let songs: SongMap = {};
   const songNames = fs
     .readdirSync(SONGS_PATH, { withFileTypes: true })
     .filter((item) => item.isDirectory())
@@ -23,7 +24,7 @@ export async function GET() {
       }
     }
     song.pages = files.filter(item => item.name.endsWith(song.fileType)).map(item => item.name);
-    songs.push(song);
+    songs[songName] = song;
   });
   return json(songs);
 }

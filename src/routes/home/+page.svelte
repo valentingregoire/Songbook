@@ -2,17 +2,16 @@
   import { onMount } from "svelte";
   import { get } from "../../lib/api";
   import { songbooksStore, songsStore } from "../../stores";
+  import type { SongMap } from "../../models/song.model";
+  import type Songbook from "../../models/songbook.model";
 
   onMount(async () => {
-    get("api/songbooks").then((songbooks) => {
-      console.log("songbooks home", songbooks);
-      songbooksStore.set(songbooks);
-    });
-
-    get("api/songs").then((songs) => {
-      console.log("songs home", songs);
-      songsStore.set(songs);
-    });
+    const songs: SongMap = await get("api/songs");
+    songsStore.set(songs);
+    const songbooks: Songbook[] = await get("api/songbooks");
+    songbooks.forEach(songbook => songbook.songs = songbook.songs.map(song => songs[song] || song));
+    songbooksStore.set(songbooks);
+    console.log("songbooks main", songbooks);
   });
 
   const menu = [

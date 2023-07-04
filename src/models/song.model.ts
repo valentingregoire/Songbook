@@ -1,3 +1,7 @@
+export type SongMap = {
+  [key: string]: Song;
+}
+
 export default class Song {
   title: string;
   fileType?: string;
