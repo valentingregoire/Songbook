@@ -11,25 +11,25 @@
 
   let page: number = 1;
   let currentSongIndex = 0;
-  let currentSongbook;
-  let currentSong;
+  export let songbook;
+  export let song;
 
   currentPageStore.subscribe((value) => page = value);
   currentSongIndexStore.subscribe((value) => currentSongIndex = value);
-  currentSongbookStore.subscribe((s) => currentSongbook = s);
-  currentSongStore.subscribe((s) => currentSong = s);
+  currentSongbookStore.subscribe((s) => songbook = s);
+  currentSongStore.subscribe((s) => song = s);
 </script>
 
 <div class="flex justify-between absolute top-0 left-0 w-full">
   <LeftPart>
-    <CurrentInfo {currentSong} {currentSongbook}/>
+    <CurrentInfo {song} {songbook}/>
   </LeftPart>
   <MiddlePart>
-    <ExtraInfo {currentSong} />
+    <ExtraInfo {song} />
   </MiddlePart>
   <RightPart>
-    <NextSongInfo {currentSongIndex} {currentSongbook}/>
-    <SongNumber {currentSongIndex} {currentSongbook}/>
-    <PageNumber {currentSong} {page}/>
+    <NextSongInfo {currentSongIndex} {songbook}/>
+    <SongNumber {currentSongIndex} {songbook}/>
+    <PageNumber {song} {page}/>
   </RightPart>
 </div>

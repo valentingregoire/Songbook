@@ -1,8 +1,10 @@
 import { derived, writable } from "svelte/store";
-import type { Songbook } from "../models/songbook.model";
+import type Songbook from "../models/songbook.model";
+import type Song from "../models/song.model";
 
 // export let settings = writable({});
 export const songbooksStore = writable<Songbook[]>([]);
+export const songsStore = writable<Song[]>([]);
 // export let songbookNames = writable<string[]>([]);
 // export let currentSongbook = writable<Songbook>();
 export const currentSongbookStore = derived(songbooksStore, ($songbooks) => {

@@ -1,12 +1,17 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import { get } from "../../lib/api";
-  import { songbooksStore } from "../../stores";
+  import { songbooksStore, songsStore } from "../../stores";
 
   onMount(async () => {
     get("api/songbooks").then((songbooks) => {
       console.log("songbooks home", songbooks);
       songbooksStore.set(songbooks);
+    });
+
+    get("api/songs").then((songs) => {
+      console.log("songs home", songs);
+      songsStore.set(songs);
     });
   });
 

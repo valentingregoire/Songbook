@@ -1,6 +1,6 @@
 import { json } from "@sveltejs/kit";
 import fs from "fs";
-import type { Songbook } from "../../../models/songbook.model";
+import type Songbook from "../../../models/songbook.model";
 
 const SONGBOOKS_PATH = "static/songbooks/";
 

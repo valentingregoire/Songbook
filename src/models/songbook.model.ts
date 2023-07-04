@@ -1,32 +1,6 @@
-export class Song {
-  title: string;
-  pages: number = 1;
-  fileType?: string;
-  artist?: string;
-  bpm?: number;
-  key?: string;
-  info?: string;
+import type Song from "./song.model";
 
-  constructor(
-    title: string,
-    pages: number,
-    fileType?: string,
-    artist?: string,
-    bpm?: number,
-    key?: string,
-    info?: string
-  ) {
-    this.title = title;
-    this.pages = pages;
-    this.fileType = fileType;
-    this.artist = artist;
-    this.bpm = bpm;
-    this.key = key;
-    this.info = info;
-  }
-}
-
-export class Songbook {
+export default class Songbook {
   name: string;
   default: boolean = false;
   songs: Song[] = [];
