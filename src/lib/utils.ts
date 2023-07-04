@@ -5,7 +5,11 @@ export const ICON_MAP = {
   "key": "🎼",
   "pages": "📄",
   "fileType": "🖻",
-  "info": "ℹ️"
+  "info": "ℹ️",
+  "songbook": "📘",
+  "songbooks": "📚",
+  "settings": "⚙️",
+
 };
 
 export default ICON_MAP;

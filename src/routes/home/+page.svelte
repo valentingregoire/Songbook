@@ -4,6 +4,7 @@
   import { songbooksStore, songsStore } from "../../stores";
   import type { SongMap } from "../../models/song.model";
   import type Songbook from "../../models/songbook.model";
+  import ICON_MAP from "../../lib/utils";
 
   onMount(async () => {
     const songs: SongMap = await get("api/songs");
@@ -17,17 +18,17 @@
   const menu = [
     {
       name: "Songbooks",
-      icon: "📚",
+      icon: ICON_MAP["songbooks"],
       link: "/songbooks"
     },
     {
       name: "Settings",
-      icon: "⚙️",
+      icon: ICON_MAP["settings"],
       link: "/settings"
     },
     {
       name: "About",
-      icon: "ℹ️",
+      icon: ICON_MAP["info"],
       link: "/about"
     }
   ];

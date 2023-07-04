@@ -14,43 +14,42 @@
 
 {#if songbook}
   <div class="w-full content-start">
-    <!--    <ul>-->
-    <!--        <li>-->
     <div class="collapse collapse-arrow bg-base-200 my-2">
       <input type="checkbox" />
       <div class="collapse-title text-xl">
-        <a href={`songbooks/${songbook.name}`}>📘 {songbook.name}</a>
+        <a href={`songbooks/${songbook.name}`}>{ICON_MAP["songbook"]} {songbook.name}</a>
       </div>
       <div class="collapse-content">
         <table class="table">
           <thead>
           <tr>
             {#if title}
-              <th>{ICON_MAP.title}</th>
+              <th>{ICON_MAP.title} Title</th>
             {/if}
             {#if artist}
-              <th>{ICON_MAP.artist}</th>
+              <th>{ICON_MAP.artist} Artist</th>
             {/if}
             {#if bpm}
-              <th>{ICON_MAP.bpm}</th>
+              <th>{ICON_MAP.bpm} BPM</th>
             {/if}
             {#if key}
-              <th>{ICON_MAP.key}</th>
+              <th>{ICON_MAP.key} Key</th>
             {/if}
             {#if pages}
-              <th>{ICON_MAP.pages}</th>
+              <th>{ICON_MAP.pages} Pages</th>
             {/if}
             {#if fileType}
-              <th>{ICON_MAP.fileType}</th>
+              <th>{ICON_MAP.fileType} File type</th>
             {/if}
             {#if info}
-              <th>{ICON_MAP.info}</th>
+              <th>{ICON_MAP.info} Info</th>
             {/if}
           </tr>
           </thead>
+          <tbody>
           {#each songbook.songs as song}
             <tr>
-              <a href={`songbooks/${songbook.name}`}>
+<!--              <a href={`songbooks/${songbook.name}`}>-->
                 {#if title}
                   <td>{song.title || ""}</td>
                 {/if}
@@ -72,14 +71,13 @@
                 {#if info}
                   <td>{song.info || ""}</td>
                 {/if}
-              </a>
+<!--              </a>-->
             </tr>
           {/each}
+          </tbody>
         </table>
       </div>
     </div>
-    <!--        </li>-->
-    <!--    </ul>-->
   </div>
 {:else}
   <h2>Songbook not found.</h2>
