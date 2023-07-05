@@ -5,14 +5,14 @@
   import type { SongMap } from "../../models/song.model";
   import type Songbook from "../../models/songbook.model";
   import ICON_MAP from "../../lib/utils";
+  import Song from "../../models/song.model";
 
   onMount(async () => {
     const songs: SongMap = await get("api/songs");
     songsStore.set(songs);
     const songbooks: Songbook[] = await get("api/songbooks");
-    songbooks.forEach(songbook => songbook.songs = songbook.songs.map(song => songs[song] || song));
+    songbooks.forEach(songbook => songbook.songs = songbook.songs.map(song => songs[song] || new Song(song)));
     songbooksStore.set(songbooks);
-    console.log("songbooks main", songbooks);
   });
 
   const menu = [

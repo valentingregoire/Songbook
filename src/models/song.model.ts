@@ -13,7 +13,7 @@ export default class Song {
 
   constructor(
     title: string,
-    fileType: string,
+    fileType?: string,
     pages?: string[],
     artist?: string,
     bpm?: number,

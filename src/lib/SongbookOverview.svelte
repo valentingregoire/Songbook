@@ -10,6 +10,17 @@
   export let pages: boolean = true;
   export let fileType: boolean = true;
   export let info: boolean = true;
+
+  // make sure to not include columns that are never set
+  // title = title ? songbook?.songs.some(song => song instanceof Song && song.title) : false;
+  console.log("instance", typeof songbook?.songs[2]);
+  // console.log(songbook?.songs.find(song => song instanceof Song));
+  artist = artist ? songbook?.songs.some(song => !(song instanceof String) && song.artist) : false;
+  bpm = bpm ? songbook?.songs.some(song => !(song instanceof String) && song.bpm) : false;
+  key = key ? songbook?.songs.some(song => !(song instanceof String) && song.key) : false;
+  pages = pages ? songbook?.songs.some(song => !(song instanceof String) && song.pages) : false;
+  fileType = fileType ? songbook?.songs.some(song => !(song instanceof String) && song.fileType) : false;
+  info = info ? songbook?.songs.some(song => !(song instanceof String) && song.info) : false;
 </script>
 
 {#if songbook}
@@ -49,29 +60,27 @@
           <tbody>
           {#each songbook.songs as song}
             <tr>
-<!--              <a href={`songbooks/${songbook.name}`}>-->
-                {#if title}
-                  <td>{song.title || ""}</td>
-                {/if}
-                {#if artist}
-                  <td>{song.artist || ""}</td>
-                {/if}
-                {#if bpm}
-                  <td>{song.bpm || ""}</td>
-                {/if}
-                {#if key}
-                  <td>{song.key || ""}</td>
-                {/if}
-                {#if pages}
-                  <td>{song.pages || ""}</td>
-                {/if}
-                {#if fileType}
-                  <td>{song.fileType || ""}</td>
-                {/if}
-                {#if info}
-                  <td>{song.info || ""}</td>
-                {/if}
-<!--              </a>-->
+              <!--              <a href={`songbooks/${songbook.name}`}>-->
+              <td>{song.title || ""}</td>
+              {#if artist}
+                <td>{song.artist || ""}</td>
+              {/if}
+              {#if bpm}
+                <td>{song.bpm || ""}</td>
+              {/if}
+              {#if key}
+                <td>{song.key || ""}</td>
+              {/if}
+              {#if pages}
+                <td>{song.pages || ""}</td>
+              {/if}
+              {#if fileType}
+                <td>{song.fileType || ""}</td>
+              {/if}
+              {#if info}
+                <td>{song.info || ""}</td>
+              {/if}
+              <!--              </a>-->
             </tr>
           {/each}
           </tbody>
