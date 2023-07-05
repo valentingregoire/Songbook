@@ -9,7 +9,12 @@ export const ICON_MAP = {
   "songbook": "📘",
   "songbooks": "📚",
   "settings": "⚙️",
-
+  "edit": "✏️",
+  "delete": "🗑️",
+  "add": "➕",
+  "save": "💾",
+  "cancel": "❌",
+  "search": "🔍"
 };
 
 export default ICON_MAP;
