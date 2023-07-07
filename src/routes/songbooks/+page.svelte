@@ -3,6 +3,7 @@
   import SongbookOverview from "$lib/SongbookOverview.svelte";
   import ICON_MAP from "../../lib/utils";
   import type Songbook from "../../models/songbook.model";
+  import { Accordion, AccordionItem } from "@skeletonlabs/skeleton";
 
   let songbooks: Songbook[];
   songbooksStore.subscribe(s => songbooks = s);
@@ -13,11 +14,22 @@
 </div>
 
 {#if songbooks}
-  <div class="w-full content-start">
+<!--  <div class="w-full content-start">-->
+<!--    {#each songbooks as songbook}-->
+<!--      <SongbookOverview {songbook} />-->
+<!--    {/each}-->
+<!--  </div>-->
+  <Accordion>
     {#each songbooks as songbook}
-      <SongbookOverview {songbook} />
+      <AccordionItem>
+        <svelte:fragment slot="lead">{ICON_MAP["songbook"]}</svelte:fragment>
+        <svelte:fragment slot="summary">{songbook.name}</svelte:fragment>
+        <svelte:fragment slot="content">
+          <SongbookOverview {songbook} />
+        </svelte:fragment>
+      </AccordionItem>
     {/each}
-  </div>
+  </Accordion>
 {:else}
   <h2>No songbooks found...</h2>
 {/if}

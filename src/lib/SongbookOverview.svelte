@@ -2,6 +2,8 @@
   import type Songbook from "../models/songbook.model";
   import ICON_MAP from "$lib/utils.ts";
   import Dialog from "./Dialog.svelte";
+  import { Table, tableMapperValues, tableSourceMapper } from "@skeletonlabs/skeleton";
+  import type { TableSource } from "@skeletonlabs/skeleton";
 
   export let songbook: Songbook;
   export let artist: boolean = true;
@@ -13,125 +15,63 @@
   let selectedSong: number;
   let modalActions;
 
+  let columnHeaders = ["#️", `${ICON_MAP.title} Title`];
+  let columns = ["number", "title"];
   // make sure to not include columns that are never set
   artist = artist ? songbook?.songs.some(song => !(song instanceof String) && song.artist) : false;
+  if (artist) {
+    columnHeaders.push(`${ICON_MAP.artist} Artist`);
+    columns.push("artist");
+  }
   bpm = bpm ? songbook?.songs.some(song => !(song instanceof String) && song.bpm) : false;
+  if (bpm) {
+    columnHeaders.push(`${ICON_MAP.bpm} BPM`);
+    columns.push("bpm");
+  }
   key = key ? songbook?.songs.some(song => !(song instanceof String) && song.key) : false;
+  if (key) {
+    columnHeaders.push(`${ICON_MAP.key} Key`);
+    columns.push("key");
+  }
   pages = pages ? songbook?.songs.some(song => !(song instanceof String) && song.pages) : false;
+  if (pages) {
+    columnHeaders.push(`${ICON_MAP.pages} Pages`);
+    columns.push("pages");
+  }
   fileType = fileType ? songbook?.songs.some(song => !(song instanceof String) && song.fileType) : false;
+  if (fileType) {
+    columnHeaders.push(`${ICON_MAP.fileType} File type`);
+    columns.push("fileType");
+  }
   info = info ? songbook?.songs.some(song => !(song instanceof String) && song.info) : false;
+  if (info) {
+    columnHeaders.push(`${ICON_MAP.info} Info`);
+    columns.push("info");
+  }
+
+  function select(event) {
+    selectedSong = event.detail;
+    console.log(event);
+    // modalActions.open();
+  }
 
   function handleModalInitialized(event) {
     console.log("modal initialized", event);
     modalActions = event.detail;
   }
 
-  function openModal() {
-    modalActions.openModal();
+  const source: TableSource = {
+    head: columnHeaders,
+    body: tableMapperValues(songbook.songs.map((song, index) => {
+      song["number"] = index + 1;
+      return song;
+    }), columns),
+    foot: columnHeaders
   }
 </script>
 
 {#if songbook}
-  <div class="flex flex-row cursor-pointer" on:click={openModal}>
-<!--    <div class="flex flex-row cursor-pointer" on:click={() => `${songbook.name}`.showModal()}>-->
-    <div class="flex-grow">
-      {ICON_MAP["songbook"]} {songbook.name}
-    </div>
-    <div class="flex-none">
-      <a href={`songbooks/${songbook.name}/edit`}>{ICON_MAP["edit"]}</a>
-    </div>
-  </div>
-<!--  <button class="btn" on:click={() => dialog2.showModal()}>open modal</button>-->
-<!--  <dialog bind:this={dialog} id="my_modal_2" class="modal">-->
-<!--    <form method="dialog" class="modal-box">-->
-<!--      <h3 class="font-bold text-lg">Hello!</h3>-->
-<!--      <p class="py-4">Press ESC key or click outside to close</p>-->
-<!--    </form>-->
-<!--    <form method="dialog" class="modal-backdrop">-->
-<!--      <button>close</button>-->
-<!--    </form>-->
-<!--  </dialog>-->
-
-<Dialog on:modalInitialized={handleModalInitialized} title={songbook.name}>
-  <table class="table table-pin-rows table-pin-cols">
-    <thead>
-    <tr>
-      <th></th>
-      <th>{ICON_MAP.title} Title</th>
-      {#if artist}
-        <th>{ICON_MAP.artist} Artist</th>
-      {/if}
-      {#if bpm}
-        <th>{ICON_MAP.bpm} BPM</th>
-      {/if}
-      {#if key}
-        <th>{ICON_MAP.key} Key</th>
-      {/if}
-      {#if pages}
-        <th>{ICON_MAP.pages} Pages</th>
-      {/if}
-      {#if fileType}
-        <th>{ICON_MAP.fileType} File type</th>
-      {/if}
-      {#if info}
-        <th>{ICON_MAP.info} Info</th>
-      {/if}
-    </tr>
-    </thead>
-    <tbody>
-    {#each songbook.songs as song, i}
-      <tr class="cursor-pointer" class:bg-accent={selectedSong === i} on:click={() => selectedSong = i}>
-        <!--              <a href={`songbooks/${songbook.name}`}>-->
-        <td>{i + 1}</td>
-        <td>{song.title || ""}</td>
-        {#if artist}
-          <td>{song.artist || ""}</td>
-        {/if}
-        {#if bpm}
-          <td>{song.bpm || ""}</td>
-        {/if}
-        {#if key}
-          <td>{song.key || ""}</td>
-        {/if}
-        {#if pages}
-          <td>{song.pages || ""}</td>
-        {/if}
-        {#if fileType}
-          <td>{song.fileType || ""}</td>
-        {/if}
-        {#if info}
-          <td>{song.info || ""}</td>
-        {/if}
-        <!--              </a>-->
-      </tr>
-    {/each}
-    </tbody>
-    <tfoot>
-    <tr>
-      <th></th>
-      <th>{ICON_MAP.title} Title</th>
-      {#if artist}
-        <th>{ICON_MAP.artist} Artist</th>
-      {/if}
-      {#if bpm}
-        <th>{ICON_MAP.bpm} BPM</th>
-      {/if}
-      {#if key}
-        <th>{ICON_MAP.key} Key</th>
-      {/if}
-      {#if pages}
-        <th>{ICON_MAP.pages} Pages</th>
-      {/if}
-      {#if fileType}
-        <th>{ICON_MAP.fileType} File type</th>
-      {/if}
-      {#if info}
-        <th>{ICON_MAP.info} Info</th>
-      {/if}
-    </tr>
-    </tfoot>
-  </table>
-</Dialog>
+  <Table {source} interactive={true} on:selected={select} />
 {:else}
   <h2>Songbook not found.</h2>
 {/if}
