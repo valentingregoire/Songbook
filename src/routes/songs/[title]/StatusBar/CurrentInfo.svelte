@@ -1,7 +1,7 @@
 <script lang="ts">
   import Info from "./Info.svelte";
-  import type { Songbook } from "../../../../models/songbook.model";
-  import { Song } from "../../../../models/songbook.model";
+  import type Songbook from "../../../../models/songbook.model";
+  import type Song from "../../../../models/song.model";
 
   export let currentSongbook: Songbook;
   export let currentSong: Song;

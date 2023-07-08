@@ -1,6 +1,6 @@
 <script lang="ts">
   import Info from "./Info.svelte";
-  import type { Songbook } from "../../../../models/songbook.model";
+  import type Songbook from "../../../../models/songbook.model";
 
   export let currentSongIndex: number = 0;
   export let currentSongbook: Songbook;
