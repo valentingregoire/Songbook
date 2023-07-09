@@ -21,31 +21,12 @@
 
 <AppBar>
   <svelte:fragment slot="lead">
-<!--    <LeftPart>-->
       <CurrentInfo {song} {songbook}/>
-<!--    </LeftPart>-->
   </svelte:fragment>
-<!--  <MiddlePart>-->
     <ExtraInfo {song} />
-<!--  </MiddlePart>-->
   <svelte:fragment slot="trail">
-<!--    <RightPart>-->
       <NextSongInfo {currentSongIndex} {songbook}/>
       <SongNumber {currentSongIndex} {songbook}/>
       <PageNumber {song} {page}/>
-<!--    </RightPart>-->
   </svelte:fragment>
 </AppBar>
-<!--<div class="flex justify-between absolute top-0 left-0 w-full">-->
-<!--  <LeftPart>-->
-<!--    <CurrentInfo {song} {songbook}/>-->
-<!--  </LeftPart>-->
-<!--  <MiddlePart>-->
-<!--    <ExtraInfo {song} />-->
-<!--  </MiddlePart>-->
-<!--  <RightPart>-->
-<!--    <NextSongInfo {currentSongIndex} {songbook}/>-->
-<!--    <SongNumber {currentSongIndex} {songbook}/>-->
-<!--    <PageNumber {song} {page}/>-->
-<!--  </RightPart>-->
-<!--</div>-->

@@ -1,10 +1,10 @@
 <script lang="ts">
-  import type Songbook from "../models/songbook.model";
   import ICON_MAP from "$lib/utils.ts";
   import type { TableSource } from "@skeletonlabs/skeleton";
   import { Table, tableMapperValues } from "@skeletonlabs/skeleton";
+  import type Song from "../models/song.model";
 
-  export let songbook: Songbook;
+  export let songs: Array<Song | string>;
   export let artist: boolean = true;
   export let bpm: boolean = true;
   export let key: boolean = true;
@@ -17,32 +17,32 @@
   let columnHeaders = ["#️", `${ICON_MAP.title} Title`];
   let columns = ["number", "title"];
   // make sure to not include columns that are never set
-  artist = artist ? songbook?.songs.some(song => !(song instanceof String) && song.artist) : false;
+  artist = artist ? songs?.some(song => !(song instanceof String) && song.artist) : false;
   if (artist) {
     columnHeaders.push(`${ICON_MAP.artist} Artist`);
     columns.push("artist");
   }
-  bpm = bpm ? songbook?.songs.some(song => !(song instanceof String) && song.bpm) : false;
+  bpm = bpm ? songs?.some(song => !(song instanceof String) && song.bpm) : false;
   if (bpm) {
     columnHeaders.push(`${ICON_MAP.bpm} BPM`);
     columns.push("bpm");
   }
-  key = key ? songbook?.songs.some(song => !(song instanceof String) && song.key) : false;
+  key = key ? songs?.some(song => !(song instanceof String) && song.key) : false;
   if (key) {
     columnHeaders.push(`${ICON_MAP.key} Key`);
     columns.push("key");
   }
-  pages = pages ? songbook?.songs.some(song => !(song instanceof String) && song.pages) : false;
+  pages = pages ? songs?.some(song => !(song instanceof String) && song.pages) : false;
   if (pages) {
     columnHeaders.push(`${ICON_MAP.pages} Pages`);
     columns.push("pages");
   }
-  fileType = fileType ? songbook?.songs.some(song => !(song instanceof String) && song.fileType) : false;
+  fileType = fileType ? songs?.some(song => !(song instanceof String) && song.fileType) : false;
   if (fileType) {
     columnHeaders.push(`${ICON_MAP.fileType} File type`);
     columns.push("fileType");
   }
-  info = info ? songbook?.songs.some(song => !(song instanceof String) && song.info) : false;
+  info = info ? songs?.some(song => !(song instanceof String) && song.info) : false;
   if (info) {
     columnHeaders.push(`${ICON_MAP.info} Info`);
     columns.push("info");
@@ -59,7 +59,7 @@
 
   const source: TableSource = {
     head: columnHeaders,
-    body: tableMapperValues(songbook.songs.map((song, index) => {
+    body: tableMapperValues(songs?.map((song, index) => {
       song["number"] = index + 1;
       return song;
     }), columns),
@@ -67,8 +67,8 @@
   }
 </script>
 
-{#if songbook}
+{#if songs}
   <Table {source} interactive={true} on:selected={select} />
 {:else}
-  <h2>Songbook not found.</h2>
+  <h2>Songs not found.</h2>
 {/if}

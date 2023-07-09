@@ -9,5 +9,6 @@
   let song: Song;
   songsStore.subscribe(songMap => song = songMap[songTitle]);
 </script>
+
 <StatusBar {song} />
 <Viewer />

@@ -2,16 +2,23 @@
   import { songbooksStore } from "../../stores";
   import type Songbook from "../../models/songbook.model";
   import Icon from "../../lib/Icon.svelte";
+  import ICON_MAP from "../../lib/utils";
+  import { AppBar } from "@skeletonlabs/skeleton";
 
   let songbooks: Songbook[];
   songbooksStore.subscribe(s => songbooks = s);
 </script>
 
-<div>
-  <h1 class="flex text-4xl m-10 items-center justify-center">
-    <Icon name="songbooks" iconClass="w-8 h-8 mr-5">Songbooks</Icon>
-  </h1>
-</div>
+<AppBar>
+  <svelte:fragment slot="lead">
+    <a class="w-8" href="/home">
+      <Icon name="arrow-left" iconClass=""/>
+    </a>
+  </svelte:fragment>
+  <h3 class="h3">Songbooks</h3>
+  <svelte:fragment slot="trail">
+  </svelte:fragment>
+</AppBar>
 
 {#if songbooks}
   <div class="card m-5">
