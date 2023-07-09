@@ -7,13 +7,6 @@
   import ICON_MAP from "../../lib/utils";
   import Song from "../../models/song.model";
 
-  onMount(async () => {
-    const songs: SongMap = await get("api/songs");
-    songsStore.set(songs);
-    const songbooks: Songbook[] = await get("api/songbooks");
-    songbooks.forEach(songbook => songbook.songs = songbook.songs.map(song => songs[song] || new Song(song)));
-    songbooksStore.set(songbooks);
-  });
 
   const menu = [
     {
