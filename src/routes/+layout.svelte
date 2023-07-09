@@ -5,7 +5,7 @@
 </script>
 
 <main>
-  <div class="flex flex-col h-screen w-full select-none">
+  <div class="flex flex-col h-screen w-full place-items-center select-none">
     <slot />
   </div>
 </main>

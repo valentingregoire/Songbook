@@ -1,17 +1,15 @@
 <script lang="ts">
   import { songbooksStore } from "../../stores";
-  import ICON_MAP from "../../lib/utils";
   import type Songbook from "../../models/songbook.model";
-  import FaBook from 'svelte-icons/fa/FaBook.svelte'
   import Icon from "../../lib/Icon.svelte";
 
   let songbooks: Songbook[];
   songbooksStore.subscribe(s => songbooks = s);
 </script>
 
-<div class="w-full">
-  <h1 class="text-4xl text-center w-full my-10">
-    <Icon name="songbooks">Songbooks</Icon>
+<div>
+  <h1 class="flex text-4xl m-10 items-center">
+    <Icon name="songbooks" iconClass="w-8 h-8 mr-5">Songbooks</Icon>
     <!--{ICON_MAP["songbooks"]} Songbooks</h1>-->
   </h1>
 </div>

@@ -4,9 +4,10 @@
   import FaArchive from "svelte-icons/fa/FaArchive.svelte";
 
   export let name: string;
+  export let iconClass: string = "badge-icon";
 </script>
 {#if name}
-<span class="badge-icon">
+<span class={iconClass}>
   {#if name === "songbook"}
     <FaBook />
   {:else if name === "songbooks"}
