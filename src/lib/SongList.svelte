@@ -3,8 +3,10 @@
   import type { TableSource } from "@skeletonlabs/skeleton";
   import { Table, tableMapperValues } from "@skeletonlabs/skeleton";
   import type Song from "../models/song.model";
+  import { goto } from "$app/navigation";
 
   export let songs: Array<Song | string>;
+  export let songbookName: string | undefined;
   export let artist: boolean = true;
   export let bpm: boolean = true;
   export let key: boolean = true;
@@ -50,11 +52,10 @@
 
   function select(event) {
     selectedSong = event.detail[0] - 1;
-  }
-
-  function handleModalInitialized(event) {
-    console.log("modal initialized", event);
-    modalActions = event.detail;
+    if (songbookName)
+      goto(`/songbooks/${songbookName}/songs/${selectedSong}`);
+    else
+      goto(`/songs/${selectedSong}`);
   }
 
   const source: TableSource = {

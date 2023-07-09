@@ -2,7 +2,6 @@
   import { songbooksStore } from "../../stores";
   import type Songbook from "../../models/songbook.model";
   import Icon from "../../lib/Icon.svelte";
-  import ICON_MAP from "../../lib/utils";
   import { AppBar } from "@skeletonlabs/skeleton";
 
   let songbooks: Songbook[];
@@ -21,7 +20,7 @@
 </AppBar>
 
 {#if songbooks}
-  <div class="card m-5">
+<!--  <div class="card m-5">-->
     <nav class="list-nav p-2">
       <ul>
         {#each songbooks as songbook}
@@ -33,7 +32,7 @@
         {/each}
       </ul>
     </nav>
-  </div>
+<!--  </div>-->
 {:else}
   <h2>No songbooks found...</h2>
 {/if}

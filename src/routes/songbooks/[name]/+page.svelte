@@ -2,16 +2,14 @@
   import { page } from "$app/stores";
   import type Songbook from "../../../models/songbook.model";
   import { songbooksStore } from "../../../stores";
-  import ICON_MAP from "../../../lib/utils";
   import SongList from "$lib/SongList.svelte";
   import Icon from "../../../lib/Icon.svelte";
   import { AppBar } from "@skeletonlabs/skeleton";
 
-  const id = $page.params.id;
-  console.log("songbook id", id);
+  const name = $page.params.name;
 
   let songbook: Songbook;
-  songbooksStore.subscribe(sb => songbook = sb.find(s => s.name === id));
+  songbooksStore.subscribe(sb => songbook = sb.find(s => s.name === name));
 </script>
 
 <AppBar>
@@ -25,4 +23,4 @@
   </svelte:fragment>
 </AppBar>
 
-<SongList songs={songbook.songs} />
+<SongList songs={songbook.songs} songbookName={name}/>
