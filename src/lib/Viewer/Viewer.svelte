@@ -1,10 +1,4 @@
 <script lang="ts">
-  import {
-    currentPageStore,
-    currentSongbookSizeStore,
-    currentSongIndexStore,
-    currentSongStore
-  } from "../../../../stores";
   import Sheet from "./Sheet.svelte";
   import SideButton from "./SideButton.svelte";
   import BottomButton from "./BottomButton.svelte";
