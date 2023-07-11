@@ -1,9 +1,9 @@
 <script lang="ts">
   import { page } from "$app/stores";
-  import type Songbook from "../../../models/songbook.model";
-  import { songbooksStore } from "../../../stores";
+  import type Songbook from "$models/songbook.model";
+  import { songbooksStore } from "$stores";
   import SongList from "$lib/SongList.svelte";
-  import Icon from "../../../lib/Icon.svelte";
+  import Icon from "$lib/Icon.svelte";
   import { AppBar } from "@skeletonlabs/skeleton";
 
   const name = $page.params.name;

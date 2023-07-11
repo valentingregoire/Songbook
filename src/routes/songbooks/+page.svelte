@@ -11,7 +11,7 @@
 <AppBar>
   <svelte:fragment slot="lead">
     <a class="w-8" href="/home">
-      <Icon name="arrow-left" iconClass=""/>
+      <Icon name="arrow-left" iconClass="" />
     </a>
   </svelte:fragment>
   <h3 class="h3">Songbooks</h3>
@@ -20,19 +20,19 @@
 </AppBar>
 
 {#if songbooks}
-<!--  <div class="card m-5">-->
+  <div class="grid grid-cols-1 h-full justify-items-center content-center">
     <nav class="list-nav p-2">
       <ul>
         {#each songbooks as songbook}
           <li>
-            <a href="/songbooks/{songbook.name}">
+            <a class="h3" href="/songbooks/{songbook.name}">
               <Icon name="songbook">{songbook.name}</Icon>
             </a>
           </li>
         {/each}
       </ul>
     </nav>
-<!--  </div>-->
+  </div>
 {:else}
-  <h2>No songbooks found...</h2>
+  <h2 class="h2">No songbooks found...</h2>
 {/if}
