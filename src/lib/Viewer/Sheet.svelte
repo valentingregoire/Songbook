@@ -8,10 +8,10 @@
 
 </script>
 
-{#if song && pageId && song?.fileType}
+{#if song?.fileType}
   <img
-    class="w-full h-full object-contain"
-    src="scores/{song.title}/{song?.title}-{pageId + 1}.{song?.fileType}"
+    class="h-screen w-full object-contain"
+    src="/songs/{song?.title}/{song?.title}-{pageId + 1}.{song?.fileType}"
     alt={song?.title}
   />
 {:else}

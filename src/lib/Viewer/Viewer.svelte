@@ -2,47 +2,47 @@
   import Sheet from "./Sheet.svelte";
   import SideButton from "./SideButton.svelte";
   import BottomButton from "./BottomButton.svelte";
+  import type Songbook from "$models/songbook.model";
 
-  let page: number = 1;
-  let currentSongIndex = 0;
-  let currentSongbookSize;
-  let currentSong;
+  export let songbook: Songbook;
+  export let songId: number;
+  export let pageId: number;
 
-  currentPageStore.subscribe((value) => page = value);
-  currentSongIndexStore.subscribe((value) => currentSongIndex = value);
-  currentSongbookSizeStore.subscribe((s) => currentSongbookSize = s);
-  currentSongStore.subscribe((s) => currentSong = s);
+  $: song = songbook?.songs[songId];
+  $: songs = songbook?.songs;
+  $: songbookSize = songs?.length;
+  $: pages = songs[songId]?.pages.length;
 
   function previousPage() {
-    if (page == 1) {
-      currentSongIndexStore.update(value => (value + currentSongbookSize - 1) % currentSongbookSize);
-      currentPageStore.set(currentSong.pages);
+    if (pageId == 0) {
+      previousSong(false);
     } else {
-      currentPageStore.update(value => (value + currentSong.pages - 1) % currentSong.pages);
+      pageId--;
     }
   }
 
   function nextPage() {
-    if (page == currentSong.pages) {
+    if (pageId === pages - 1) {
       nextSong();
     } else {
-      currentPageStore.update(value => value + 1);
+      pageId++;
     }
   }
 
-  function previousSong() {
-    currentSongIndexStore.update(value => (value + currentSongbookSize - 1) % currentSongbookSize);
-    currentPageStore.set(1);
+  function previousSong(start: boolean = true) {
+    songId = (songId + songbookSize - 1) % songbookSize;
+    if (start) pageId = 0; else pageId = pages - 1;
   }
 
   function nextSong() {
-    currentSongIndexStore.update(value => (value + 1) % currentSongbookSize);
-    currentPageStore.set(1);
+    songId = (songId + 1) % songbookSize;
+    pageId = 0;
   }
 </script>
 
-<div class="flex h-full justify-center content-center">
-  <Sheet {page} {currentSong} />
+<!--<div class="flex h-full w-full justify-center">-->
+<div class="block mx-auto">
+  <Sheet {song} {pageId} />
   <SideButton
     classes="top-0 left-0"
     on:click={previousSong}>

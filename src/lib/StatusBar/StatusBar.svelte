@@ -6,25 +6,29 @@
   import PageNumber from "./PageNumber.svelte";
   import { AppBar } from "@skeletonlabs/skeleton";
   import type Songbook from "$models/songbook.model";
+  import Icon from "../Icon.svelte";
 
   export let songId: number;
   export let songbook: Songbook;
   export let pageId: number;
 
-  // currentPageStore.subscribe((value) => page = value);
-  // currentSongIndexStore.subscribe((value) => currentSongIndex = value);
-  // currentSongbookStore.subscribe((s) => songbook = s);
   $: song = songbook?.songs[songId];
 </script>
 
 <AppBar>
   <svelte:fragment slot="lead">
-      <CurrentInfo {song} {songbook}/>
+    <!--    <a class="w-8" href="/songbooks/{songbook.name}">-->
+    <!--      <Icon name="arrow-left" iconClass=""/>-->
+    <!--    </a>-->
+
+    <a href="/songbooks/{songbook.name}">
+      <CurrentInfo {song} {songbook} />
+    </a>
   </svelte:fragment>
-    <ExtraInfo {song} />
+  <ExtraInfo {song} />
   <svelte:fragment slot="trail">
-      <NextSongInfo {songId} {songbook}/>
-      <SongNumber {songId} {songbook}/>
-      <PageNumber {song} {pageId}/>
+    <NextSongInfo {songId} {songbook} />
+    <SongNumber {songId} {songbook} />
+    <PageNumber {song} {pageId} />
   </svelte:fragment>
 </AppBar>
