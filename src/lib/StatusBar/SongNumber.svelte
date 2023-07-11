@@ -6,5 +6,5 @@
 </script>
 
 <div class="flex">
-  <span>🎵 {songId + 1}/{songbook?.songs?.length}</span>
+  <span>🎵 {+songId + 1}/{songbook?.songs?.length}</span>
 </div>

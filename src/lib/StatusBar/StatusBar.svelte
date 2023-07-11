@@ -6,7 +6,6 @@
   import PageNumber from "./PageNumber.svelte";
   import { AppBar } from "@skeletonlabs/skeleton";
   import type Songbook from "$models/songbook.model";
-  import Icon from "../Icon.svelte";
 
   export let songId: number;
   export let songbook: Songbook;

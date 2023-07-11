@@ -11,7 +11,7 @@
   $: song = songbook?.songs[songId];
   $: songs = songbook?.songs;
   $: songbookSize = songs?.length;
-  $: pages = songs[songId]?.pages.length;
+  $: pages = songs[songId]?.pages?.length;
 
   function previousPage() {
     if (pageId == 0) {
@@ -22,7 +22,7 @@
   }
 
   function nextPage() {
-    if (pageId === pages - 1) {
+    if (pageId === +pages - 1) {
       nextSong();
     } else {
       pageId++;
@@ -30,12 +30,12 @@
   }
 
   function previousSong(start: boolean = true) {
-    songId = (songId + songbookSize - 1) % songbookSize;
-    if (start) pageId = 0; else pageId = pages - 1;
+    songId = (songId + +songbookSize - 1) % +songbookSize;
+    if (start) pageId = 0; else pageId = +pages - 1;
   }
 
   function nextSong() {
-    songId = (songId + 1) % songbookSize;
+    songId = (songId + 1) % +songbookSize;
     pageId = 0;
   }
 </script>

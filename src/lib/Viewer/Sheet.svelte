@@ -15,8 +15,10 @@
     alt={song?.title}
   />
 {:else}
-  {#if song?.artist}
-    <h1 class="h1">{ICON_MAP.artist} {song.artist}</h1>
-  {/if}
-  <h1 class="h1">{ICON_MAP.title} {song?.title}</h1>
+  <h1 class="h1 text-center">
+    {#if song?.artist}
+      {ICON_MAP.artist} {song.artist}
+    {/if}
+    {ICON_MAP.title} {song?.title}
+  </h1>
 {/if}
