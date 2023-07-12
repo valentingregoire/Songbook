@@ -15,11 +15,12 @@
   let songs: SongMap;
   let imagesToLoad: number = 0;
   let imagesLoaded: number = 0;
-  let comment: string;
+  let comment: string = "Loading...";
 
   const progress = tweened(0, {
-    duration: 1,
-    easing: cubicOut
+    duration: 50,
+    easing: cubicOut,
+    delay: 50
   });
 
   onMount(async () => {
@@ -30,17 +31,20 @@
     const songbooks: Array<Songbook> = await get("api/songbooks");
     songbooks.forEach(songbook => songbook.songs = songbook.songs.map(song => songs[song] || new Song(song)));
     songbooksStore.set(songbooks);
-    comment = "Loading images...";
-    await goto("/home");
+    comment = "Loading pages...";
   });
 
   $:if (songs) {
     imagesToLoad = Object.values(songs).reduce((acc, cur) => +acc + cur?.pages?.length, 0);
   }
 
-  function imageLoaded() {
+  async function imageLoaded() {
     imagesLoaded++;
-    if (imagesToLoad > 0) progress.set(imagesLoaded / imagesToLoad * 100);
+    if (imagesToLoad > 0) await progress.set(imagesLoaded / imagesToLoad * 100);
+    if (imagesLoaded === imagesToLoad) {
+      comment = "Loading complete!"
+      await goto("/home");
+    }
   }
 
 </script>
@@ -57,9 +61,9 @@
 
 <!--{imagesLoaded} / {imagesToLoad} / {$progress}-->
 <div class="grid grid-cols-1 h-full justify-items-center content-center"
-     transition:fly={{y: 200, delay: 1000, duration: 250}}>
+     transition:fly={{y: 200, duration: 250}}>
   <img src="icon.png" alt="logo" />
-  <ProgressBar class="mt-8 w-[512px]" label="Loading data..." value={$progress} />
+  <ProgressBar class="mt-8 w-1/2" label="Loading data..." value={$progress} />
   {#if comment}
     <div class="flex mt-4">
       <span class="badge-icon"><FaFileDownload /></span>
