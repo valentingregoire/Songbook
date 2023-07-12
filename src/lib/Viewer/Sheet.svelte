@@ -8,17 +8,19 @@
 
 </script>
 
-{#if song?.fileType}
-  <img
-    class="h-screen w-full object-contain"
-    src="/songs/{song?.title}/{song?.title}-{pageId + 1}.{song?.fileType}"
-    alt={song?.title}
-  />
-{:else}
-  <h1 class="h1 text-center">
-    {#if song?.artist}
-      {ICON_MAP.artist} {song.artist}
-    {/if}
-    {ICON_MAP.title} {song?.title}
-  </h1>
-{/if}
+<div class="block mx-auto h-screen">
+  {#if song?.fileType}
+    <img
+      class="w-full h-full object-contain"
+      src="/songs/{song?.title}/{song?.title}-{pageId + 1}.{song?.fileType}"
+      alt={song?.title}
+    />
+  {:else}
+    <h1 class="h1 text-center">
+      {#if song?.artist}
+        {ICON_MAP.artist} {song.artist}
+      {/if}
+      {ICON_MAP.title} {song?.title}
+    </h1>
+  {/if}
+</div>

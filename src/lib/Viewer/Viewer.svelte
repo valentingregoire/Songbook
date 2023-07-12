@@ -41,23 +41,26 @@
 </script>
 
 <!--<div class="flex h-full w-full justify-center">-->
-<div class="block mx-auto">
+<!--<div class="absolute top-0 grid grid-cols-1 w-full h-screen justify-items-center">-->
+  <div class="grid grid-cols-1 w-full h-screen justify-items-center overflow-hidden">
   <Sheet {song} {pageId} />
-  <SideButton
-    classes="top-0 left-0"
-    on:click={previousSong}>
-  </SideButton>
-  <SideButton
-    classes="top-0 right-0"
-    on:click={nextSong}>
-  </SideButton>
-  <SideButton
-    classes="bottom-0 left-0"
-    on:click={previousPage}>
-  </SideButton>
-  <SideButton
-    classes="bottom-0 right-0"
-    on:click={nextPage}>
-  </SideButton>
-  <BottomButton />
+  <div class="block relative w-full h-full">
+    <SideButton
+      classes="top-0 left-0"
+      on:click={previousSong}>
+    </SideButton>
+    <SideButton
+      classes="top-0 right-0"
+      on:click={nextSong}>
+    </SideButton>
+    <SideButton
+      classes="bottom-0 left-0"
+      on:click={previousPage}>
+    </SideButton>
+    <SideButton
+      classes="bottom-0 right-0"
+      on:click={nextPage}>
+    </SideButton>
+    <BottomButton />
+  </div>
 </div>

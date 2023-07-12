@@ -6,6 +6,7 @@
   import PageNumber from "./PageNumber.svelte";
   import { AppBar } from "@skeletonlabs/skeleton";
   import type Songbook from "$models/songbook.model";
+  import Icon from "$lib/Icon.svelte";
 
   export let songId: number;
   export let songbook: Songbook;
@@ -14,20 +15,23 @@
   $: song = songbook?.songs[songId];
 </script>
 
-<AppBar>
-  <svelte:fragment slot="lead">
-    <!--    <a class="w-8" href="/songbooks/{songbook.name}">-->
-    <!--      <Icon name="arrow-left" iconClass=""/>-->
-    <!--    </a>-->
+<div>
+  <AppBar padding="p-1">
+    <svelte:fragment slot="lead">
+      <a class="w-6" href="/songbooks/{songbook.name}">
+        <Icon name="arrow-left" iconClass="" />
+      </a>
+      <a href="/songbooks/{songbook.name}">
+        <CurrentInfo {song} {songbook} />
+      </a>
+    </svelte:fragment>
 
-    <a href="/songbooks/{songbook.name}">
-      <CurrentInfo {song} {songbook} />
-    </a>
-  </svelte:fragment>
-  <ExtraInfo {song} />
-  <svelte:fragment slot="trail">
-    <NextSongInfo {songId} {songbook} />
-    <SongNumber {songId} {songbook} />
-    <PageNumber {song} {pageId} />
-  </svelte:fragment>
-</AppBar>
+    <ExtraInfo {song} />
+
+    <svelte:fragment slot="trail">
+      <NextSongInfo {songId} {songbook} />
+      <SongNumber {songId} {songbook} />
+      <PageNumber {song} {pageId} />
+    </svelte:fragment>
+  </AppBar>
+</div>
