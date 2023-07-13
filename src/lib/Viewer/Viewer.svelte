@@ -3,7 +3,7 @@
   import SideButton from "./SideButton.svelte";
   import BottomButton from "./BottomButton.svelte";
   import type Songbook from "$models/songbook.model";
-  import { Drawer, drawerStore, type DrawerSettings } from "@skeletonlabs/skeleton";
+  import { Drawer, type DrawerSettings, drawerStore } from "@skeletonlabs/skeleton";
   import { page } from "$app/stores";
   import { goto } from "$app/navigation";
   import { tick } from "svelte";
@@ -37,18 +37,15 @@
 
   async function previousSong(start: boolean = true): Promise<void> {
     songId = (songId + +songbookSize - 1) % +songbookSize;
-    console.log(JSON.stringify(song));
-    console.log("pages", pages);
     if (start)
       pageId = 0;
     else
       await tick();
-      pageId = +pages - 1;
+    pageId = +pages - 1;
     await navigate();
   }
 
   async function nextSong(): Promise<void> {
-    console.log("nextSong", songId);
     songId = (songId + 1) % +songbookSize;
     pageId = 0;
     await navigate();
@@ -57,12 +54,10 @@
   async function navigate(): Promise<void> {
     $page.url.searchParams.set("pageId", String(pageId));
     await tick();
-    console.log(songId, pageId);
-    await goto(`/songbooks/${songbook?.name}/songs/${songId}?${$page.url.searchParams}`, {replaceState: true});
+    await goto(`/songbooks/${songbook?.name}/songs/${songId}?${$page.url.searchParams}`, { replaceState: true });
   }
 
   function openBottomDrawer(): void {
-    console.log("open bottom drawer");
     const drawerSettings: DrawerSettings = {
       id: "bottom-drawer",
       position: "bottom",
@@ -70,8 +65,8 @@
       // bgBackdrop: 'bg-gradient-to-tr from-indigo-500/50 via-purple-500/50 to-pink-500/50',
       // width: 'w-[280px] md:w-[480px]',
       height: "h-[80%]",
-      padding: 'px-4 pt-4',
-      rounded: 'rounded-t-xl'
+      padding: "px-4 pt-4",
+      rounded: "rounded-t-xl"
     };
     drawerStore.open(drawerSettings);
   }
