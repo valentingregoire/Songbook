@@ -53,9 +53,9 @@
   function select(event) {
     selectedSong = event.detail[0] - 1;
     if (songbookName)
-      goto(`/songbooks/${songbookName}/songs/${selectedSong}`);
+      goto(`/songbooks/${songbookName}/songs/${selectedSong}?pageId=0`);
     else
-      goto(`/songs/${selectedSong}`);
+      goto(`/songs/${selectedSong}?pageId=0`);
   }
 
   const source: TableSource = {

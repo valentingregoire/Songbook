@@ -18,10 +18,10 @@
 <div>
   <AppBar padding="p-1">
     <svelte:fragment slot="lead">
-      <a class="w-6" href="/songbooks/{songbook.name}">
+      <a class="w-6" href="/songbooks/{songbook?.name}">
         <Icon name="arrow-left" iconClass="" />
       </a>
-      <a href="/songbooks/{songbook.name}">
+      <a href="/songbooks/{songbook?.name}">
         <CurrentInfo {song} {songbook} />
       </a>
     </svelte:fragment>

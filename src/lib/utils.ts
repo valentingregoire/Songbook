@@ -16,7 +16,8 @@ export const ICON_MAP = {
   "add": "➕",
   "save": "💾",
   "cancel": "❌",
-  "search": "🔍"
+  "search": "🔍",
+  "hash": "#️"
 };
 
 export default ICON_MAP;
