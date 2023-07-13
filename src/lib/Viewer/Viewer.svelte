@@ -42,6 +42,7 @@
     if (start)
       pageId = 0;
     else
+      await tick();
       pageId = +pages - 1;
     await navigate();
   }
