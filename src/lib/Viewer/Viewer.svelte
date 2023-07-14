@@ -4,7 +4,6 @@
   import BottomButton from "./BottomButton.svelte";
   import type Songbook from "$models/songbook.model";
   import { Drawer, type DrawerSettings, drawerStore } from "@skeletonlabs/skeleton";
-  import { page } from "$app/stores";
   import { goto } from "$app/navigation";
   import { tick } from "svelte";
 
@@ -17,44 +16,33 @@
   $: songbookSize = songs?.length;
   $: pages = song?.pages?.length;
 
-  function previousPage() {
-    if (pageId == 0) {
-      previousSong(false);
-    } else {
-      pageId--;
-    }
-    navigate();
+  async function previousPage() {
+    const songIdNew = pageId == 0 ? (songId + songbookSize - 1) % songbookSize : songId;
+    const pageIdNew = pageId == 0 ? songs[songIdNew].pages.length - 1 : pageId - 1;
+    await navigate(songIdNew, pageIdNew);
   }
 
   async function nextPage(): Promise<void> {
-    if (pageId === +pages - 1) {
-      await nextSong();
-    } else {
-      pageId++;
-    }
-    await navigate();
+    const songIdNew = pageId == pages - 1 ? (songId + 1) % songbookSize : songId;
+    const pageIdNew = pageId == pages - 1 ? 0 : pageId + 1;
+    await navigate(songIdNew, pageIdNew);
   }
 
-  async function previousSong(start: boolean = true): Promise<void> {
-    songId = (songId + +songbookSize - 1) % +songbookSize;
-    if (start)
-      pageId = 0;
-    else
-      await tick();
-    pageId = +pages - 1;
-    await navigate();
+  async function previousSong(): Promise<void> {
+    // const songIdNew = songId === 0 ? songbookSize - 1 : songId - 1;
+    const songIdNew = (songId + songbookSize - 1) % +songbookSize;
+    await navigate(songIdNew);
   }
 
   async function nextSong(): Promise<void> {
-    songId = (songId + 1) % +songbookSize;
-    pageId = 0;
-    await navigate();
+    const songIdNew = (songId + 1) % +songbookSize;
+    await navigate(songIdNew);
   }
 
-  async function navigate(): Promise<void> {
-    $page.url.searchParams.set("pageId", String(pageId));
+  async function navigate(songId: number, pageId: number = 0): Promise<void> {
+    // $page.url.searchParams.set("pageId", String(pageId));
     await tick();
-    await goto(`/songbooks/${songbook?.name}/songs/${songId}?${$page.url.searchParams}`, { replaceState: true });
+    await goto(`/songbooks/${songbook?.name}/songs/${songId}?pageId=${pageId}`, { replaceState: true });
   }
 
   function openBottomDrawer(): void {
@@ -72,7 +60,6 @@
   }
 </script>
 
-<!--{JSON.stringify(song)} - {pageId} - {pages}-->
 <div class="grid grid-cols-1 w-full relative h-screen justify-items-center">
   <Sheet {song} {pageId} />
   <div class="block w-full h-full">
