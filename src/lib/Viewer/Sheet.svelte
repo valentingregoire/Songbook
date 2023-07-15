@@ -8,10 +8,10 @@
 
 </script>
 
-<div class="block mx-auto h-screen">
+<div class="block mx-auto">
   {#if song?.fileType}
     <img
-      class="w-full h-full object-contain"
+      class="w-full h-screen object-contain"
       src="/songs/{song?.title}/{song?.title}-{pageId + 1}.{song?.fileType}"
       alt={song?.title}
     />

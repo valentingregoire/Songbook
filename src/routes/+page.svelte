@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onMount } from "svelte";
+  import { onMount, tick } from "svelte";
   import SongMap from "../models/song.model";
   import Song from "../models/song.model";
   import { get } from "../lib/api";
@@ -18,7 +18,7 @@
   let songs: SongMap;
   let unitsToLoad: number = 0;
   let unitsLoaded: number = 0;
-  let comment: string = "Loading...";
+  let comment: string = "Loading components";
 
   $:if (songs) {
     unitsToLoad = Object.values(songs).reduce((acc, cur) => +acc + cur?.pages?.length, API_LOAD_WEIGHT);
@@ -31,6 +31,7 @@
 
   async function unitLoaded() {
     unitsLoaded++;
+    await tick();
     if (unitsToLoad > 0) await progress.set(unitsLoaded / unitsToLoad * 100);
     if (unitsLoaded >= unitsToLoad) {
       comment = "Loading complete!";
@@ -43,12 +44,12 @@
     songs = await get("api/songs");
     songsStore.set(songs);
     await unitLoaded();
-    comment = "Loading songbooks...";
+    comment = "Loading songbooks";
     const songbooks: Array<Songbook> = await get("api/songbooks");
     songbooks.forEach(songbook => songbook.songs = songbook.songs.map(song => songs[song] || new Song(song)));
     songbooksStore.set(songbooks);
     await unitLoaded();
-    comment = "Loading pages...";
+    comment = "Loading pages";
   });
 </script>
 
@@ -63,14 +64,16 @@
 </svelte:head>
 
 <!--{unitsLoaded} / {unitsToLoad} / {$progress}-->
-<div class="grid grid-cols-1 h-full justify-items-center content-center"
-     transition:fly={{y: 200, duration: 250}}>
-  <img src="icon.png" alt="logo" />
-  <ProgressBar class="mt-8 w-[512px]" label="Loading..." value={$progress} />
-  {#if comment}
-    <div class="flex mt-4">
-      <span class="badge-icon"><FaFileDownload /></span>
-      <span class="badge-text"> {comment}</span>
-    </div>
-  {/if}
+<div class="flex w-screen h-screen justify-center">
+  <div class="grid grid-cols-1 h-full w-[512px] justify-items-center content-center"
+       transition:fly={{y: 200, duration: 250}}>
+    <img src="icon.png" alt="logo" />
+    <ProgressBar class="mt-8" meter="bg-primary-300" track="bg-primary-100" label="Loading..." value={$progress} />
+    {#if comment}
+      <div class="flex mt-4">
+        <span class="badge-icon"><FaFileDownload /></span>
+        <span class="badge-text"> {comment}</span>
+      </div>
+    {/if}
+  </div>
 </div>
