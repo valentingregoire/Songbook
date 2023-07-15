@@ -1,14 +1,12 @@
 <script lang="ts">
-  import Viewer from "./Viewer/Viewer.svelte";
-  import StatusBar from "./StatusBar/StatusBar.svelte";
-  import Song from "../../../models/songbook.model.js";
   import { page } from "$app/stores";
+  import type Song from "$models/song.model";
   import { songsStore } from "../../../stores";
 
-  const songTitle = $page.params.title;
+  const id = $page.params.id;
   let song: Song;
-  songsStore.subscribe(songMap => song = songMap[songTitle]);
+  songsStore.subscribe(songs => Object.values(songs).find(s => s. === id));
+
 </script>
 
-<StatusBar {song} />
-<Viewer />
+<h1 class="h1">{id}</h1>

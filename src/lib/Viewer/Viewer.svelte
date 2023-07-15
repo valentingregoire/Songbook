@@ -6,10 +6,13 @@
   import { Drawer, type DrawerSettings, drawerStore } from "@skeletonlabs/skeleton";
   import { goto } from "$app/navigation";
   import { tick } from "svelte";
+  import Menu from "./Menu.svelte";
 
   export let songbook: Songbook;
   export let songId: number;
   export let pageId: number;
+
+  let menu: Drawer;
 
   $: song = songbook?.songs[songId];
   $: songs = songbook?.songs;
@@ -45,19 +48,6 @@
     await goto(`/songbooks/${songbook?.name}/songs/${songId}?pageId=${pageId}`, { replaceState: true });
   }
 
-  function openBottomDrawer(): void {
-    const drawerSettings: DrawerSettings = {
-      id: "bottom-drawer",
-      position: "bottom",
-      // bgDrawer: 'bg-purple-900 text-white',
-      // bgBackdrop: 'bg-gradient-to-tr from-indigo-500/50 via-purple-500/50 to-pink-500/50',
-      // width: 'w-[280px] md:w-[480px]',
-      height: "h-[80%]",
-      padding: "px-4 pt-4",
-      rounded: "rounded-t-xl"
-    };
-    drawerStore.open(drawerSettings);
-  }
 </script>
 
 <div class="grid grid-cols-1 w-full relative h-screen justify-items-center">
@@ -79,9 +69,7 @@
       classes="bottom-0 right-0"
       on:click={nextPage}>
     </SideButton>
-    <BottomButton on:click={openBottomDrawer} />
+    <BottomButton on:click={menu.openMenuDrawer} />
+    <Menu bind:this={menu} {songs} songbookName={songbook.name} />
   </div>
-  <Drawer>
-    Klik buiten het veld om te sluiten.
-  </Drawer>
 </div>

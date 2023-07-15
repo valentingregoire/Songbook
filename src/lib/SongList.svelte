@@ -3,20 +3,19 @@
   import type { TableSource } from "@skeletonlabs/skeleton";
   import { Table, tableMapperValues } from "@skeletonlabs/skeleton";
   import type Song from "../models/song.model";
-  import { goto } from "$app/navigation";
+  // import { goto } from "$app/navigation";
 
   export let songs: Array<Song | string>;
-  export let songbookName: string | undefined;
+  export let selectedSongId: number;
+  export let clickSong: Function;
   export let artist: boolean = true;
   export let bpm: boolean = true;
   export let key: boolean = true;
   export let pages: boolean = true;
   export let fileType: boolean = true;
   export let info: boolean = true;
-  let selectedSong: number;
-  let modalActions;
 
-  let columnHeaders = ["#️", `${ICON_MAP.title} Title`];
+  let columnHeaders = [ICON_MAP.hash, `${ICON_MAP.title} Title`];
   let columns = ["number", "title"];
   // make sure to not include columns that are never set
   artist = artist ? songs?.some(song => !(song instanceof String) && song.artist) : false;
@@ -51,11 +50,12 @@
   }
 
   function select(event) {
-    selectedSong = event.detail[0] - 1;
-    if (songbookName)
-      goto(`/songbooks/${songbookName}/songs/${selectedSong}?pageId=0`);
-    else
-      goto(`/songs/${selectedSong}?pageId=0`);
+    selectedSongId = event.detail[0] - 1;
+    clickSong();
+    // if (songbookName)
+    //   goto(`/songbooks/${songbookName}/songs/${selectedSong}?pageId=0`);
+    // else
+    //   goto(`/songs/${selectedSong}?pageId=0`);
   }
 
   const source: TableSource = {

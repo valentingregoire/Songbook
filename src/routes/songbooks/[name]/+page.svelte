@@ -5,17 +5,24 @@
   import SongList from "$lib/SongList.svelte";
   import Icon from "$lib/Icon.svelte";
   import { AppBar } from "@skeletonlabs/skeleton";
+  import { navigate } from "../../../lib/utils";
 
   const name = $page.params.name;
 
   let songbook: Songbook;
   songbooksStore.subscribe(sb => songbook = sb.find(s => s.name === name));
+
+  let selectedSongId: number;
+
+  async function clickSong(): Promise<void> {
+    await navigate({ songbookName: name, songId: selectedSongId });
+  }
 </script>
 
 <AppBar>
   <svelte:fragment slot="lead">
     <a class="w-8" href="/songbooks">
-      <Icon name="arrow-left" iconClass=""/>
+      <Icon name="arrow-left" iconClass="" />
     </a>
   </svelte:fragment>
   <h3 class="h3">{songbook.name}</h3>
@@ -23,4 +30,4 @@
   </svelte:fragment>
 </AppBar>
 
-<SongList songs={songbook.songs} songbookName={name}/>
+<SongList songs={songbook.songs} bind:selectedSongId={selectedSongId} {clickSong} />
