@@ -7,7 +7,6 @@
   export let pageId: number;
 </script>
 
-PageNumber: {pageId + 1}/{song?.pages?.length}
 <div class="flex">
   <Info icon={ICON_MAP.page} label="{pageId + 1}/{song?.pages?.length || 1}" />
 </div>
