@@ -28,7 +28,7 @@
 
 <div class="grid grid-cols-1 h-full justify-items-center content-center">
   {#each menu as item}
-    <a href={item.link} class="m-5 w-96 card btn btn-primary btn-lg py-6">
+    <a href={item.link} class="m-5 w-96 card btn btn-primary btn-lg py-6 rounded-full">
       <h1 class="h1">{item.icon} {item.name}</h1>
     </a>
   {/each}

@@ -12,16 +12,13 @@
   import { cubicOut } from "svelte/easing";
   import FaFileDownload from "svelte-icons/fa/FaFileDownload.svelte";
 
-  // consider loading songs and songbooks as 5 in total
-  const API_LOAD_WEIGHT: number = 2;
-
   let songs: SongMap;
   let unitsToLoad: number = 0;
   let unitsLoaded: number = 0;
   let comment: string = "Loading components";
 
   $:if (songs) {
-    unitsToLoad = Object.values(songs).reduce((acc, cur) => +acc + cur?.pages?.length, API_LOAD_WEIGHT);
+    unitsToLoad = Object.values(songs).reduce((acc, cur) => +acc + cur?.pages?.length, 0);
   }
 
   const progress = tweened(0, {
@@ -43,12 +40,10 @@
     comment = "Loading songs...";
     songs = await get("api/songs");
     songsStore.set(songs);
-    await unitLoaded();
     comment = "Loading songbooks";
     const songbooks: Array<Songbook> = await get("api/songbooks");
     songbooks.forEach(songbook => songbook.songs = songbook.songs.map(song => songs[song] || new Song(song)));
     songbooksStore.set(songbooks);
-    await unitLoaded();
     comment = "Loading pages";
   });
 </script>
@@ -63,17 +58,18 @@
   {/if}
 </svelte:head>
 
-<!--{unitsLoaded} / {unitsToLoad} / {$progress}-->
 <div class="flex w-screen h-screen justify-center">
   <div class="grid grid-cols-1 h-full w-[512px] justify-items-center content-center"
        transition:fly={{y: 200, duration: 250}}>
     <img src="icon.png" alt="logo" />
-    <ProgressBar class="mt-8" meter="bg-primary-300" track="bg-primary-100" label="Loading..." value={$progress} />
-    {#if comment}
-      <div class="flex mt-4">
-        <span class="badge-icon"><FaFileDownload /></span>
+    <div class="grid grid-cols-1 absolute w-[240px] top-[458px] justify-items-center">
+      <ProgressBar class="mt-8" height="h-10" track="bg-primary-200" meter="bg-primary-400" label="Loading..." value={$progress} />
+      <div class="flex mt-3 text-primary-400 text-lg">
+<!--        <span class="badge-icon h-[22px] mt-1"><FaFileDownload /></span>-->
         <span class="badge-text"> {comment}</span>
       </div>
+    </div>
+    {#if comment}
     {/if}
   </div>
 </div>

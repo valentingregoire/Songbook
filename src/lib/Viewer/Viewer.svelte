@@ -14,11 +14,11 @@
   $: song = songbook?.songs[songId];
   $: songs = songbook?.songs;
   $: songbookSize = songs?.length;
-  $: pages = song?.pages?.length;
+  $: pages = song?.pages?.length || 1;
 
   async function previousPage() {
     const songIdNew = pageId == 0 ? (songId + songbookSize - 1) % songbookSize : songId;
-    const pageIdNew = pageId == 0 ? songs[songIdNew].pages.length - 1 : pageId - 1;
+    const pageIdNew = pageId == 0 ? songs[songIdNew].pages?.length - 1 || 0 : pageId - 1;
     await navigate(songIdNew, pageIdNew);
   }
 
