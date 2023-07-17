@@ -1,20 +1,20 @@
 <script lang="ts">
   import { onMount, tick } from "svelte";
-  import SongMap from "../models/song.model";
-  import Song from "../models/song.model";
-  import { get } from "../lib/api";
-  import { songbooksStore, songsStore } from "../stores";
-  import Songbook from "../models/songbook.model";
+  import SongMap from "$models/song.model";
+  import Song from "$models/song.model";
+  import { get } from "$lib/api";
+  import { settingsStore, songbooksStore, songsStore } from "$stores";
+  import Songbook from "$models/songbook.model";
   import { goto } from "$app/navigation";
   import { ProgressBar } from "@skeletonlabs/skeleton";
   import { fly } from "svelte/transition";
   import { tweened } from "svelte/motion";
   import { cubicOut } from "svelte/easing";
-  import FaFileDownload from "svelte-icons/fa/FaFileDownload.svelte";
 
   let songs: SongMap;
   let unitsToLoad: number = 0;
   let unitsLoaded: number = 0;
+  let settings: Settings;
   let comment: string = "Loading components";
 
   $:if (songs) {
@@ -37,13 +37,19 @@
   }
 
   onMount(async () => {
-    comment = "Loading songs...";
+    comment = "Loading songs";
     songs = await get("api/songs");
     songsStore.set(songs);
+
     comment = "Loading songbooks";
     const songbooks: Array<Songbook> = await get("api/songbooks");
     songbooks.forEach(songbook => songbook.songs = songbook.songs.map(song => songs[song] || new Song(song)));
     songbooksStore.set(songbooks);
+
+    comment = "Loading settings";
+    settings = await get("api/settings");
+    settingsStore.set(settings);
+
     comment = "Loading pages";
   });
 </script>

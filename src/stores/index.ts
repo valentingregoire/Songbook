@@ -16,3 +16,5 @@ export const currentPageStore = writable<number>(1);
 export const currentSongStore = derived(
   [currentSongbookStore, currentSongIndexStore],
   ([$currentSongbook, $currentSongIndex]) => $currentSongbook?.songs[$currentSongIndex]);
+
+export const settingsStore = writable({});
