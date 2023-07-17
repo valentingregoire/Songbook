@@ -5,7 +5,7 @@
   import SongList from "$lib/SongList.svelte";
   import Icon from "$lib/Icon.svelte";
   import { AppBar } from "@skeletonlabs/skeleton";
-  import { navigate } from "../../../lib/utils";
+  import { navigate } from "$lib/utils";
 
   const name = $page.params.name;
 

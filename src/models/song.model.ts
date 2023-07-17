@@ -29,6 +29,19 @@ export default class Song {
     this.info = info;
   }
 
+  equals(song: Song): boolean {
+    return (
+      song &&
+      this.title === song.title &&
+      this.fileType === song.fileType &&
+      this.pages === song.pages &&
+      this.artist === song.artist &&
+      this.bpm === song.bpm &&
+      this.key === song.key &&
+      this.info === song.info
+    );
+  }
+
   setPropertyByName(propertyName: string, value: any) {
     this[propertyName] = value;
   }

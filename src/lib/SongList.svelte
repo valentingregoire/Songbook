@@ -69,7 +69,7 @@
 </script>
 
 {#if songs}
-  <Table {source} interactive={true} on:selected={select} />
+  <Table class="table-compact" {source} interactive={true} on:selected={select} />
 {:else}
   <h2>Songs not found.</h2>
 {/if}
