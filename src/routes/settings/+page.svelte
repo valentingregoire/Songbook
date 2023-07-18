@@ -2,6 +2,7 @@
   import { AppBar } from "@skeletonlabs/skeleton";
   import Icon from "$lib/Icon.svelte";
   import { settingsStore } from "$stores";
+  import type { Settings } from "$models/settings.model";
 
   let settings: Settings;
   settingsStore.subscribe(value => settings = value);
@@ -18,5 +19,5 @@
   </svelte:fragment>
 </AppBar>
 
-Settings: {JSON.stringify(settings)}
+Settings: {JSON.stringify(settings)} <br />
 1: {settings.viewer.sideButtonWidth} | {settings.viewer.bottomButtonHeight}

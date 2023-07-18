@@ -3,13 +3,14 @@
   import SongMap from "$models/song.model";
   import Song from "$models/song.model";
   import { get } from "$lib/api";
-  import { settingsStore, songbooksStore, songsStore } from "$stores";
+  import { settingsMapStore, songbooksStore, songsStore } from "$stores";
   import Songbook from "$models/songbook.model";
   import { goto } from "$app/navigation";
   import { ProgressBar } from "@skeletonlabs/skeleton";
   import { fly } from "svelte/transition";
   import { tweened } from "svelte/motion";
   import { cubicOut } from "svelte/easing";
+  import type { Settings } from "$models/settings.model";
 
   let songs: SongMap;
   let unitsToLoad: number = 0;
@@ -37,20 +38,20 @@
   }
 
   onMount(async () => {
-    comment = "Loading songs";
+    comment += "\nLoading songs";
     songs = await get("api/songs");
     songsStore.set(songs);
 
-    comment = "Loading songbooks";
+    comment += "\nLoading songbooks";
     const songbooks: Array<Songbook> = await get("api/songbooks");
     songbooks.forEach(songbook => songbook.songs = songbook.songs.map(song => songs[song] || new Song(song)));
     songbooksStore.set(songbooks);
 
-    comment = "Loading settings";
+    comment += "\Loading settings";
     settings = await get("api/settings");
-    settingsStore.set(settings);
+    settingsMapStore.set(settings);
 
-    comment = "Loading pages";
+    comment += "\Loading pages";
   });
 </script>
 
