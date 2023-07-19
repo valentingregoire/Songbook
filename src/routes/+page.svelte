@@ -9,12 +9,13 @@
   import { fly } from "svelte/transition";
   import { tweened } from "svelte/motion";
   import { cubicOut } from "svelte/easing";
-  import type { Settings } from "$models/settings.model";
   import LoadingItem from "$lib/LoadingItem.svelte";
   import { ComponentType } from "$models/components.model";
 
   let songs: SongMap;
   let pagesToLoad: number = 0;
+  let totalLoaded = 0;
+  let totalToLoad = 1;
 
   // [component, [loaded, toLoad]]
   const loadingItems: Map<ComponentType, Array<number>> = new Map(
@@ -30,6 +31,11 @@
   // $:if (songs) {
   //   pagesToLoad = Object.values(songs).reduce((acc, cur) => +acc + cur?.pages?.length, 0);
   // }
+
+  $: if (loadingItems.get(ComponentType.Pages)?.length === 2) {
+    totalLoaded = Object.values(loadingItems).reduce((acc, cur) => +acc + cur[0], 0);
+    totalToLoad = Object.values(loadingItems).reduce((acc, cur) => +acc + cur[1], 0);
+  }
 
   const progress = tweened(0, {
     duration: 100,
@@ -86,7 +92,6 @@
     <img src="icon.png" alt="logo" />
     <!--    <div class="grid grid-cols-1 absolute w-[240px] top-[458px] justify-items-center">-->
     <div class="w-full grid grid-cols-1 justify-items-center">
-      <ProgressBar class="mt-8" track="bg-primary-200" meter="bg-primary-400" label="Loading..." value={$progress} />
       <div class="flex mt-3 text-primary-400 text-lg">
         <!--        <span class="badge-icon h-[22px] mt-1"><FaFileDownload /></span>-->
         <!--        <span class="badge-text"> {comment}</span>-->
@@ -96,7 +101,7 @@
               <li>
                 <div class="flex items-center">
                   <span><LoadingItem value={value[0] / value[1] * 100} /></span>
-                  <span> {key}</span>
+                  <span class="ml-2">{key}</span>
                 </div>
               </li>
             {/each}
@@ -104,5 +109,6 @@
         </ul>
       </div>
     </div>
+    <ProgressBar class="mt-4 w-[80%]" track="bg-primary-200" meter="bg-primary-400" label="Loading..." value={totalLoaded / totalToLoad * 100} />
   </div>
 </div>
