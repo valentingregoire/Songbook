@@ -7,8 +7,9 @@
   import FaSave from "svelte-icons/fa/FaSave.svelte";
   import FaFileAlt from "svelte-icons/fa/FaFileAlt.svelte";
   import FaWindowClose from "svelte-icons/fa/FaWindowClose.svelte";
-  import MdClose from 'svelte-icons/md/MdClose.svelte'
-  import MdCancel from 'svelte-icons/md/MdCancel.svelte'
+  import MdClose from "svelte-icons/md/MdClose.svelte";
+  import MdCancel from "svelte-icons/md/MdCancel.svelte";
+  import FaCheckCircle from "svelte-icons/fa/FaCheckCircle.svelte";
 
 
   export let name: string;
@@ -34,6 +35,8 @@
       <MdClose />
     {:else if name === "cancel"}
       <MdCancel />
+    {:else if name === "check-circle"}
+      <FaCheckCircle />
     {:else}
       {name}
     {/if}
