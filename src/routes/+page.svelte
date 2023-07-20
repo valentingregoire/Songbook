@@ -10,6 +10,7 @@
   import { cubicOut } from "svelte/easing";
   import LoadingItem from "$lib/LoadingItem.svelte";
   import { ComponentType } from "$models/components.model";
+  import { goto } from "$app/navigation";
 
   let songMap: SongMap;
   let pagesToLoad: number = 0;
@@ -26,38 +27,62 @@
   };
 
   function getProgress(component: ComponentType) {
-    return typeof loadingItems[component] !== "boolean" && loadingItems[component].length === 2 ? loadingItems[component][0] / loadingItems[component][1] * 100 : 0;
+    return typeof loadingItems[component] !== "boolean" && loadingItems[component].length === 2 ?
+      loadingItems[component][0] / loadingItems[component][1] * 100 :
+      0;
   }
 
-  $: progress = {
-    [ComponentType.Components]: false,
+  $: loadingProgress = {
+    [ComponentType.Components]: getProgress(ComponentType.Components),
     [ComponentType.Songs]: getProgress(ComponentType.Songs),
+    // [ComponentType.Songbooks]: getProgress(ComponentType.Songbooks),
+    // [ComponentType.Settings]: getProgress(ComponentType.Settings),
+    // [ComponentType.Pages]: getProgress(ComponentType.Pages),
     [ComponentType.Songbooks]: loadingItems[ComponentType.Songbooks].length === 2 ? loadingItems[ComponentType.Songbooks][0] / loadingItems[ComponentType.Songbooks][1] * 100 : 0,
     [ComponentType.Settings]: loadingItems[ComponentType.Settings].length === 2 ? loadingItems[ComponentType.Settings][0] / loadingItems[ComponentType.Settings][1] * 100 : 0,
     [ComponentType.Pages]: loadingItems[ComponentType.Pages].length === 2 ? loadingItems[ComponentType.Pages][0] / loadingItems[ComponentType.Pages][1] * 100 : 0
   };
 
   $: if (loadingItems[ComponentType.Pages]?.length === 2) {
-    totalLoaded = Object.values(loadingItems).reduce((acc, cur) => +acc + cur[0], 0);
-    totalToLoad = Object.values(loadingItems).reduce((acc, cur) => +acc + cur[1], 0);
+    totalLoaded = Object.values(loadingItems).reduce((acc, cur) => {
+      if (typeof cur === "boolean") return acc;
+      return +acc + cur[0];
+    }, 0);
+    totalToLoad = Object.values(loadingItems).reduce((acc, cur) => {
+      if (typeof cur === "boolean") return acc;
+      return +acc + cur[1];
+    }, 0);
   }
 
-  $: isSongsLoaded = progress[ComponentType.Songs] === 100;
+  $: totalProgress = totalLoaded / totalToLoad * 100;
 
-  const progressAnimation = tweened(0, {
+  $: isSongsLoaded = loadingProgress[ComponentType.Songs] === 100;
+
+  $: {
+    if (totalProgress === 100) {
+      async () => {
+        console.log("finished");
+        await tick();
+        await goto("/home");
+      };
+    }
+  }
+
+  const progress = tweened(0, {
     duration: 100,
     easing: cubicOut
   });
 
-  async function unitLoaded() {
+  $: {
+    progress.set(totalProgress);
+  }
+
+  async function pageLoaded() {
     await tick();
     const pagesLoaded = loadingItems[ComponentType.Pages][0] + 1;
     loadingItems[ComponentType.Pages] = [pagesLoaded, pagesToLoad];
-    if (pagesLoaded >= pagesToLoad) {
-      // await goto("/home");
-    } else {
-      await progressAnimation.set(pagesLoaded / pagesToLoad * 100);
-    }
+    // if (pagesLoaded >= pagesToLoad) await goto("/home");
+
   }
 
   onMount(async () => {
@@ -83,17 +108,20 @@
     );
   });
 </script>
+<svelte:window on:load={() => loadingItems[ComponentType.Components] = [1, 1]} />
 
 <svelte:head>
   {#if isSongsLoaded}
     {#each Object.values(songMap) as song}
       {#each song.pages as page}
-        <link rel="preload" as="image" href="songs/{song.title}/{page}" on:load={unitLoaded} />
+        <link rel="preload" as="image" href="songs/{song.title}/{page}" on:load={pageLoaded} />
       {/each}
     {/each}
   {/if}
 </svelte:head>
 
+{totalLoaded} / {totalToLoad} = {totalProgress} <br />
+{$progress}
 <div class="flex w-screen h-screen justify-center">
   <div class="grid grid-cols-1 h-full w-[512px] justify-items-center content-center"
        transition:fly={{y: 200, duration: 250}}>
@@ -106,7 +134,7 @@
               <li>
                 <div class="flex items-center">
                   <span>
-                    <LoadingItem value={progress[key]} />
+                    <LoadingItem value={loadingProgress[key]} />
                   </span>
                   <span class="ml-2">{key}</span>
                 </div>
@@ -117,6 +145,6 @@
       </div>
     </div>
     <ProgressBar class="mt-4 w-[80%]" track="bg-primary-200" meter="bg-primary-400" label="Loading..."
-                 value={totalLoaded / totalToLoad * 100} />
+                 value={$progress} />
   </div>
 </div>
