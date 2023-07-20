@@ -15,7 +15,7 @@
   let menu: Drawer;
 
   $: song = songbook?.songs[songId];
-  $: songs = songbook?.songs;
+  $: songMap = songbook?.songs;
   $: songbookSize = songs?.length;
   $: pages = song?.pages?.length || 1;
 
