@@ -4,7 +4,6 @@
   import Song from "$models/song.model";
   import { get } from "$lib/api";
   import { settingsMapStore, songbooksStore, songsStore } from "$stores";
-  import { goto } from "$app/navigation";
   import { ProgressBar } from "@skeletonlabs/skeleton";
   import { fly } from "svelte/transition";
   import { tweened } from "svelte/motion";
@@ -19,16 +18,20 @@
 
   // [component, [loaded, toLoad]]
   const loadingItems = {
-    [ComponentType.Components]: [],
-    [ComponentType.Songs]: [],
-    [ComponentType.Songbooks]: [],
-    [ComponentType.Settings]: [],
-    [ComponentType.Pages]: []
+    [ComponentType.Components]: false,
+    [ComponentType.Songs]: false,
+    [ComponentType.Songbooks]: false,
+    [ComponentType.Settings]: false,
+    [ComponentType.Pages]: false
   };
 
+  function getProgress(component: ComponentType) {
+    return typeof loadingItems[component] !== "boolean" && loadingItems[component].length === 2 ? loadingItems[component][0] / loadingItems[component][1] * 100 : 0;
+  }
+
   $: progress = {
-    [ComponentType.Components]: loadingItems[ComponentType.Components].length === 2 ? loadingItems[ComponentType.Components][0] / loadingItems[ComponentType.Components][1] * 100 : 0,
-    [ComponentType.Songs]: loadingItems[ComponentType.Songs].length === 2 ? loadingItems[ComponentType.Songs][0] / loadingItems[ComponentType.Songs][1] * 100 : 0,
+    [ComponentType.Components]: false,
+    [ComponentType.Songs]: getProgress(ComponentType.Songs),
     [ComponentType.Songbooks]: loadingItems[ComponentType.Songbooks].length === 2 ? loadingItems[ComponentType.Songbooks][0] / loadingItems[ComponentType.Songbooks][1] * 100 : 0,
     [ComponentType.Settings]: loadingItems[ComponentType.Settings].length === 2 ? loadingItems[ComponentType.Settings][0] / loadingItems[ComponentType.Settings][1] * 100 : 0,
     [ComponentType.Pages]: loadingItems[ComponentType.Pages].length === 2 ? loadingItems[ComponentType.Pages][0] / loadingItems[ComponentType.Pages][1] * 100 : 0
@@ -39,7 +42,7 @@
     totalToLoad = Object.values(loadingItems).reduce((acc, cur) => +acc + cur[1], 0);
   }
 
-  $: isPagesLoaded = loadingItems[ComponentType.Pages]?.length === 2 && loadingItems[ComponentType.Pages][0] >= loadingItems[ComponentType.Pages][1];
+  $: isSongsLoaded = progress[ComponentType.Songs] === 100;
 
   const progressAnimation = tweened(0, {
     duration: 100,
@@ -51,21 +54,19 @@
     const pagesLoaded = loadingItems[ComponentType.Pages][0] + 1;
     loadingItems[ComponentType.Pages] = [pagesLoaded, pagesToLoad];
     if (pagesLoaded >= pagesToLoad) {
-      await goto("/home");
+      // await goto("/home");
     } else {
       await progressAnimation.set(pagesLoaded / pagesToLoad * 100);
     }
   }
 
   onMount(async () => {
-    console.log("map1", loadingItems);
     await get("api/songs").then(songs => {
       songMap = songs;
       songsStore.set(songs);
       pagesToLoad = Object.values(songs).reduce((acc, cur) => +acc + cur?.pages?.length, 0);
       loadingItems[ComponentType.Pages] = [0, pagesToLoad];
       loadingItems[ComponentType.Songs] = [1, 1];
-      console.log("map2", loadingItems);
     });
 
     get("api/songbooks").then(songbooks => {
@@ -84,7 +85,7 @@
 </script>
 
 <svelte:head>
-  {#if isPagesLoaded}
+  {#if isSongsLoaded}
     {#each Object.values(songMap) as song}
       {#each song.pages as page}
         <link rel="preload" as="image" href="songs/{song.title}/{page}" on:load={unitLoaded} />
@@ -93,8 +94,6 @@
   {/if}
 </svelte:head>
 
-<!--{JSON.stringify(loadingItems)} <br />-->
-<!--{JSON.stringify(progress)}-->
 <div class="flex w-screen h-screen justify-center">
   <div class="grid grid-cols-1 h-full w-[512px] justify-items-center content-center"
        transition:fly={{y: 200, duration: 250}}>
