@@ -22,8 +22,8 @@
   <ProgressRadial value={intermediate ? undefined : $progress}
                   width="w-5"
                   stroke="200"
-                  meter="stroke-primary-400"
-                  track="stroke-primary-200" />
+                  meter="stroke-primary-500"
+                  track="stroke-primary-300" />
 {:else}
   <Icon name="check-circle" iconClass="badge-icon text-success-600" />
 {/if}

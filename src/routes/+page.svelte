@@ -120,14 +120,12 @@
   {/if}
 </svelte:head>
 
-{totalLoaded} / {totalToLoad} = {totalProgress} <br />
-{$progress}
 <div class="flex w-screen h-screen justify-center">
   <div class="grid grid-cols-1 h-full w-[512px] justify-items-center content-center"
        transition:fly={{y: 200, duration: 250}}>
     <img src="icon.png" alt="logo" />
     <div class="w-full grid grid-cols-1 justify-items-center">
-      <div class="flex mt-3 text-primary-400 text-lg">
+      <div class="flex mt-3 text-lg">
         <ul class="list">
           {#if loadingItems}
             {#each Object.entries(loadingItems) as [key, value]}
@@ -144,7 +142,7 @@
         </ul>
       </div>
     </div>
-    <ProgressBar class="mt-4 w-[80%]" track="bg-primary-200" meter="bg-primary-400" label="Loading..."
+    <ProgressBar class="mt-4 w-[80%]" track="bg-primary-300" meter="bg-primary-500" label="Loading..."
                  value={$progress} />
   </div>
 </div>

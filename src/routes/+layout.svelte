@@ -1,6 +1,7 @@
 <script>
-  import '@skeletonlabs/skeleton/themes/theme-crimson.css';
-  import '@skeletonlabs/skeleton/styles/skeleton.css';
+  import "../theme.pcss";
+  // import '@skeletonlabs/skeleton/themes/theme-crimson.css';
+  import "@skeletonlabs/skeleton/styles/skeleton.css";
   import "../app.css";
 </script>
 
