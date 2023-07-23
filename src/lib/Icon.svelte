@@ -10,6 +10,7 @@
   import MdClose from "svelte-icons/md/MdClose.svelte";
   import MdCancel from "svelte-icons/md/MdCancel.svelte";
   import FaCheckCircle from "svelte-icons/fa/FaCheckCircle.svelte";
+  import { fade } from 'svelte/transition';
 
 
   export let name: string;
@@ -17,7 +18,7 @@
 </script>
 
 {#if name}
-  <i class={iconClass}>
+  <i class={iconClass} transition:fade>
     {#if name === "songbook"}
       <FaBook />
     {:else if name === "songbooks"}
@@ -42,7 +43,7 @@
     {/if}
   </i>
   {#if $$slots.default}
-    <span class="badge-text">
+    <span class="badge-text" transition:fade>
       <slot />
     </span>
   {/if}

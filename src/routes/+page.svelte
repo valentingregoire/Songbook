@@ -13,87 +13,61 @@
   import { goto } from "$app/navigation";
 
   let songMap: SongMap;
-  let pagesToLoad: number = 0;
   let totalLoaded = 0;
   let totalToLoad = 1;
+  let totalProgress = 0;
 
   // [component, [loaded, toLoad]]
   const loadingItems = {
-    [ComponentType.Components]: false,
-    [ComponentType.Songs]: false,
-    [ComponentType.Songbooks]: false,
-    [ComponentType.Settings]: false,
-    [ComponentType.Pages]: false
+    [ComponentType.Songs]: [],
+    [ComponentType.Songbooks]: [],
+    [ComponentType.Settings]: [],
+    [ComponentType.Pages]: []
   };
 
-  function getProgress(component: ComponentType) {
-    return typeof loadingItems[component] !== "boolean" && loadingItems[component].length === 2 ?
-      loadingItems[component][0] / loadingItems[component][1] * 100 :
-      0;
-  }
-
-  $: loadingProgress = {
-    [ComponentType.Components]: getProgress(ComponentType.Components),
-    [ComponentType.Songs]: getProgress(ComponentType.Songs),
-    // [ComponentType.Songbooks]: getProgress(ComponentType.Songbooks),
-    // [ComponentType.Settings]: getProgress(ComponentType.Settings),
-    // [ComponentType.Pages]: getProgress(ComponentType.Pages),
-    [ComponentType.Songbooks]: loadingItems[ComponentType.Songbooks].length === 2 ? loadingItems[ComponentType.Songbooks][0] / loadingItems[ComponentType.Songbooks][1] * 100 : 0,
-    [ComponentType.Settings]: loadingItems[ComponentType.Settings].length === 2 ? loadingItems[ComponentType.Settings][0] / loadingItems[ComponentType.Settings][1] * 100 : 0,
-    [ComponentType.Pages]: loadingItems[ComponentType.Pages].length === 2 ? loadingItems[ComponentType.Pages][0] / loadingItems[ComponentType.Pages][1] * 100 : 0
-  };
-
-  $: if (loadingItems[ComponentType.Pages]?.length === 2) {
-    totalLoaded = Object.values(loadingItems).reduce((acc, cur) => {
-      if (typeof cur === "boolean") return acc;
-      return +acc + cur[0];
-    }, 0);
-    totalToLoad = Object.values(loadingItems).reduce((acc, cur) => {
-      if (typeof cur === "boolean") return acc;
-      return +acc + cur[1];
-    }, 0);
-  }
-
-  $: totalProgress = totalLoaded / totalToLoad * 100;
-
-  $: isSongsLoaded = loadingProgress[ComponentType.Songs] === 100;
-
-  $: {
-    if (totalProgress === 100) {
-      async () => {
-        console.log("finished");
-        await tick();
-        await goto("/home");
-      };
-    }
-  }
+  $: loadingProgress = Object.fromEntries(Object.entries(loadingItems).map(([key, value]) => {
+    return [key, value.length == 2 ? value[0] / value[1] * 100 : undefined];
+  }));
 
   const progress = tweened(0, {
     duration: 100,
     easing: cubicOut
   });
 
-  $: {
-    progress.set(totalProgress);
+  $: if (loadingItems[ComponentType.Pages]?.length === 2) {
+    (async () => {
+      totalLoaded = Object.values(loadingItems).reduce((acc, cur) => {
+        return +acc + cur[0];
+      }, 0);
+      totalToLoad = Object.values(loadingItems).reduce((acc, cur) => {
+        return +acc + cur[1];
+      }, 0);
+      totalProgress = totalLoaded / totalToLoad * 100;
+      await progress.set(totalProgress);
+      if (totalProgress === 100 && loadingItems[ComponentType.Pages][1] > 0) {
+        await tick();
+        await goto("/home");
+      }
+    })();
   }
 
-  async function pageLoaded() {
+  async function songPageLoaded() {
     await tick();
-    const pagesLoaded = loadingItems[ComponentType.Pages][0] + 1;
-    loadingItems[ComponentType.Pages] = [pagesLoaded, pagesToLoad];
-    // if (pagesLoaded >= pagesToLoad) await goto("/home");
-
+    loadingItems[ComponentType.Pages][0]++;
   }
 
   onMount(async () => {
+    loadingItems[ComponentType.Songs] = [0, 2];
     await get("api/songs").then(songs => {
+      loadingItems[ComponentType.Songs] = [1, 2];
       songMap = songs;
       songsStore.set(songs);
-      pagesToLoad = Object.values(songs).reduce((acc, cur) => +acc + cur?.pages?.length, 0);
+      const pagesToLoad = Object.values(songs).reduce((acc, cur) => +acc + cur?.pages?.length, 0);
       loadingItems[ComponentType.Pages] = [0, pagesToLoad];
-      loadingItems[ComponentType.Songs] = [1, 1];
+      loadingItems[ComponentType.Songs] = [2, 2];
     });
 
+    loadingItems[ComponentType.Songbooks] = [0, 2];
     get("api/songbooks").then(songbooks => {
       loadingItems[ComponentType.Songbooks] = [1, 2];
       songbooks.forEach(songbook => songbook.songs = songbook.songs.map(song => songMap[song] || new Song(song)));
@@ -101,6 +75,7 @@
       loadingItems[ComponentType.Songbooks] = [2, 2];
     });
 
+    loadingItems[ComponentType.Settings] = [0, 1];
     get("api/settings").then(settings => {
         settingsMapStore.set(settings);
         loadingItems[ComponentType.Settings] = [1, 1];
@@ -108,13 +83,13 @@
     );
   });
 </script>
-<svelte:window on:load={() => loadingItems[ComponentType.Components] = [1, 1]} />
+
 
 <svelte:head>
-  {#if isSongsLoaded}
+  {#if loadingProgress[ComponentType.Songs] === 100}
     {#each Object.values(songMap) as song}
       {#each song.pages as page}
-        <link rel="preload" as="image" href="songs/{song.title}/{page}" on:load={pageLoaded} />
+        <link rel="preload" as="image" href="songs/{song.title}/{page}" on:load={songPageLoaded} />
       {/each}
     {/each}
   {/if}
