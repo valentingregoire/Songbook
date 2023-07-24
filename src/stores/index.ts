@@ -1,7 +1,7 @@
 import { derived, writable } from "svelte/store";
 import type Songbook from "$models/songbook.model";
 import type { SongMap } from "$models/song.model";
-import type { SettingsMap } from "$models/settings.model";
+import type { SettingsMap, Settings } from "$models/settings.model";
 import { SettingsType } from "$models/settings.model";
 
 // export let settings = writable({});
@@ -21,9 +21,15 @@ export const currentSongStore = derived(
 
 export const settingsMapStore = writable<SettingsMap>();
 export const settingsStore = derived(settingsMapStore, $settingsMap => {
-  const viewer_settings = {
-    ...$settingsMap[SettingsType.Default].viewer,
-    ...$settingsMap[SettingsType.User].viewer
+  const viewer_settings: Settings = {
+    viewer: {
+      ...$settingsMap[SettingsType.Default].viewer,
+      ...$settingsMap[SettingsType.User].viewer
+    },
+    menu: {
+      ...$settingsMap[SettingsType.Default].menu,
+      ...$settingsMap[SettingsType.User].menu
+    }
   };
   return {
     viewer: viewer_settings

@@ -124,7 +124,7 @@
                    meter="bg-primary-500"
                    label="Loading..."
                    value={$progress}
-                   on:transitionend={goto("/songbooks")}
+                   on:transitionend={goto("/home")}
       />
     {/key}
   </div>

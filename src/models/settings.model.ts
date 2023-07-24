@@ -2,7 +2,11 @@ export interface Settings {
   viewer: {
     sideButtonWidth: string;
     bottomButtonHeight: string;
-  };
+    showButtons: boolean;
+  },
+  menu: {
+    showMenu: boolean;
+  }
 }
 
 export enum SettingsType {

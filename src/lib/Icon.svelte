@@ -10,11 +10,13 @@
   import MdClose from "svelte-icons/md/MdClose.svelte";
   import MdCancel from "svelte-icons/md/MdCancel.svelte";
   import FaCheckCircle from "svelte-icons/fa/FaCheckCircle.svelte";
-  import FaBars from 'svelte-icons/fa/FaBars.svelte'
+  import FaBars from "svelte-icons/fa/FaBars.svelte";
+  import FaMusic from "svelte-icons/fa/FaMusic.svelte";
+  import FaCog from "svelte-icons/fa/FaCog.svelte";
 
 
   export let name: string;
-  export let iconClass: string = "w-full h-[1.5rem]";
+  export let iconClass: string = "content-left h-[1.5rem]";
 </script>
 
 {#if name}
@@ -40,6 +42,10 @@
       <FaCheckCircle />
     {:else if name === "menu"}
       <FaBars />
+    {:else if name === "songs" || name === "song"}
+      <FaMusic />
+    {:else if name === "settings"}
+      <FaCog />
     {:else}
       {name}
     {/if}
