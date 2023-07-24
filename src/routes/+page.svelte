@@ -11,6 +11,8 @@
   import LoadingItem from "$lib/LoadingItem.svelte";
   import { ComponentType } from "$models/components.model";
   import { goto } from "$app/navigation";
+  import Icon from "$lib/Icon.svelte";
+  import { fade } from "svelte/transition";
 
   let songMap: SongMap;
   let totalLoaded = 0;
@@ -44,10 +46,10 @@
       }, 0);
       totalProgress = totalLoaded / totalToLoad * 100;
       await progress.set(totalProgress);
-      if (totalProgress === 100 && loadingItems[ComponentType.Pages][1] > 0) {
-        await tick();
-        await goto("/home");
-      }
+      // if (totalProgress === 100 && loadingItems[ComponentType.Pages][1] > 0) {
+      //   await tick();
+      //   await goto("/home");
+      // }
     })();
   }
 
@@ -95,9 +97,8 @@
   {/if}
 </svelte:head>
 
-<div class="flex w-screen h-screen justify-center">
-  <div class="grid grid-cols-1 h-full w-[512px] justify-items-center content-center"
-       transition:fly={{y: 200, duration: 250}}>
+<div class="flex w-screen h-screen justify-center" transition:fly={{y: 200, duration: 250}}>
+  <div class="grid grid-cols-1 h-full w-[512px] justify-items-center content-center">
     <img src="icon.png" alt="logo" />
     <div class="w-full grid grid-cols-1 justify-items-center">
       <div class="flex mt-3 text-lg">
@@ -117,7 +118,14 @@
         </ul>
       </div>
     </div>
-    <ProgressBar class="mt-4 w-[80%]" track="bg-primary-300" meter="bg-primary-500" label="Loading..."
-                 value={$progress} />
+    {#key totalProgress}
+      <ProgressBar class="mt-4 w-[80%]"
+                   track="bg-primary-300"
+                   meter="bg-primary-500"
+                   label="Loading..."
+                   value={$progress}
+                   on:transitionend={goto("/home")}
+      />
+    {/key}
   </div>
 </div>

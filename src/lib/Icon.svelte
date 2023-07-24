@@ -3,22 +3,22 @@
   import FaItunesNote from "svelte-icons/fa/FaItunesNote.svelte";
   import FaArchive from "svelte-icons/fa/FaArchive.svelte";
   import IoMdArrowRoundBack from "svelte-icons/io/IoMdArrowRoundBack.svelte";
-  import FaArrowLeft from "svelte-icons/fa/FaArrowLeft.svelte";
+  // import FaArrowLeft from "svelte-icons/fa/FaArrowLeft.svelte";
   import FaSave from "svelte-icons/fa/FaSave.svelte";
   import FaFileAlt from "svelte-icons/fa/FaFileAlt.svelte";
-  import FaWindowClose from "svelte-icons/fa/FaWindowClose.svelte";
+  // import FaWindowClose from "svelte-icons/fa/FaWindowClose.svelte";
   import MdClose from "svelte-icons/md/MdClose.svelte";
   import MdCancel from "svelte-icons/md/MdCancel.svelte";
   import FaCheckCircle from "svelte-icons/fa/FaCheckCircle.svelte";
-  import { fade } from 'svelte/transition';
+  import FaBars from 'svelte-icons/fa/FaBars.svelte'
 
 
   export let name: string;
-  export let iconClass: string = "badge-icon";
+  export let iconClass: string = "w-full h-[1.5rem]";
 </script>
 
 {#if name}
-  <i class={iconClass} transition:fade>
+  <div class={iconClass}>
     {#if name === "songbook"}
       <FaBook />
     {:else if name === "songbooks"}
@@ -38,12 +38,14 @@
       <MdCancel />
     {:else if name === "check-circle"}
       <FaCheckCircle />
+    {:else if name === "menu"}
+      <FaBars />
     {:else}
       {name}
     {/if}
-  </i>
+  </div>
   {#if $$slots.default}
-    <span class="badge-text" transition:fade>
+    <span class="badge-text">
       <slot />
     </span>
   {/if}

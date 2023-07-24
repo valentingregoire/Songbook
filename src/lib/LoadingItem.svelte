@@ -9,7 +9,7 @@
   export let value: number | undefined = undefined;
 
   const progress = tweened(0, {
-    duration: 100,
+    duration: 10,
     easing: cubicOut
   });
 

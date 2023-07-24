@@ -4,6 +4,7 @@
   import { songbooksStore } from "$stores";
   import StatusBar from "$lib/StatusBar/StatusBar.svelte";
   import Viewer from "$lib/Viewer/Viewer.svelte";
+  import { fade } from "svelte/transition";
 
   const songbookName: string = $page.params.name;
 
@@ -15,4 +16,10 @@
 </script>
 
 <StatusBar {songbook} {songId} {pageId} />
-<Viewer {songbook} {songId} {pageId} />
+{#key $page.url}
+  <div
+    transition:fade={{duration: 100}}
+  >
+    <Viewer {songbook} {songId} {pageId} />
+  </div>
+{/key}

@@ -3,7 +3,7 @@
   import SideButton from "./SideButton.svelte";
   import BottomButton from "./BottomButton.svelte";
   import type Songbook from "$models/songbook.model";
-  import { Drawer, type DrawerSettings, drawerStore } from "@skeletonlabs/skeleton";
+  import { Drawer } from "@skeletonlabs/skeleton";
   import { goto } from "$app/navigation";
   import { tick } from "svelte";
   import Menu from "./Menu.svelte";
@@ -16,12 +16,12 @@
 
   $: song = songbook?.songs[songId];
   $: songMap = songbook?.songs;
-  $: songbookSize = songs?.length;
+  $: songbookSize = songbook?.songs?.length;
   $: pages = song?.pages?.length || 1;
 
   async function previousPage() {
     const songIdNew = pageId == 0 ? (songId + songbookSize - 1) % songbookSize : songId;
-    const pageIdNew = pageId == 0 ? songs[songIdNew].pages?.length - 1 || 0 : pageId - 1;
+    const pageIdNew = pageId == 0 ? songbook?.songs[songIdNew].pages?.length - 1 || 0 : pageId - 1;
     await navigate(songIdNew, pageIdNew);
   }
 
@@ -70,6 +70,6 @@
       on:click={nextPage}>
     </SideButton>
     <BottomButton on:click={menu.openMenuDrawer} />
-    <Menu bind:this={menu} {songs} songbookName={songbook.name} />
+    <Menu bind:this={menu} songs={songbook?.songs} songbookName={songbook.name} />
   </div>
 </div>
