@@ -9,8 +9,11 @@
   import { fly } from "svelte/transition";
   import { settingsStore } from "$stores";
   import type { Settings } from "$models/settings.model";
-  import { onMount } from "svelte";
+  import { getContext, onMount } from "svelte";
   import { cubicIn, quintIn } from "svelte/easing";
+  import type { LayoutModel } from "../models/layout.model";
+
+  export let data;
 
   const menu = [
     {
@@ -33,7 +36,7 @@
   let settings: Settings;
 
   $: if ($page.url.pathname !== "/")
-      settingsStore.subscribe(value => settings = value);
+    settingsStore.subscribe(value => settings = value);
 
   // onMount(() => {
   //   settingsStore.subscribe(value => settings = value);
@@ -45,8 +48,6 @@
   // let showRail: boolean = false;
 </script>
 
-{JSON.stringify($page.url)} <br />
-{JSON.stringify(settings)}
 {#if $page.url.pathname !== "/"}
   <AppBar>
     <svelte:fragment slot="lead">
@@ -54,15 +55,25 @@
         <Icon name="menu" />
       </button>
     </svelte:fragment>
-    <h3 class="h3">Songbooks</h3>
+    <h3 class="h3">{$page.data?.title}</h3>
     <svelte:fragment slot="trail">
     </svelte:fragment>
   </AppBar>
 
-  <!--{JSON.stringify(settings)}-->
   {#if showRail}
-    <div class="flex absolute h-full" in:fly={{x: -200, duration: 150}} out:fly={{x:-200, duration: 150, easing: cubicIn}}>
+    <div class="flex absolute h-full" in:fly={{x: -200, duration: 150}}
+         out:fly={{x:-200, duration: 150, easing: cubicIn}}>
       <AppRail>
+        <svelte:fragment slot="lead">
+          {#if $page.data?.back_url}
+            <AppRailAnchor href={$page.data.back_url}>
+              <svelte:fragment slot="lead">
+                <Icon name="arrow-left" />
+              </svelte:fragment>
+              <span>Back</span>
+            </AppRailAnchor>
+          {/if}
+        </svelte:fragment>
         {#each menu as item}
           <AppRailAnchor href={item.link} selected={$page.url.pathname === item.link}>
             <svelte:fragment slot="lead">
@@ -71,8 +82,8 @@
             <span>{item.name}</span>
           </AppRailAnchor>
         {/each}
-        <svelte:fragment slot="trail">
-        </svelte:fragment>
+        <!--        <svelte:fragment slot="trail">-->
+        <!--        </svelte:fragment>-->
       </AppRail>
     </div>
   {/if}
