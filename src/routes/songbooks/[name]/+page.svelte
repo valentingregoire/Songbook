@@ -3,8 +3,6 @@
   import type Songbook from "$models/songbook.model";
   import { songbooksStore } from "$stores";
   import SongList from "$lib/SongList.svelte";
-  import Icon from "$lib/Icon.svelte";
-  import { AppBar } from "@skeletonlabs/skeleton";
   import { navigate } from "$lib/utils";
 
   const name = $page.params.name;
@@ -18,16 +16,5 @@
     await navigate({ songbookName: name, songId: selectedSongId });
   }
 </script>
-
-<AppBar>
-  <svelte:fragment slot="lead">
-    <a class="w-8" href="/songbooks">
-      <Icon name="arrow-left" iconClass="" />
-    </a>
-  </svelte:fragment>
-  <h3 class="h3">{songbook.name}</h3>
-  <svelte:fragment slot="trail">
-  </svelte:fragment>
-</AppBar>
 
 <SongList songs={songbook.songs} bind:selectedSongId={selectedSongId} {clickSong} />
