@@ -6,6 +6,7 @@ export const ICON_MAP = {
   "bpm": "⏱️",
   "key": "🎼",
   "page": "📄",
+  "pages": "🗐",
   "fileType": "🖻",
   "info": "ℹ️",
   "info2": "📝",

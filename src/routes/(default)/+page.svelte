@@ -11,13 +11,12 @@
   import LoadingItem from "$lib/LoadingItem.svelte";
   import { ComponentType } from "$models/components.model";
   import { goto } from "$app/navigation";
-  import Icon from "$lib/Icon.svelte";
-  import { fade } from "svelte/transition";
 
   let songMap: SongMap;
   let totalLoaded = 0;
   let totalToLoad = 1;
   let totalProgress = 0;
+  let transitionsDone: boolean = false;
 
   // [component, [loaded, toLoad]]
   const loadingItems = {
@@ -32,7 +31,7 @@
   }));
 
   const progress = tweened(0, {
-    duration: 100,
+    duration: 550,
     easing: cubicOut
   });
 
@@ -45,17 +44,19 @@
         return +acc + cur[1];
       }, 0);
       totalProgress = totalLoaded / totalToLoad * 100;
-      await progress.set(totalProgress);
-      // if (totalProgress === 100 && loadingItems[ComponentType.Pages][1] > 0) {
-      //   await tick();
-      //   await goto("/home");
-      // }
+      if (totalProgress === 100) {
+        await tick();
+        await progress.set(100);
+        await goto("/songbooks");
+      }
     })();
   }
 
   async function songPageLoaded() {
     await tick();
     loadingItems[ComponentType.Pages][0]++;
+    totalProgress = totalLoaded / totalToLoad * 100;
+    await progress.set(totalProgress);
   }
 
   onMount(async () => {
@@ -97,7 +98,7 @@
   {/if}
 </svelte:head>
 
-<div class="flex w-screen h-screen justify-center" transition:fly|global={{y: 200, duration: 250}} on:transitionend={goto("/songbooks")}>
+<div class="flex w-screen h-screen justify-center" transition:fly={{y: 200, duration: 250}}>
   <div class="grid grid-cols-1 h-full w-[512px] justify-items-center content-center">
     <img src="icon.png" alt="logo" />
     <div class="w-full grid grid-cols-1 justify-items-center">

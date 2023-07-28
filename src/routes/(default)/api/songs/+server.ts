@@ -1,8 +1,8 @@
 import { json } from "@sveltejs/kit";
 import type Dirent from "fs";
 import fs from "fs";
-import type SongMap from "../../../models/song.model";
-import Song from "../../../models/song.model";
+import type SongMap from "$models/song.model";
+import Song from "$models/song.model";
 
 const SONGS_PATH = "static/songs/";
 

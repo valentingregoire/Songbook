@@ -1,17 +1,15 @@
 <script lang="ts">
-  import "../theme.pcss";
+  import "$src/theme.pcss";
   // import '@skeletonlabs/skeleton/themes/theme-crimson.css';
   import "@skeletonlabs/skeleton/styles/skeleton.css";
-  import "../app.css";
-  import { AppBar, AppRail, AppRailAnchor, AppRailTile } from "@skeletonlabs/skeleton";
+  import "$src/app.css";
+  import { AppBar, AppRail, AppRailAnchor } from "@skeletonlabs/skeleton";
   import Icon from "$lib/Icon.svelte";
   import { page } from "$app/stores";
   import { fly } from "svelte/transition";
   import { settingsStore } from "$stores";
   import type { Settings } from "$models/settings.model";
-  import { getContext, onMount } from "svelte";
-  import { cubicIn, quintIn } from "svelte/easing";
-  import type { LayoutModel } from "../models/layout.model";
+  import { cubicIn } from "svelte/easing";
 
   export let data;
 

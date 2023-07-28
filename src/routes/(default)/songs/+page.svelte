@@ -1,8 +1,8 @@
 <script lang="ts">
-  import type Song from "../../models/song.model";
-  import { songsStore } from "../../stores";
-  import SongList from "../../lib/SongList.svelte";
-  import { navigate } from "../../lib/utils";
+  import type Song from "$models/song.model";
+  import { songsStore } from "$stores";
+  import SongList from "$lib/SongList.svelte";
+  import { navigate } from "$lib/utils";
 
   let songs: Array<Song | string>;
   let selectedSongId: number;

@@ -2,7 +2,7 @@
   import ICON_MAP from "$lib/utils.ts";
   import type { TableSource } from "@skeletonlabs/skeleton";
   import { Table, tableMapperValues } from "@skeletonlabs/skeleton";
-  import type Song from "../models/song.model";
+  import type Song from "$models/song.model";
   // import { goto } from "$app/navigation";
 
   export let songs: Array<Song | string>;
