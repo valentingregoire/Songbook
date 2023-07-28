@@ -63,14 +63,14 @@
          out:fly={{x:-200, duration: 150, easing: cubicIn}}>
       <AppRail>
         <svelte:fragment slot="lead">
-          {#if $page.data?.back_url}
-            <AppRailAnchor href={$page.data.back_url}>
-              <svelte:fragment slot="lead">
-                <Icon name="arrow-left" />
-              </svelte:fragment>
-              <span>Back</span>
-            </AppRailAnchor>
-          {/if}
+          <!--{#if $page.data?.back_url}-->
+          <!--  <AppRailAnchor href={$page.data.back_url}>-->
+          <!--    <svelte:fragment slot="lead">-->
+          <!--      <Icon name="arrow-left" />-->
+          <!--    </svelte:fragment>-->
+          <!--    <span>Back</span>-->
+          <!--  </AppRailAnchor>-->
+          <!--{/if}-->
         </svelte:fragment>
         {#each menu as item}
           <AppRailAnchor href={item.link} selected={$page?.url?.pathname === item?.link}>

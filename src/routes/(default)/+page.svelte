@@ -16,7 +16,6 @@
   let totalLoaded = 0;
   let totalToLoad = 1;
   let totalProgress = 0;
-  let transitionsDone: boolean = false;
 
   // [component, [loaded, toLoad]]
   const loadingItems = {
@@ -31,7 +30,7 @@
   }));
 
   const progress = tweened(0, {
-    duration: 550,
+    duration: 300,
     easing: cubicOut
   });
 
