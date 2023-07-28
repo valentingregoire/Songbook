@@ -1,11 +1,8 @@
 import type { LayoutModel } from "$models/layout.model";
-import { page } from "$app/stores";
 
-export async function load() {
-  let songbookName: string = "Songbook";
-  page.subscribe(($page) => songbookName = $page.params.name);
-  const layoutData: LayoutModel = {
-    title: songbookName,
+export async function load({ params }) {
+  let layoutData: LayoutModel = {
+    title: params.name,
     back_url: "/songbooks"
   };
   return layoutData;

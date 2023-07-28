@@ -97,7 +97,7 @@
   {/if}
 </svelte:head>
 
-<div class="flex w-screen h-screen justify-center" transition:fly={{y: 200, duration: 250}} on:transitionend={goto("/songbooks")}>
+<div class="flex w-screen h-screen justify-center" transition:fly|global={{y: 200, duration: 250}} on:transitionend={goto("/songbooks")}>
   <div class="grid grid-cols-1 h-full w-[512px] justify-items-center content-center">
     <img src="icon.png" alt="logo" />
     <div class="w-full grid grid-cols-1 justify-items-center">

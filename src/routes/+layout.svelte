@@ -75,7 +75,7 @@
           {/if}
         </svelte:fragment>
         {#each menu as item}
-          <AppRailAnchor href={item.link} selected={$page.url.pathname === item.link}>
+          <AppRailAnchor href={item.link} selected={$page?.url?.pathname === item?.link}>
             <svelte:fragment slot="lead">
               <Icon name={item.icon} />
             </svelte:fragment>
