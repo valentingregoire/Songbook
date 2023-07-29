@@ -13,6 +13,7 @@
   import FaBars from "svelte-icons/fa/FaBars.svelte";
   import FaMusic from "svelte-icons/fa/FaMusic.svelte";
   import FaCog from "svelte-icons/fa/FaCog.svelte";
+  import MdImportContacts from 'svelte-icons/md/MdImportContacts.svelte'
 
 
   export let name: string;
@@ -24,7 +25,8 @@
     {#if name === "songbook"}
       <FaBook />
     {:else if name === "songbooks"}
-      <FaArchive />
+<!--      <FaArchive />-->
+      <MdImportContacts />
     {:else if name === "title"}
       <FaItunesNote />
     {:else if name === "arrow-left"}

@@ -7,6 +7,7 @@
   import { goto } from "$app/navigation";
   import { tick } from "svelte";
   import Menu from "./Menu.svelte";
+  import { Direction, Subject } from "$models/layout.model";
 
   export let songbook: Songbook;
   export let songId: number;
@@ -22,30 +23,31 @@
   async function previousPage() {
     const songIdNew = pageId == 0 ? (songId + songbookSize - 1) % songbookSize : songId;
     const pageIdNew = pageId == 0 ? songbook?.songs[songIdNew].pages?.length - 1 || 0 : pageId - 1;
-    await navigate(songIdNew, pageIdNew);
+    await navigate(songIdNew, pageIdNew, Subject.Page, Direction.Previous);
   }
 
   async function nextPage(): Promise<void> {
     const songIdNew = pageId == pages - 1 ? (songId + 1) % songbookSize : songId;
     const pageIdNew = pageId == pages - 1 ? 0 : pageId + 1;
-    await navigate(songIdNew, pageIdNew);
+    await navigate(songIdNew, pageIdNew, Subject.Page, Direction.Next);
   }
 
   async function previousSong(): Promise<void> {
-    // const songIdNew = songId === 0 ? songbookSize - 1 : songId - 1;
     const songIdNew = (songId + songbookSize - 1) % +songbookSize;
-    await navigate(songIdNew);
+    await navigate(songIdNew, 0, Subject.Song, Direction.Previous);
   }
 
   async function nextSong(): Promise<void> {
     const songIdNew = (songId + 1) % +songbookSize;
-    await navigate(songIdNew);
+    await navigate(songIdNew, 0, Subject.Song, Direction.Next);
   }
 
-  async function navigate(songId: number, pageId: number = 0): Promise<void> {
-    // $page.url.searchParams.set("pageId", String(pageId));
+  async function navigate(songId: number, pageId: number, subject: Subject, direction: Direction): Promise<void> {
     await tick();
-    await goto(`/songbooks/${songbook?.name}/songs/${songId}?pageId=${pageId}`, { replaceState: true });
+    await goto(
+      `/songbooks/${songbook?.name}/songs/${songId}?pageId=${pageId}&subject=${subject}&direction=${direction}`,
+      { replaceState: true }
+    );
   }
 
 </script>

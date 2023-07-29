@@ -43,7 +43,6 @@ export default class Song {
   }
 
   setPropertyByName(propertyName: string, value: any) {
-    console.log("setting property by name", propertyName, value);
     this[propertyName] = value;
   }
 }

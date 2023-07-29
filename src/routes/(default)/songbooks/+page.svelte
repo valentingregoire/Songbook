@@ -15,7 +15,7 @@
         <ul>
           {#each songbooks as songbook}
             <li>
-              <a class="h3" href="/songbooks/{songbook.name}">
+              <a class="h3" href="/songbooks/{songbook.name}/songs/0?pageId=0">
                 <Icon name="songbook">{songbook.name}</Icon>
               </a>
             </li>

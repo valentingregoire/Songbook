@@ -32,63 +32,55 @@
   ];
 
   let settings: Settings;
+  let showRail: boolean;
 
-  $: if ($page.url.pathname !== "/")
+  $: if ($page.url.pathname !== "/") {
     settingsStore.subscribe(value => settings = value);
-
-  // onMount(() => {
-  //   settingsStore.subscribe(value => settings = value);
-  // });
-  // let settings;
-  // settingsStore.subscribe(value => settings = value);
-
-  let showRail = settings?.menu?.showMenu;
-  // let showRail: boolean = false;
+    showRail = settings?.menu?.show;
+  }
 </script>
 
-{#if $page.url.pathname !== "/"}
-  <AppBar>
-    <svelte:fragment slot="lead">
-      <button type="button" class="btn-icon" on:click={() => showRail = !showRail}>
-        <Icon name="menu" />
-      </button>
-    </svelte:fragment>
-    <h3 class="h3">{$page.data?.title}</h3>
-    <svelte:fragment slot="trail">
-    </svelte:fragment>
-  </AppBar>
+<AppBar>
+  <svelte:fragment slot="lead">
+    <button type="button" class="btn-icon" on:click={() => showRail = !showRail}>
+      <Icon name="menu" />
+    </button>
+  </svelte:fragment>
+  <h3 class="h3">{$page.data?.title}</h3>
+  <svelte:fragment slot="trail">
+  </svelte:fragment>
+</AppBar>
 
-  {#if showRail}
-    <div class="flex absolute h-full" in:fly={{x: -200, duration: 150}}
-         out:fly={{x:-200, duration: 150, easing: cubicIn}}>
-      <AppRail>
-        <svelte:fragment slot="lead">
-          {#if $page.data?.back_url}
-            <AppRailAnchor href={$page.data.back_url}>
-              <svelte:fragment slot="lead">
-                <Icon name="arrow-left" />
-              </svelte:fragment>
-              <span>Back</span>
-            </AppRailAnchor>
-          {/if}
-        </svelte:fragment>
-        {#each menu as item}
-          <AppRailAnchor href={item?.link} selected={$page?.url?.pathname === item?.link}>
+{#if showRail}
+  <div class="flex absolute h-full z-50" in:fly={{x: -200, duration: 150}}
+       out:fly={{x:-200, duration: 150, easing: cubicIn}}>
+    <AppRail>
+      <svelte:fragment slot="lead">
+        {#if $page.data?.back_url}
+          <AppRailAnchor href={$page.data.back_url}>
             <svelte:fragment slot="lead">
-              <Icon name={item.icon} />
+              <Icon name="arrow-left" />
             </svelte:fragment>
-            <span>{item.name}</span>
+            <span>Back</span>
           </AppRailAnchor>
-        {/each}
-        <!--        <svelte:fragment slot="trail">-->
-        <!--        </svelte:fragment>-->
-      </AppRail>
-    </div>
-  {/if}
+        {/if}
+      </svelte:fragment>
+      {#each menu as item}
+        <AppRailAnchor href={item?.link} selected={$page?.url?.pathname === item?.link}>
+          <svelte:fragment slot="lead">
+            <Icon name={item.icon} />
+          </svelte:fragment>
+          <span>{item.name}</span>
+        </AppRailAnchor>
+      {/each}
+      <!--        <svelte:fragment slot="trail">-->
+      <!--        </svelte:fragment>-->
+    </AppRail>
+  </div>
 {/if}
 
 <main>
-  <div class="h-screen w-full select-none overflow-clip">
+  <div class="h-screen w-full select-none overflow-clip" in:fly={{y: -500, duration: 200}} out:fly={{y: 500, duration: 200}}>
     <slot />
   </div>
 </main>

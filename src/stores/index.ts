@@ -31,7 +31,5 @@ export const settingsStore = derived(settingsMapStore, $settingsMap => {
       ...$settingsMap[SettingsType.User].menu
     }
   };
-  return {
-    viewer: viewer_settings
-  };
+  return viewer_settings;
 });

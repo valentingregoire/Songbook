@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type Songbook from "../models/songbook.model";
+  import type Songbook from "$models/songbook.model";
   import ICON_MAP from "$lib/utils.ts";
 
   export let songbook: Songbook;

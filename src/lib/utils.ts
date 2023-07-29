@@ -2,6 +2,7 @@ import { goto } from "$app/navigation";
 
 export const ICON_MAP = {
   "title": "🎵",
+  "song": "🎵",
   "artist": "👨‍",
   "bpm": "⏱️",
   "key": "🎼",
