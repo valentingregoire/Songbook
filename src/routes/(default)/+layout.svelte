@@ -1,6 +1,5 @@
 <script lang="ts">
   import "$src/theme.pcss";
-  // import '@skeletonlabs/skeleton/themes/theme-crimson.css';
   import "@skeletonlabs/skeleton/styles/skeleton.css";
   import "$src/app.css";
   import { AppBar, AppRail, AppRailAnchor } from "@skeletonlabs/skeleton";
@@ -32,18 +31,18 @@
   ];
 
   let settings: Settings;
-  let showRail: boolean;
+  let showSideBar: boolean;
+  let showSideBarOriginal: boolean;
 
-  $: if ($page.url.pathname !== "/") {
-    settingsStore.subscribe(value => settings = value);
-    showRail = settings?.menu?.show;
-  }
+  settingsStore.subscribe(value => settings = value);
+  showSideBar = settings?.layout?.showSideBar;
+  showSideBarOriginal = settings?.layout?.showSideBar;
 </script>
 
-<div in:fly={{y: -500, duration: 200}} out:fly={{y: 500, duration: 200}}>
+<div class="h-screen w-screen relative">
   <AppBar>
     <svelte:fragment slot="lead">
-      <button type="button" class="btn-icon" on:click={() => showRail = !showRail}>
+      <button type="button" class="btn-icon" on:click={() => showSideBar = !showSideBar}>
         <Icon name="menu" />
       </button>
     </svelte:fragment>
@@ -52,10 +51,10 @@
     </svelte:fragment>
   </AppBar>
 
-  {#if showRail}
+  {#if showSideBar}
     <div class="flex absolute h-full z-50"
-         in:fly={{x: -200, duration: 150}}
-         out:fly={{x:-200, duration: 150, easing: cubicIn}}>
+         in:fly={{x: -200, duration: settings?.layout?.animationSpeed}}
+         out:fly={{x:-200, duration: settings?.layout?.animationSpeed, easing: cubicIn}}>
       <AppRail>
         <svelte:fragment slot="lead">
           {#if $page.data?.back_url}
@@ -81,9 +80,16 @@
     </div>
   {/if}
 
-  <main>
-    <div class="h-screen w-full select-none overflow-clip">
-      <slot />
-    </div>
+  <!--  <div class="w-full h-full">-->
+  <main class="">
+    {#key $page.url.pathname}
+      <div
+        class="h-full select-none overflow-clip"
+        in:fly={{y: 500, duration: settings?.layout?.animationSpeed}}
+      >
+        <slot />
+      </div>
+    {/key}
   </main>
+  <!--  </div>-->
 </div>

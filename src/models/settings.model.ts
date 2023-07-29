@@ -1,11 +1,12 @@
 export class Settings {
-  viewer?: {
+  layout: {
+    showSideBar?: boolean;
+    animationSpeed?: number;
+  } = {};
+  viewer: {
     sideButtonWidth?: string;
     bottomButtonHeight?: string;
     showButtons?: boolean;
-  } = {};
-  menu?: {
-    showMenu?: boolean;
   } = {};
 }
 

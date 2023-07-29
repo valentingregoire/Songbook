@@ -13,9 +13,9 @@
   import { goto } from "$app/navigation";
 
   let songMap: SongMap;
-  let totalLoaded = 0;
-  let totalToLoad = 1;
-  let totalProgress = 0;
+  let totalLoaded: number = 0;
+  let totalToLoad: number = 1;
+  let totalProgress: number = 0;
 
   // [component, [loaded, toLoad]]
   const loadingItems = {
@@ -59,6 +59,13 @@
   }
 
   onMount(async () => {
+    loadingItems[ComponentType.Settings] = [0, 1];
+    get("api/settings").then(settings => {
+        settingsMapStore.set(settings);
+        loadingItems[ComponentType.Settings] = [1, 1];
+      }
+    );
+
     loadingItems[ComponentType.Songs] = [0, 2];
     await get("api/songs").then(songs => {
       loadingItems[ComponentType.Songs] = [1, 2];
@@ -76,13 +83,6 @@
       songbooksStore.set(songbooks);
       loadingItems[ComponentType.Songbooks] = [2, 2];
     });
-
-    loadingItems[ComponentType.Settings] = [0, 1];
-    get("api/settings").then(settings => {
-        settingsMapStore.set(settings);
-        loadingItems[ComponentType.Settings] = [1, 1];
-      }
-    );
   });
 </script>
 

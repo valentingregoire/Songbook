@@ -21,15 +21,16 @@ export const currentSongStore = derived(
 
 export const settingsMapStore = writable<SettingsMap>();
 export const settingsStore = derived(settingsMapStore, $settingsMap => {
-  const viewer_settings: Settings = {
+  if (!$settingsMap) return;
+  const settings: Settings = {
+    layout: {
+      ...$settingsMap[SettingsType.Default].layout,
+      ...$settingsMap[SettingsType.User].layout
+    },
     viewer: {
       ...$settingsMap[SettingsType.Default].viewer,
       ...$settingsMap[SettingsType.User].viewer
-    },
-    menu: {
-      ...$settingsMap[SettingsType.Default].menu,
-      ...$settingsMap[SettingsType.User].menu
     }
   };
-  return viewer_settings;
+  return settings;
 });
