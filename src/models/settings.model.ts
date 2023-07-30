@@ -1,8 +1,12 @@
 export class Settings {
   layout: {
-    showSideBar?: boolean;
+    sideBar: {
+      show?: boolean;
+      labels?: boolean;
+      width?: string;
+    }
     animationSpeed?: number;
-  } = {};
+  } = {sideBar: {}};
   viewer: {
     sideButtonWidth?: string;
     bottomButtonHeight?: string;

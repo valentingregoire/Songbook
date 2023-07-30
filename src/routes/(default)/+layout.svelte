@@ -10,8 +10,7 @@
   import type { Settings } from "$models/settings.model";
   import { cubicIn } from "svelte/easing";
 
-  export let data;
-
+  const iconSize: string = "h-[22px]";
   const menu = [
     {
       name: "Songbooks",
@@ -32,18 +31,19 @@
 
   let settings: Settings;
   let showSideBar: boolean;
-  let showSideBarOriginal: boolean;
+  let showSideBarInitial: boolean;
 
   settingsStore.subscribe(value => settings = value);
-  showSideBar = settings?.layout?.showSideBar;
-  showSideBarOriginal = settings?.layout?.showSideBar;
+  showSideBarInitial = settings?.layout?.showSideBar;
+  $: $page.url.path, showSideBar = showSideBarInitial;
 </script>
 
+{JSON.stringify(settings)}
 <div class="h-screen w-screen relative">
   <AppBar>
     <svelte:fragment slot="lead">
       <button type="button" class="btn-icon" on:click={() => showSideBar = !showSideBar}>
-        <Icon name="menu" />
+        <Icon name="menu" size={iconSize} />
       </button>
     </svelte:fragment>
     <h3 class="h3">{$page.data?.title}</h3>
@@ -51,34 +51,40 @@
     </svelte:fragment>
   </AppBar>
 
-  {#if showSideBar}
-    <div class="flex absolute h-full z-50"
-         in:fly={{x: -200, duration: settings?.layout?.animationSpeed}}
-         out:fly={{x:-200, duration: settings?.layout?.animationSpeed, easing: cubicIn}}>
-      <AppRail>
-        <svelte:fragment slot="lead">
-          {#if $page.data?.back_url}
-            <AppRailAnchor href={$page.data.back_url}>
+  {#key $page.url.pathname}
+    {#if showSideBar}
+      <div class="flex absolute h-full z-50"
+           in:fly={{x: -200, duration: settings?.layout?.animationSpeed}}
+           out:fly={{x:-200, duration: settings?.layout?.animationSpeed, easing: cubicIn}}>
+        <AppRail>
+          <svelte:fragment slot="lead">
+            {#if $page.data?.back_url}
+              <AppRailAnchor href={$page.data.back_url}>
+                <svelte:fragment slot="lead">
+                  <Icon name="arrow-left" size={iconSize} />
+                </svelte:fragment>
+                {#if settings?.layout.sideBar.labels}
+                  <span>Back</span>
+                {/if}
+              </AppRailAnchor>
+            {/if}
+          </svelte:fragment>
+          {#each menu as item}
+            <AppRailAnchor href={item?.link} selected={$page?.url?.pathname === item?.link}>
               <svelte:fragment slot="lead">
-                <Icon name="arrow-left" />
+                <Icon name={item.icon} size="h-[36px]" />
               </svelte:fragment>
-              <span>Back</span>
+              {#if settings?.layout.sideBar.labels}
+                <span>{item.name}</span>
+              {/if}
             </AppRailAnchor>
-          {/if}
-        </svelte:fragment>
-        {#each menu as item}
-          <AppRailAnchor href={item?.link} selected={$page?.url?.pathname === item?.link}>
-            <svelte:fragment slot="lead">
-              <Icon name={item.icon} />
-            </svelte:fragment>
-            <span>{item.name}</span>
-          </AppRailAnchor>
-        {/each}
-        <!--        <svelte:fragment slot="trail">-->
-        <!--        </svelte:fragment>-->
-      </AppRail>
-    </div>
-  {/if}
+          {/each}
+          <!--        <svelte:fragment slot="trail">-->
+          <!--        </svelte:fragment>-->
+        </AppRail>
+      </div>
+    {/if}
+  {/key}
 
   <!--  <div class="w-full h-full">-->
   <main class="">

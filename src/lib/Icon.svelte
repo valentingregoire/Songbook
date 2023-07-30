@@ -13,48 +13,68 @@
   import FaBars from "svelte-icons/fa/FaBars.svelte";
   import FaMusic from "svelte-icons/fa/FaMusic.svelte";
   import FaCog from "svelte-icons/fa/FaCog.svelte";
-  import MdImportContacts from 'svelte-icons/md/MdImportContacts.svelte'
+  import MdImportContacts from "svelte-icons/md/MdImportContacts.svelte";
+  import MdCheckBox from "svelte-icons/md/MdCheckBox.svelte";
+  import MdCheckBoxOutlineBlank from "svelte-icons/md/MdCheckBoxOutlineBlank.svelte";
+  import FaCheck from "svelte-icons/fa/FaCheck.svelte";
+  import FaTimes from "svelte-icons/fa/FaTimes.svelte";
+  import FaHashtag from "svelte-icons/fa/FaHashtag.svelte";
 
 
   export let name: string;
-  export let iconClass: string = "content-left h-[1.5rem]";
+  export let size: string = "h-[16px]"
+  export let success: boolean = false;
+  export let error: boolean = false;
+  export let iconClass: string = "content-left float-left items-center";
 </script>
 
 {#if name}
-  <div class={iconClass}>
-    {#if name === "songbook"}
-      <FaBook />
-    {:else if name === "songbooks"}
-<!--      <FaArchive />-->
-      <MdImportContacts />
-    {:else if name === "title"}
-      <FaItunesNote />
-    {:else if name === "arrow-left"}
-      <IoMdArrowRoundBack />
-      <!--    <FaArrowLeft />-->
-    {:else if name === "save"}
-      <FaSave />
-    {:else if name === "page"}
-      <FaFileAlt />
-    {:else if name === "close"}
-      <MdClose />
-    {:else if name === "cancel"}
-      <MdCancel />
-    {:else if name === "check-circle"}
-      <FaCheckCircle />
-    {:else if name === "menu"}
-      <FaBars />
-    {:else if name === "songs" || name === "song"}
-      <FaMusic />
-    {:else if name === "settings"}
-      <FaCog />
-    {:else}
-      {name}
+  <div
+    class="flex content-start items-center"
+    class:text-success-700={success}
+    class:text-error-600={error}
+  >
+    <div class="{iconClass} {size}">
+      {#if name === "songbook"}
+        <FaBook />
+      {:else if name === "songbooks"}
+        <!--      <FaArchive />-->
+        <MdImportContacts />
+      {:else if name === "title"}
+        <FaItunesNote />
+      {:else if name === "arrow-left"}
+        <IoMdArrowRoundBack />
+        <!--    <FaArrowLeft />-->
+      {:else if name === "save"}
+        <FaSave />
+      {:else if name === "page"}
+        <FaFileAlt />
+      {:else if name === "close"}
+        <MdClose />
+      {:else if name === "cancel"}
+        <MdCancel />
+      {:else if name === "check-circle"}
+        <FaCheckCircle />
+      {:else if name === "check"}
+        <FaCheck />
+      {:else if name === "clear"}
+        <FaTimes />
+      {:else if name === "menu"}
+        <FaBars />
+      {:else if name === "songs" || name === "song"}
+        <FaMusic />
+      {:else if name === "settings"}
+        <FaCog />
+      {:else if name === "hash"}
+        <FaHashtag />
+      {:else}
+        {name}
+      {/if}
+    </div>
+    {#if $$slots.default}
+      <span class="badge-text pl-2">
+        <slot />
+      </span>
     {/if}
   </div>
-  {#if $$slots.default}
-    <span class="badge-text">
-      <slot />
-    </span>
-  {/if}
 {/if}
