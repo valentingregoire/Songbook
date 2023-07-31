@@ -19,6 +19,8 @@
   import FaCheck from "svelte-icons/fa/FaCheck.svelte";
   import FaTimes from "svelte-icons/fa/FaTimes.svelte";
   import FaHashtag from "svelte-icons/fa/FaHashtag.svelte";
+  import FaPencilAlt from 'svelte-icons/fa/FaPencilAlt.svelte'
+  import MdGroup from 'svelte-icons/md/MdGroup.svelte'
 
 
   export let name: string;
@@ -42,6 +44,8 @@
         <MdImportContacts />
       {:else if name === "title"}
         <FaItunesNote />
+      {:else if name === "artist"}
+        <MdGroup />
       {:else if name === "arrow-left"}
         <IoMdArrowRoundBack />
         <!--    <FaArrowLeft />-->
@@ -67,6 +71,8 @@
         <FaCog />
       {:else if name === "hash"}
         <FaHashtag />
+      {:else if name === "edit"}
+        <FaPencilAlt />
       {:else}
         {name}
       {/if}

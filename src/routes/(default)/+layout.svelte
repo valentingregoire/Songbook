@@ -38,7 +38,6 @@
   $: $page.url.path, showSideBar = showSideBarInitial;
 </script>
 
-{JSON.stringify(settings)}
 <div class="h-screen w-screen relative">
   <AppBar>
     <svelte:fragment slot="lead">

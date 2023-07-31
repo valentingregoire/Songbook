@@ -20,6 +20,11 @@
           <!--          </Icon>-->
           {#if songbook.default}
             <span class="badge variant-ghost-success text-success-700">Default</span>
+            {:else}
+            <label class="flex space-x-2" on:click|stopPropagation={() => console.log("hallo")} >
+              <input type="checkbox" class="checkbox input-primary" />
+              <span>Default</span>
+            </label>
           {/if}
         </header>
         <hr class="opacity-50" />
@@ -33,21 +38,29 @@
                   {songbook.songs.length} songs
                 </svelte:fragment>
                 <svelte:fragment slot="content">
-                  {#each songbook.songs as song, index}
-                    <div>
-                      <a href="/songbooks/{songbook.name}/songs/{index}?pageId=0">
-                        <Icon name="song">{index + 1} {song.title}</Icon>
-                      </a>
-                    </div>
-                  {/each}
+                  <ol class="list">
+                    {#each songbook.songs as song, index}
+                      <li>
+                        <a class="btn btn-sm btn-hover" href="/songbooks/{songbook.name}/songs/{index}?pageId=0"
+                           on:click|preventDefault={goto(`/songbooks/${songbook.name}/songs/${index}?pageId=0`)}>
+                          <!--                        <Icon name="song">{index + 1} {song.title}</Icon>-->
+                          <span>{index + 1}</span>
+                          <span>{song.title}</span>
+                        </a>
+                      </li>
+                    {/each}
+                  </ol>
                 </svelte:fragment>
               </AccordionItem>
             </Accordion>
           </div>
         </section>
         <hr class="opacity-50" />
-        <footer class="card-footer p-5">
-          Some actions here
+        <footer class="card-footer p-5 flex justify-end">
+          <button type="button" class="btn btn-sm variant-filled-secondary"
+                  on:click|preventDefault={goto(`/songbooks/${songbook.name}`)}>
+            <Icon name="edit">Edit</Icon>
+          </button>
         </footer>
       </a>
     {/each}
