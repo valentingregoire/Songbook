@@ -27,31 +27,33 @@
   {#each songbook.songs as song, index}
     <div class="flex-grow flex flex-col card w-1/6 drop-shadow-md m-2">
       <header class="p-3 space-x-2">
-        <div class="inline-flex w-8 items-center justify-center aspect-square variant-filled-surface rounded-full">
+        <div class="inline-flex w-8 items-center justify-center aspect-square variant-soft rounded-full">
           <h5 class="h5">{index + 1}</h5>
         </div>
-        <h4 class="h4 inline-block whitespace-nowrap">{song.title}</h4>
+        <h3 class="h3 inline-block whitespace-nowrap">{song.title}</h3>
       </header>
       <!--      <hr class="opacity-50" />-->
-      <section class="flex-grow px-6 py-3">
+      <section class="flex-grow px-6 py-3 text-surface-700">
         {#if song.artist}
           <Icon name="artist">{song.artist}</Icon>
         {/if}
         {#if song.pages}
           <Accordion
-            class="w-full"
             duration={settings.layout.animationSpeed}
-            padding="pr-2"
+            padding="p-1"
             regionPanel="space-y-1"
+            rounded="rounded-full"
           >
-            <AccordionItem>
+            <AccordionItem class="-mx-1">
               <svelte:fragment slot="lead">
                 <Icon name="page" />
               </svelte:fragment>
-              <svelte:fragment slot="summary">{song.pages.length}</svelte:fragment>
+              <svelte:fragment slot="summary">
+                <span class="-mx-1">{song.pages.length}</span>
+              </svelte:fragment>
               <svelte:fragment slot="content">
                 {#each song.pages as page}
-                  <div class="pl-5">{page}</div>
+                  <div class="pl-5 m-0">{page}</div>
                 {/each}
               </svelte:fragment>
             </AccordionItem>
@@ -72,7 +74,7 @@
       </section>
       <!--      <hr class="opacity-50" />-->
       <footer class="flex card-footer justify-end">
-        <button class="btn btn-sm variant-filled-primary">
+        <button class="btn btn-sm variant-soft">
           <Icon name="edit">Edit</Icon>
         </button>
       </footer>
