@@ -25,10 +25,10 @@
 
 <div class="flex flex-wrap">
   {#each songbook.songs as song, index}
-    <div class="flex-grow flex flex-col card w-1/6 drop-shadow-md m-2">
+    <div class="flex-grow flex flex-col card bg-surface-50 w-1/6 drop-shadow-md m-2">
       <header class="p-3 space-x-2">
         <div class="inline-flex w-8 items-center justify-center aspect-square variant-soft rounded-full">
-          <h5 class="h5">{index + 1}</h5>
+          <h5 class="h5 font-bold">{index + 1}</h5>
         </div>
         <h3 class="h3 inline-block whitespace-nowrap">{song.title}</h3>
       </header>

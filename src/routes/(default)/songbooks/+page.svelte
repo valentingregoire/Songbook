@@ -10,22 +10,25 @@
 </script>
 
 
-<div class="flex relative justify-center content-center">
+<div class="flex flex-wrap relative justify-center content-center">
   {#if songbooks}
     {#each songbooks as songbook}
-      <a class="card w-1/5 h-fit m-5 drop-shadow-md" href="/songbooks/{songbook.name}/songs/0?pageId=0">
-        <header class="card-header flex justify-between p-5">
+      <a class="card w-full md:w-1/4 lg:w-1/6 min-w-fit grow h-fit m-5 drop-shadow-md"
+         href="/songbooks/{songbook.name}/songs/0?pageId=0">
+        <header class="card-header flex flex-nowrap justify-between p-5">
           <!--          <Icon name="songbook">-->
-          <h4 class="h4">{songbook.name}</h4>
+          <h4 class="h4 whitespace-nowrap">{songbook.name}</h4>
           <!--          </Icon>-->
-          {#if songbook.default}
-            <span class="badge variant-ghost-success text-success-700">Default</span>
+          <div class="ml-2">
+            {#if songbook.default}
+              <span class="badge variant-ghost-success text-success-700">Default</span>
             {:else}
-            <label class="flex space-x-2" on:click|stopPropagation={() => console.log("hallo")} >
-              <input type="checkbox" class="checkbox input-primary" />
-              <span>Default</span>
-            </label>
-          {/if}
+              <label class="flex space-x-2" on:click|stopPropagation={() => console.log("hallo")}>
+                <input type="checkbox" class="checkbox input-primary" />
+                <span>Default</span>
+              </label>
+            {/if}
+          </div>
         </header>
         <hr class="opacity-50" />
         <section class="p-5 flex-col">
