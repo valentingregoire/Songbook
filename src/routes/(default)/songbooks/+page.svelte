@@ -10,10 +10,10 @@
 </script>
 
 
-<div class="flex flex-wrap relative justify-center content-center">
+<div class="flex flex-wrap relative justify-center content-center p-2 gap-5">
   {#if songbooks}
     {#each songbooks as songbook}
-      <a class="card w-full md:w-1/4 lg:w-1/6 min-w-fit grow h-fit m-5 drop-shadow-md"
+      <a class="card w-full md:w-1/4 lg:w-1/6 min-w-fit grow h-fit drop-shadow-md"
          href="/songbooks/{songbook.name}/songs/0?pageId=0">
         <header class="card-header flex flex-nowrap justify-between p-5">
           <!--          <Icon name="songbook">-->

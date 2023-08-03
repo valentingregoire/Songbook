@@ -12,12 +12,12 @@ export async function GET() {
     .readdirSync(SONGS_PATH, { withFileTypes: true })
     .filter(item => item.isDirectory())
     .map(item => item.name);
-  songNames.forEach((songName: string) => {
+  songNames.forEach((songName: string, index: number) => {
     let files: Dirent[] = fs
       .readdirSync(`${SONGS_PATH}/${songName}`, { withFileTypes: true })
       .filter(item => !item.isDirectory() && !item.name.endsWith(".json"));
     const fileType: string = files.length > 0 ? files[0].name.split(".")[1] : "svg";
-    let song: Song = new Song(songName, fileType);
+    let song: Song = new Song(index, songName, fileType);
     if (fs.existsSync(`${SONGS_PATH}/${songName}/_info.json`)) {
       const songData = JSON.parse(
         fs.readFileSync(`${SONGS_PATH}/${songName}/_info.json`).toString()

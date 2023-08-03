@@ -6,6 +6,9 @@
   import Icon from "$lib/Icon.svelte";
   import { Accordion, AccordionItem } from "@skeletonlabs/skeleton";
   import type { Settings } from "$models/settings.model";
+  import { dndzone } from "svelte-dnd-action";
+  import { flip } from "svelte/animate";
+  import type Song from "$models/song.model";
 
   const name = $page.params.name;
   let settings: Settings;
@@ -16,16 +19,35 @@
 
   let selectedSongId: number;
 
-  async function clickSong(): Promise<void> {
-    await navigate({ songbookName: name, songId: selectedSongId });
+  function clickSong(id: number) {
+    navigate(`/songbooks/${name}/songs/${id}`);
+  }
+
+  function handleConsider(event: CustomEvent<DndEvent<Song>>) {
+    songbook.songs = event.detail.items;
+  }
+
+  function handleFinalize(event: CustomEvent<DndEvent<Song>>) {
+    songbook.songs = event.detail.items;
   }
 </script>
 
 <!--<SongList songs={songbook.songs} bind:selectedSongId={selectedSongId} {clickSong} />-->
 
-<div class="flex flex-wrap">
-  {#each songbook.songs as song, index}
-    <div class="flex-grow flex flex-col card bg-surface-50 w-1/6 drop-shadow-md m-2">
+<section
+  class="flex flex-wrap p-2 gap-5"
+  use:dndzone={{items: songbook.songs, flipDurationMs: settings.layout.animationSpeed}}
+  on:consider={handleConsider}
+  on:finalize={handleFinalize}
+>
+  {#each songbook.songs as song, index (song.id)}
+<!--    bg-surface-50-->
+    <a
+      href="/songbooks/{name}/songs/{index}"
+      class="flex flex-col card w-full md:w-1/4 lg:w-1/6 min-w-fit grow w-1/6 drop-shadow-md"
+      animate:flip={{duration: settings.layout.animationSpeed}}
+      on:click|stopPropagation
+    >
       <header class="p-3 space-x-2">
         <div class="inline-flex w-8 items-center justify-center aspect-square variant-soft rounded-full">
           <h5 class="h5 font-bold">{index + 1}</h5>
@@ -33,7 +55,7 @@
         <h3 class="h3 inline-block whitespace-nowrap">{song.title}</h3>
       </header>
       <!--      <hr class="opacity-50" />-->
-      <section class="flex-grow px-6 py-3 text-surface-700">
+      <section class="flex-grow px-6 py-3 text-surface-700" on:click|preventDefault>
         {#if song.artist}
           <Icon name="artist">{song.artist}</Icon>
         {/if}
@@ -73,11 +95,11 @@
         {/if}
       </section>
       <!--      <hr class="opacity-50" />-->
-      <footer class="flex card-footer justify-end">
+      <footer class="self-end flex card-footer justify-end">
         <button class="btn btn-sm variant-soft">
           <Icon name="edit">Edit</Icon>
         </button>
       </footer>
-    </div>
+    </a>
   {/each}
-</div>
+</section>

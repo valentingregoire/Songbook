@@ -22,6 +22,7 @@
   import MdTimer from "svelte-icons/md/MdTimer.svelte";
   import FaFileImage from "svelte-icons/fa/FaFileImage.svelte";
   import FaInfoCircle from "svelte-icons/fa/FaInfoCircle.svelte";
+  import FaChevronLeft from "svelte-icons/fa/FaChevronLeft.svelte";
 
 
   export let name: string;
@@ -57,6 +58,8 @@
         <FaFileImage />
       {:else if name === "info"}
         <FaInfoCircle />
+      {:else if name === "left"}
+        <FaChevronLeft />
       {:else if name === "arrow-left"}
         <IoMdArrowRoundBack />
         <!--    <FaArrowLeft />-->

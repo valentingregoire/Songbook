@@ -5,12 +5,14 @@
   import { AppBar, AppRail, AppRailAnchor } from "@skeletonlabs/skeleton";
   import Icon from "$lib/Icon.svelte";
   import { page } from "$app/stores";
-  import { fly } from "svelte/transition";
+  import { fade, fly } from "svelte/transition";
   import { settingsStore } from "$stores";
   import type { Settings } from "$models/settings.model";
-  import { cubicIn } from "svelte/easing";
+  import { cubicIn, cubicOut } from "svelte/easing";
 
-  const iconSize: string = "h-[22px]";
+  // const iconSize: string = "h-[22px]";
+  // const iconSize: string = "h-[36px]";
+  const iconSize: string = "h-9";
   const menu = [
     {
       name: "Songbooks",
@@ -41,8 +43,16 @@
 <div class="h-screen w-screen relative">
   <AppBar>
     <svelte:fragment slot="lead">
-      <button type="button" class="btn-icon" on:click={() => showSideBar = !showSideBar}>
-        <Icon name="menu" size={iconSize} />
+      <button type="button" class="btn-icon relative" on:click={() => showSideBar = !showSideBar}>
+        {#if showSideBar}
+          <span class="absolute" transition:fly={{x: -20, duration: settings.layout.animationSpeed, easing: cubicIn}}>
+            <Icon name="left" size="h-6" />
+          </span>
+        {:else}
+          <span class="absolute" transition:fly={{x: 20, duration: settings.layout.animationSpeed, easing: cubicIn}}>
+            <Icon name="menu" size="h-6" />
+          </span>
+        {/if}
       </button>
     </svelte:fragment>
     <h3 class="h3">{$page.data?.title}</h3>
@@ -53,7 +63,7 @@
   {#key $page.url.pathname}
     {#if showSideBar}
       <div class="flex absolute h-full z-50"
-           in:fly={{x: -200, duration: settings?.layout?.animationSpeed}}
+           in:fly={{x: -200, duration: settings?.layout?.animationSpeed, easing: cubicOut}}
            out:fly={{x:-200, duration: settings?.layout?.animationSpeed, easing: cubicIn}}>
         <AppRail>
           <svelte:fragment slot="lead">
@@ -71,7 +81,7 @@
           {#each menu as item}
             <AppRailAnchor href={item?.link} selected={$page?.url?.pathname === item?.link}>
               <svelte:fragment slot="lead">
-                <Icon name={item.icon} size="h-[36px]" />
+                <Icon name={item.icon} size={iconSize} />
               </svelte:fragment>
               {#if settings?.layout.sideBar.labels}
                 <span>{item.name}</span>

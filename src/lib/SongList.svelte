@@ -60,14 +60,14 @@
 
   const source: TableSource = {
     head: columnHeaders,
-    body: tableMapperValues(songs?.map((song, songIndex) => {
+    body: tableMapperValues(songs?.map(song => {
       // if (song instanceof String)
       //   return { title: song , number: index + 1 };
-      song.number = songIndex + 1;
+      song.number = song.id + 1;
       // song.title = song.title.replace("'", "’");
       song.pages?.forEach((page, pageIndex) => {
         // page = page.replace("'", "’");
-        page = `<a href="/songs/${songIndex}?pageId=${pageIndex}">${page}</a>`;
+        page = `<a href="/songs/${song.id}?pageId=${pageIndex}">${page}</a>`;
         song.pages[pageIndex] = page;
       });
       return song;

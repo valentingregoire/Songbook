@@ -3,6 +3,7 @@ export type SongMap = {
 }
 
 export default class Song {
+  id: number;
   title: string;
   fileType?: string;
   pages?: string[];
@@ -12,6 +13,7 @@ export default class Song {
   info?: string;
 
   constructor(
+    id: number,
     title: string,
     fileType?: string,
     pages?: string[],
@@ -20,6 +22,7 @@ export default class Song {
     key?: string,
     info?: string
   ) {
+    this.id = id;
     this.title = title;
     this.fileType = fileType;
     this.pages = pages;
@@ -30,16 +33,7 @@ export default class Song {
   }
 
   equals(song: Song): boolean {
-    return (
-      song &&
-      this.title === song.title &&
-      this.fileType === song.fileType &&
-      this.pages === song.pages &&
-      this.artist === song.artist &&
-      this.bpm === song.bpm &&
-      this.key === song.key &&
-      this.info === song.info
-    );
+    return song && this.id === song.id;
   }
 
   setPropertyByName(propertyName: string, value: any) {
