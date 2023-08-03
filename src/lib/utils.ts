@@ -1,5 +1,6 @@
 import { goto } from "$app/navigation";
 
+export const SONGBOOKS_PATH = "static/songbooks/";
 export const ICON_MAP = {
   "title": "🎵",
   "song": "🎵",

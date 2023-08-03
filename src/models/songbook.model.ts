@@ -1,5 +1,9 @@
 import type Song from "./song.model";
 
+export type SongbookMap = {
+  [key: string]: Songbook;
+}
+
 export default class Songbook {
   name: string;
   default: boolean = false;

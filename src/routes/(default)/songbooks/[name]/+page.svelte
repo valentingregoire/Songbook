@@ -9,13 +9,16 @@
   import { dndzone } from "svelte-dnd-action";
   import { flip } from "svelte/animate";
   import type Song from "$models/song.model";
+  import { post } from "$lib/api";
 
   const name = $page.params.name;
   let settings: Settings;
   settingsStore.subscribe(s => settings = s);
 
   let songbook: Songbook;
-  songbooksStore.subscribe(sb => songbook = sb.find(s => s.name === name));
+  songbooksStore.subscribe(songbookMap => {
+    songbook = songbookMap[name]
+  });
 
   let selectedSongId: number;
 
@@ -24,11 +27,21 @@
   }
 
   function handleConsider(event: CustomEvent<DndEvent<Song>>) {
+    console.log("consider");
     songbook.songs = event.detail.items;
   }
 
-  function handleFinalize(event: CustomEvent<DndEvent<Song>>) {
+  async function handleFinalize(event: CustomEvent<DndEvent<Song>>) {
+    console.log("finalize");
     songbook.songs = event.detail.items;
+    songbooksStore.update(songbookMap => {
+      songbookMap[songbook.name] = songbook;
+      return songbookMap;
+    });
+    const songsMapped: string[] = songbook.songs.map(song => song.title);
+    const toReturn = { ...songbook, songs: songsMapped };
+    console.log("toReturn", toReturn);
+    await post(`/api/songbooks/${name}`, toReturn);
   }
 </script>
 

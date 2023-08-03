@@ -11,6 +11,7 @@
   import LoadingItem from "$lib/LoadingItem.svelte";
   import { ComponentType } from "$models/components.model";
   import { goto } from "$app/navigation";
+  import type Songbook from "$models/songbook.model";
 
   let songMap: SongMap;
   let totalLoaded: number = 0;
@@ -79,7 +80,7 @@
     loadingItems[ComponentType.Songbooks] = [0, 2];
     get("api/songbooks").then(songbooks => {
       loadingItems[ComponentType.Songbooks] = [1, 2];
-      songbooks.forEach(songbook => songbook.songs = songbook.songs.map(song => songMap[song] || new Song(song)));
+      Object.values(songbooks).forEach((songbook: Songbook) => songbook.songs = songbook.songs.map(song => songMap[song] || new Song(song)));
       songbooksStore.set(songbooks);
       loadingItems[ComponentType.Songbooks] = [2, 2];
     });

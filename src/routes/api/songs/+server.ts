@@ -6,7 +6,7 @@ import Song from "$models/song.model";
 
 const SONGS_PATH = "static/songs/";
 
-export async function GET() {
+export async function GET(): Promise<Response> {
   let songs: SongMap = {};
   const songNames: Dirent[] = fs
     .readdirSync(SONGS_PATH, { withFileTypes: true })

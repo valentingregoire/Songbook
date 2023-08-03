@@ -5,13 +5,13 @@
   import { AppBar, AppRail, AppRailAnchor } from "@skeletonlabs/skeleton";
   import Icon from "$lib/Icon.svelte";
   import { page } from "$app/stores";
-  import { fade, fly } from "svelte/transition";
+  import { fly } from "svelte/transition";
   import { settingsStore } from "$stores";
   import type { Settings } from "$models/settings.model";
   import { cubicIn, cubicOut } from "svelte/easing";
+  import type { SongbookMap } from "../../models/songbook.model";
+  import { songbooksStore } from "../../stores";
 
-  // const iconSize: string = "h-[22px]";
-  // const iconSize: string = "h-[36px]";
   const iconSize: string = "h-9";
   const menu = [
     {
@@ -34,12 +34,15 @@
   let settings: Settings;
   let showSideBar: boolean;
   let showSideBarInitial: boolean;
+  let songbooks: SongbookMap;
+  songbooksStore.subscribe(value => songbooks = value);
 
   settingsStore.subscribe(value => settings = value);
   showSideBarInitial = settings?.layout?.showSideBar;
   $: $page.url.path, showSideBar = showSideBarInitial;
 </script>
 
+{JSON.stringify(songbooks["1"])}
 <div class="h-screen w-screen relative">
   <AppBar>
     <svelte:fragment slot="lead">
@@ -96,7 +99,7 @@
   {/key}
 
   <!--  <div class="w-full h-full">-->
-  <main class="">
+  <main>
     {#key $page.url.pathname}
       <div
         class="h-full select-none overflow-clip"
