@@ -23,7 +23,7 @@
             {#if songbook.default}
               <span class="badge variant-ghost-success text-success-700">Default</span>
             {:else}
-              <label class="flex space-x-2" on:click|stopPropagation={() => console.log("hallo")}>
+              <label class="flex space-x-2" on:click|stopPropagation>
                 <input type="checkbox" class="checkbox input-primary" />
                 <span>Default</span>
               </label>
@@ -42,7 +42,7 @@
                 </svelte:fragment>
                 <svelte:fragment slot="content">
                   <ol class="list">
-                    {#each songbook.songs as song, index}
+                    {#each songbook.songObjects as song, index}
                       <li>
                         <a class="btn btn-sm btn-hover" href="/songbooks/{songbook.name}/songs/{index}?pageId=0"
                            on:click|preventDefault>

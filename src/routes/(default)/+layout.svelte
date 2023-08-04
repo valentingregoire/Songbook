@@ -6,11 +6,10 @@
   import Icon from "$lib/Icon.svelte";
   import { page } from "$app/stores";
   import { fly } from "svelte/transition";
-  import { settingsStore } from "$stores";
+  import { settingsStore, songbooksStore } from "$stores";
   import type { Settings } from "$models/settings.model";
   import { cubicIn, cubicOut } from "svelte/easing";
-  import type { SongbookMap } from "../../models/songbook.model";
-  import { songbooksStore } from "../../stores";
+  import type { SongbookMap } from "$models/songbook.model";
 
   const iconSize: string = "h-9";
   const menu = [
@@ -42,8 +41,7 @@
   $: $page.url.path, showSideBar = showSideBarInitial;
 </script>
 
-{JSON.stringify(songbooks["1"])}
-<div class="h-screen w-screen relative">
+<div class="h-screen w-screen relative select-none">
   <AppBar>
     <svelte:fragment slot="lead">
       <button type="button" class="btn-icon relative" on:click={() => showSideBar = !showSideBar}>
@@ -102,7 +100,7 @@
   <main>
     {#key $page.url.pathname}
       <div
-        class="h-full select-none overflow-clip"
+        class="h-full overflow-clip"
         in:fly={{y: 500, duration: settings?.layout?.animationSpeed}}
       >
         <slot />

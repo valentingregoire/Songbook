@@ -1,16 +1,18 @@
 import { json } from "@sveltejs/kit";
 import fs from "fs";
-import type { SongbookMap } from "$models/songbook.model";
 import { SONGBOOKS_PATH } from "$lib/utils";
+import type Songbook from "$models/songbook.model";
 
 
 export async function GET(): Promise<Response> {
-  let songbooks: SongbookMap = {};
+  const songbookMap: Map<string, Songbook> = new Map();
   const songbookNames = fs.readdirSync(SONGBOOKS_PATH);
   songbookNames.forEach((songbookName: string) => {
-    songbooks[songbookName.split(".")[0]] = JSON.parse(
-      fs.readFileSync(`${SONGBOOKS_PATH}/${songbookName}`).toString()
+    songbookMap.set(songbookName.split(".")[0],
+      JSON.parse(
+        fs.readFileSync(`${SONGBOOKS_PATH}/${songbookName}`).toString()
+      ) as Songbook
     );
   });
-  return json(songbooks);
+  return json(Object.fromEntries(songbookMap));
 }

@@ -1,7 +1,5 @@
 <script lang="ts">
   import { onMount, tick } from "svelte";
-  import SongMap from "$models/song.model";
-  import Song from "$models/song.model";
   import { get } from "$lib/api";
   import { settingsMapStore, songbooksStore, songsStore } from "$stores";
   import { ProgressBar } from "@skeletonlabs/skeleton";
@@ -12,8 +10,10 @@
   import { ComponentType } from "$models/components.model";
   import { goto } from "$app/navigation";
   import type Songbook from "$models/songbook.model";
+  import Song from "../../models/song.model";
+  import type { Settings, SettingsType } from "../../models/settings.model";
 
-  let songMap: SongMap;
+  let songMap: Map<string, Song>;
   let totalLoaded: number = 0;
   let totalToLoad: number = 1;
   let totalProgress: number = 0;
@@ -61,27 +61,31 @@
 
   onMount(async () => {
     loadingItems[ComponentType.Settings] = [0, 1];
-    get("api/settings").then(settings => {
-        settingsMapStore.set(settings);
-        loadingItems[ComponentType.Settings] = [1, 1];
-      }
-    );
+    get("api/settings").then((settings: Map<SettingsType, Settings>) => {
+      settingsMapStore.set(new Map<SettingsType, Settings>(Object.entries(settings) as [SettingsType, Settings][]));
+      loadingItems[ComponentType.Settings] = [1, 1];
+    });
 
     loadingItems[ComponentType.Songs] = [0, 2];
-    await get("api/songs").then(songs => {
+    await get("api/songs").then((songs: Map<string, Song>) => {
       loadingItems[ComponentType.Songs] = [1, 2];
-      songMap = songs;
-      songsStore.set(songs);
-      const pagesToLoad = Object.values(songs).reduce((acc, cur) => +acc + cur?.pages?.length, 0);
+      songMap = new Map();
+      songMap = new Map<string, Song>(Object.entries(songs) as Array<[string, Song]>);
+      songsStore.set(songMap);
+      const pagesToLoad = [...songMap.values()].reduce((acc: number, cur: Song) => +acc + cur.pages?.length, 0);
       loadingItems[ComponentType.Pages] = [0, pagesToLoad];
       loadingItems[ComponentType.Songs] = [2, 2];
     });
 
     loadingItems[ComponentType.Songbooks] = [0, 2];
-    get("api/songbooks").then(songbooks => {
+    get("api/songbooks").then((songbooks: Map<string, Songbook>) => {
       loadingItems[ComponentType.Songbooks] = [1, 2];
-      Object.values(songbooks).forEach((songbook: Songbook) => songbook.songs = songbook.songs.map(song => songMap[song] || new Song(song)));
-      songbooksStore.set(songbooks);
+      const songbookMap: Map<string, Songbook> = new Map(Object.entries(songbooks) as Array<[string, Songbook]>);
+      songbookMap.forEach((songbook: Songbook) => {
+        // Object.values(songbooks).forEach((songbook: Songbook) => {
+        songbook.songObjects = songbook.songs.map((songTitle: string) => songMap.get(songTitle) as Song || new Song(songTitle, "N/A"));
+      });
+      songbooksStore.set(songbookMap);
       loadingItems[ComponentType.Songbooks] = [2, 2];
     });
   });
@@ -90,7 +94,7 @@
 
 <svelte:head>
   {#if loadingProgress[ComponentType.Songs] === 100}
-    {#each Object.values(songMap) as song}
+    {#each songMap.values() as song}
       {#each song.pages as page}
         <link rel="preload" as="image" href="songs/{song.title}/{page}" on:load={songPageLoaded} />
       {/each}

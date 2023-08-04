@@ -1,24 +1,25 @@
-export class Settings {
-  layout: {
-    sideBar: {
-      show?: boolean;
-      labels?: boolean;
-      width?: string;
-    }
-    animationSpeed?: number;
-  } = {sideBar: {}};
-  viewer: {
-    sideButtonWidth?: string;
-    bottomButtonHeight?: string;
-    showButtons?: boolean;
-  } = {};
+export interface Settings {
+  layout?: LayoutSettings;
+  viewer?: ViewerSettings;
+}
+
+interface LayoutSettings {
+  sideBar?: SideBarSettings;
+}
+
+interface SideBarSettings {
+  show?: boolean;
+  labels?: boolean;
+  width?: string;
+}
+
+interface ViewerSettings {
+  sideButtonWidth?: string;
+  bottomButtonHeight?: string;
+  showButtons?: boolean;
 }
 
 export enum SettingsType {
-  Default,
-  User
-}
-
-export type SettingsMap = {
-  [key in SettingsType]: Settings;
+  Default = "DEFAULT",
+  User = "USER"
 }

@@ -8,9 +8,6 @@ export async function POST(requestEvent: Request) {
   const { request } = requestEvent;
   const songbook: Songbook = await request.json();
 
-  console.log("request", JSON.stringify(request, null, 2));
-  console.log("songbook", JSON.stringify(songbook, null, 2));
-
   fs.writeFileSync(
     `${SONGBOOKS_PATH}/${songbookName}.json`,
     JSON.stringify(songbook, null, 2)

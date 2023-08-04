@@ -1,9 +1,9 @@
 import { json } from "@sveltejs/kit";
 import fs from "fs";
-import type { Settings, SettingsMap } from "$models/settings.model";
+import type { Settings } from "$models/settings.model";
 import { SettingsType } from "$models/settings.model";
 
-export async function GET() {
+export async function GET(): Promise<Response> {
   const defaultSettings: Settings = JSON.parse(
     fs.readFileSync("static/settings/default.json").toString()
   );
@@ -11,10 +11,9 @@ export async function GET() {
     fs.readFileSync("static/settings/user.json").toString()
   );
 
-  const settingsMap: SettingsMap = {
-    [SettingsType.Default]: defaultSettings,
-    [SettingsType.User]: userSettings
-  }
+  const settingsMap: Map<SettingsType, Settings> = new Map();
+  settingsMap.set(SettingsType.Default, defaultSettings);
+  settingsMap.set(SettingsType.User, userSettings);
 
-  return json(settingsMap);
+  return json(Object.fromEntries(settingsMap));
 }

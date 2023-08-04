@@ -1,13 +1,11 @@
 import type Song from "./song.model";
-
-export type SongbookMap = {
-  [key: string]: Songbook;
-}
+import { transient } from "../lib/utils";
 
 export default class Songbook {
   name: string;
   default: boolean = false;
-  songs: (Song | string)[] = [];
+  songs: string[] = [];
+  @transient() songObjects: Song[] = [];
 
 
   constructor(name: string, defaultSongbook: boolean, songs: string[]) {

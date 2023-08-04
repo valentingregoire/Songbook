@@ -10,6 +10,7 @@
   import { flip } from "svelte/animate";
   import type Song from "$models/song.model";
   import { post } from "$lib/api";
+  import type { SongbookMap } from "../../../../models/songbook.model";
 
   const name = $page.params.name;
   let settings: Settings;
@@ -27,12 +28,10 @@
   }
 
   function handleConsider(event: CustomEvent<DndEvent<Song>>) {
-    console.log("consider");
     songbook.songs = event.detail.items;
   }
 
   async function handleFinalize(event: CustomEvent<DndEvent<Song>>) {
-    console.log("finalize");
     songbook.songs = event.detail.items;
     songbooksStore.update(songbookMap => {
       songbookMap[songbook.name] = songbook;
@@ -40,7 +39,6 @@
     });
     const songsMapped: string[] = songbook.songs.map(song => song.title);
     const toReturn = { ...songbook, songs: songsMapped };
-    console.log("toReturn", toReturn);
     await post(`/api/songbooks/${name}`, toReturn);
   }
 </script>
@@ -57,7 +55,7 @@
 <!--    bg-surface-50-->
     <a
       href="/songbooks/{name}/songs/{index}"
-      class="flex flex-col card w-full md:w-1/4 lg:w-1/6 min-w-fit grow w-1/6 drop-shadow-md"
+      class="flex flex-col card w-full md:w-1/4 lg:w-1/6 min-w-fit grow w-1/6 rounded-2xl shadow-md"
       animate:flip={{duration: settings.layout.animationSpeed}}
       on:click|stopPropagation
     >
