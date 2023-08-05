@@ -24,7 +24,6 @@
   import FaInfoCircle from "svelte-icons/fa/FaInfoCircle.svelte";
   import FaChevronLeft from "svelte-icons/fa/FaChevronLeft.svelte";
 
-
   export let name: string;
   export let size: string = "h-[16px]";
   export let success: boolean = false;

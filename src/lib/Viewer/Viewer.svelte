@@ -21,13 +21,18 @@
   $: pages = song?.pages?.length || 1;
 
   async function previousPage() {
-    const songIdNew = pageId == 0 ? (songId + songbookSize - 1) % songbookSize : songId;
-    const pageIdNew = pageId == 0 ? songbook?.songs[songIdNew].pages?.length - 1 || 0 : pageId - 1;
+    const songIdNew =
+      pageId == 0 ? (songId + songbookSize - 1) % songbookSize : songId;
+    const pageIdNew =
+      pageId == 0
+        ? songbook?.songs[songIdNew].pages?.length - 1 || 0
+        : pageId - 1;
     await navigate(songIdNew, pageIdNew, Subject.Page, Direction.Previous);
   }
 
   async function nextPage(): Promise<void> {
-    const songIdNew = pageId == pages - 1 ? (songId + 1) % songbookSize : songId;
+    const songIdNew =
+      pageId == pages - 1 ? (songId + 1) % songbookSize : songId;
     const pageIdNew = pageId == pages - 1 ? 0 : pageId + 1;
     await navigate(songIdNew, pageIdNew, Subject.Page, Direction.Next);
   }
@@ -42,36 +47,32 @@
     await navigate(songIdNew, 0, Subject.Song, Direction.Next);
   }
 
-  async function navigate(songId: number, pageId: number, subject: Subject, direction: Direction): Promise<void> {
+  async function navigate(
+    songId: number,
+    pageId: number,
+    subject: Subject,
+    direction: Direction
+  ): Promise<void> {
     await tick();
     await goto(
       `/songbooks/${songbook?.name}/songs/${songId}?pageId=${pageId}&subject=${subject}&direction=${direction}`,
       { replaceState: true }
     );
   }
-
 </script>
 
 <div class="grid grid-cols-1 w-full relative h-screen justify-items-center">
   <Sheet {song} {pageId} />
   <div class="block w-full h-full">
-    <SideButton
-      classes="top-0 left-0"
-      on:click={previousSong}>
-    </SideButton>
-    <SideButton
-      classes="top-0 right-0"
-      on:click={nextSong}>
-    </SideButton>
-    <SideButton
-      classes="bottom-0 left-0"
-      on:click={previousPage}>
-    </SideButton>
-    <SideButton
-      classes="bottom-0 right-0"
-      on:click={nextPage}>
-    </SideButton>
+    <SideButton classes="top-0 left-0" on:click={previousSong} />
+    <SideButton classes="top-0 right-0" on:click={nextSong} />
+    <SideButton classes="bottom-0 left-0" on:click={previousPage} />
+    <SideButton classes="bottom-0 right-0" on:click={nextPage} />
     <BottomButton on:click={menu.openMenuDrawer} />
-    <Menu bind:this={menu} songs={songbook?.songs} songbookName={songbook.name} />
+    <Menu
+      bind:this={menu}
+      songs={songbook?.songs}
+      songbookName={songbook.name}
+    />
   </div>
 </div>

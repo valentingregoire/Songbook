@@ -8,16 +8,15 @@
 
   let settings: Settings;
 
-  settingsStore.subscribe(s => settings = s);
+  settingsStore.subscribe((s) => (settings = s));
   const animationSpeed = settings?.layout?.animationSpeed;
-
 </script>
 
 <main>
   <div
     class="h-screen w-full select-none overflow-clip"
-    in:fly={{y: 500, duration: animationSpeed}}
-    out:fly={{y: 500, duration: animationSpeed}}
+    in:fly={{ y: 500, duration: animationSpeed }}
+    out:fly={{ y: 500, duration: animationSpeed }}
   >
     <slot />
   </div>

@@ -3,5 +3,5 @@ export enum ComponentType {
   Songs = "Songs",
   Songbooks = "Songbooks",
   Settings = "Settings",
-  Pages = "Pages"
+  Pages = "Pages",
 }

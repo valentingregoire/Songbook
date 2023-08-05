@@ -8,8 +8,8 @@ export default defineConfig({
       allow: [
         searchForWorkspaceRoot(process.cwd()),
         "static/scores/",
-        "static/songbooks/"
-      ]
-    }
-  }
+        "static/songbooks/",
+      ],
+    },
+  },
 });

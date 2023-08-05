@@ -14,19 +14,26 @@ export async function GET(): Promise<Response> {
   songNames.forEach((fileName: string) => {
     let files: Dirent[] = fs
       .readdirSync(`${SONGS_PATH}/${fileName}`, { withFileTypes: true })
-      .filter((item: Dirent) => !item.isDirectory() && !item.name.endsWith(".json"));
-    const fileType: string = files.length > 0 ? files[0].name.split(".")[1] : "svg";
+      .filter(
+        (item: Dirent) => !item.isDirectory() && !item.name.endsWith(".json")
+      );
+    const fileType: string =
+      files.length > 0 ? files[0].name.split(".")[1] : "svg";
     let song: Song = new Song(fileName, fileType);
     if (fs.existsSync(`${SONGS_PATH}/${fileName}/${SONG_INFO_FILE}`)) {
       const songData = JSON.parse(
-        fs.readFileSync(`${SONGS_PATH}/${fileName}/${SONG_INFO_FILE}`).toString()
+        fs
+          .readFileSync(`${SONGS_PATH}/${fileName}/${SONG_INFO_FILE}`)
+          .toString()
       );
       for (const key in songData) {
         // song.setPropertyByName(key, songData[key]);
         (song as { [key: string]: any })[key] = songData[key];
       }
     }
-    song.pages = files.filter((dirent: Dirent) => dirent.name.endsWith(song.fileType)).map((item: Dirent) => item.name);
+    song.pages = files
+      .filter((dirent: Dirent) => dirent.name.endsWith(song.fileType))
+      .map((item: Dirent) => item.name);
     songMap.set(song.id, song);
   });
   return json(Object.fromEntries(songMap));

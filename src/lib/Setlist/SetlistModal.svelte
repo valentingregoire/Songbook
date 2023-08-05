@@ -4,11 +4,6 @@
   function close() {
     dialog.close();
   }
-
 </script>
 
-<dialog
-  bind:this={dialog}
-  on:close={close}>
-
-</dialog>
+<dialog bind:this={dialog} on:close={close} />

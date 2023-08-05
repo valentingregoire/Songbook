@@ -3,7 +3,7 @@
   import type { Settings } from "$models/settings.model";
 
   let settings: Settings;
-  settingsStore.subscribe(value => settings = value);
+  settingsStore.subscribe((value) => (settings = value));
 </script>
 
 Settings: {JSON.stringify(settings)} <br />

@@ -9,17 +9,55 @@
   let title: string;
 
   // $: changed = song ? !song.equals(songOriginal) : false;
-  $: equal = song ? JSON.stringify(song) === JSON.stringify(songOriginal) : true;
+  $: equal = song
+    ? JSON.stringify(song) === JSON.stringify(songOriginal)
+    : true;
 </script>
 
 {#if song}
   <div class="grid grid-cols-2 grid-rows-4 gap-4">
-    <input class="input" title="Title" type="text" bind:value={song.title} placeholder="Title" />
-    <input class="input" title="Artist" type="text" bind:value={song.artist} placeholder="Artist" />
-    <input class="input" title="File Type" type="text" bind:value={song.fileType} placeholder="File Type" />
-    <input class="input" title="BPM" type="number" bind:value={song.bpm} placeholder="BPM" />
-    <input class="input" title="Key" type="text" bind:value={song.key} placeholder="Key" />
-    <input class="input" title="Info" type="text" bind:value={song.info} placeholder="Extra info" />
+    <input
+      class="input"
+      title="Title"
+      type="text"
+      bind:value={song.title}
+      placeholder="Title"
+    />
+    <input
+      class="input"
+      title="Artist"
+      type="text"
+      bind:value={song.artist}
+      placeholder="Artist"
+    />
+    <input
+      class="input"
+      title="File Type"
+      type="text"
+      bind:value={song.fileType}
+      placeholder="File Type"
+    />
+    <input
+      class="input"
+      title="BPM"
+      type="number"
+      bind:value={song.bpm}
+      placeholder="BPM"
+    />
+    <input
+      class="input"
+      title="Key"
+      type="text"
+      bind:value={song.key}
+      placeholder="Key"
+    />
+    <input
+      class="input"
+      title="Info"
+      type="text"
+      bind:value={song.info}
+      placeholder="Extra info"
+    />
     <div class="col-span-2">
       <ul class="list">
         {#each song?.pages as page}

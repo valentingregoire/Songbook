@@ -6,8 +6,7 @@
 
   const id = $page.params.id;
   let song: Song;
-  songsStore.subscribe(songs => song = Object.values(songs)[id]);
-
+  songsStore.subscribe((songs) => (song = Object.values(songs)[id]));
 </script>
 
 <h1 class="h1">{song?.title}</h1>

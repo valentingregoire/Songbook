@@ -14,11 +14,11 @@ const config = {
     // See https://kit.svelte.dev/docs/adapters for more information about adapters.
     adapter: adapter(),
     alias: {
-      "$src": path.resolve("./src"),
-      "$models": path.resolve("./src/models"),
-      "$stores": path.resolve("./src/stores")
-    }
-  }
+      $src: path.resolve("./src"),
+      $models: path.resolve("./src/models"),
+      $stores: path.resolve("./src/stores"),
+    },
+  },
 };
 
 export default config;

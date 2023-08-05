@@ -6,7 +6,6 @@ export default class Songbook {
   songs: string[] = [];
   songObjects?: Song[] = [];
 
-
   constructor(name: string, defaultSongbook: boolean, songs: string[]) {
     this.name = name;
     this.default = defaultSongbook;

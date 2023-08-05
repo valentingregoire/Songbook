@@ -10,7 +10,7 @@
 
   const progress = tweened(0, {
     duration: 10,
-    easing: cubicOut
+    easing: cubicOut,
   });
 
   $: if (value) {
@@ -28,11 +28,13 @@
     </div>
   {:else}
     <div class="absolute" transition:fade>
-      <ProgressRadial value={value === undefined ? undefined : $progress}
-                      width="w-5"
-                      stroke="200"
-                      meter="stroke-primary-500"
-                      track="stroke-primary-300" />
+      <ProgressRadial
+        value={value === undefined ? undefined : $progress}
+        width="w-5"
+        stroke="200"
+        meter="stroke-primary-500"
+        track="stroke-primary-300"
+      />
     </div>
   {/if}
 </div>

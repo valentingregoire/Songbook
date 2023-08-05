@@ -2,27 +2,27 @@ import { goto } from "$app/navigation";
 
 export const SONGBOOKS_PATH = "static/songbooks/";
 export const ICON_MAP = {
-  "title": "🎵",
-  "song": "🎵",
-  "artist": "👨‍",
-  "bpm": "⏱️",
-  "key": "🎼",
-  "page": "📄",
-  "pages": "🗐",
-  "fileType": "🖻",
-  "info": "ℹ️",
-  "info2": "📝",
-  "songbook": "📘",
+  title: "🎵",
+  song: "🎵",
+  artist: "👨‍",
+  bpm: "⏱️",
+  key: "🎼",
+  page: "📄",
+  pages: "🗐",
+  fileType: "🖻",
+  info: "ℹ️",
+  info2: "📝",
+  songbook: "📘",
   // "songbook": "<FaBook />",
-  "songbooks": "📚",
-  "settings": "⚙️",
-  "edit": "✏️",
-  "delete": "🗑️",
-  "add": "➕",
-  "save": "💾",
-  "cancel": "❌",
-  "search": "🔍",
-  "hash": "#️"
+  songbooks: "📚",
+  settings: "⚙️",
+  edit: "✏️",
+  delete: "🗑️",
+  add: "➕",
+  save: "💾",
+  cancel: "❌",
+  search: "🔍",
+  hash: "#️",
 };
 
 export default ICON_MAP;
@@ -34,8 +34,7 @@ interface NavigateOptions {
 }
 
 export async function navigate(options?: NavigateOptions): Promise<void> {
-  if (!options)
-    await goto("/home");
+  if (!options) await goto("/home");
   else {
     let url = "";
     if (options.songbookName) {

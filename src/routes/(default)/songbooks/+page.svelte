@@ -6,22 +6,25 @@
   import { goto } from "$app/navigation";
 
   let songbooks: Map<string, Songbook>;
-  songbooksStore.subscribe(s => songbooks = s);
+  songbooksStore.subscribe((s) => (songbooks = s));
 </script>
-
 
 <div class="flex flex-wrap relative justify-center content-center p-2 gap-5">
   {#if songbooks}
     {#each songbooks.values() as songbook (songbook.name)}
-      <a class="card w-full md:w-1/4 lg:w-1/6 min-w-fit grow h-fit drop-shadow-md"
-         href="/songbooks/{songbook.name}/songs/0?pageId=0">
+      <a
+        class="card w-full md:w-1/4 lg:w-1/6 min-w-fit grow h-fit drop-shadow-md"
+        href="/songbooks/{songbook.name}/songs/0?pageId=0"
+      >
         <header class="card-header flex flex-nowrap justify-between p-5">
           <!--          <Icon name="songbook">-->
           <h4 class="h4 whitespace-nowrap">{songbook.name}</h4>
           <!--          </Icon>-->
           <div class="ml-2">
             {#if songbook.default}
-              <span class="badge variant-ghost-success text-success-700">Default</span>
+              <span class="badge variant-ghost-success text-success-700"
+                >Default</span
+              >
             {:else}
               <label class="flex space-x-2" on:click|stopPropagation>
                 <input type="checkbox" class="checkbox input-primary" />
@@ -35,8 +38,7 @@
           <div on:click|preventDefault>
             <Accordion>
               <AccordionItem>
-                <svelte:fragment slot="lead">
-                </svelte:fragment>
+                <svelte:fragment slot="lead" />
                 <svelte:fragment slot="summary">
                   {songbook.songObjects.length} songs
                 </svelte:fragment>
@@ -44,8 +46,11 @@
                   <ol class="list">
                     {#each songbook.songObjects as song, index}
                       <li>
-                        <a class="btn btn-sm btn-hover" href="/songbooks/{songbook.name}/songs/{index}?pageId=0"
-                           on:click|preventDefault>
+                        <a
+                          class="btn btn-sm btn-hover"
+                          href="/songbooks/{songbook.name}/songs/{index}?pageId=0"
+                          on:click|preventDefault
+                        >
                           <!--                        <Icon name="song">{index + 1} {song.title}</Icon>-->
                           <span>{index + 1}</span>
                           <span>{song.title}</span>
@@ -60,14 +65,16 @@
         </section>
         <hr class="opacity-50" />
         <footer class="card-footer p-5 flex justify-end">
-          <button type="button" class="btn btn-sm variant-filled-secondary"
-                  on:click|preventDefault={goto(`/songbooks/${songbook.name}`)}>
+          <button
+            type="button"
+            class="btn btn-sm variant-filled-secondary"
+            on:click|preventDefault={goto(`/songbooks/${songbook.name}`)}
+          >
             <Icon name="edit">Edit</Icon>
           </button>
         </footer>
       </a>
     {/each}
-
 
     <!--      <nav class="list-nav p-2">-->
     <!--        <ul>-->

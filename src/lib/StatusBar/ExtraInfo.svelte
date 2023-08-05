@@ -1,9 +1,9 @@
 <script lang="ts">
-import Info from "./Info.svelte";
-import type Song from "$models/song.model";
-import ICON_MAP from "../utils";
+  import Info from "./Info.svelte";
+  import type Song from "$models/song.model";
+  import ICON_MAP from "../utils";
 
-export let song: Song;
+  export let song: Song;
 </script>
 
 <div>

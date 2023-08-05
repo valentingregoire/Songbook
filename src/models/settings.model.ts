@@ -22,5 +22,5 @@ interface ViewerSettings {
 
 export enum SettingsType {
   Default = "DEFAULT",
-  User = "USER"
+  User = "USER",
 }

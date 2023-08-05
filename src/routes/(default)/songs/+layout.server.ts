@@ -3,7 +3,7 @@ import ICON_MAP from "$lib/utils";
 
 export async function load() {
   let layoutData: LayoutModel = {
-    title: `${ICON_MAP.song} Songs`
+    title: `${ICON_MAP.song} Songs`,
   };
   return layoutData;
 }

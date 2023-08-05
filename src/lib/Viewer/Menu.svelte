@@ -1,5 +1,9 @@
 <script lang="ts">
-  import { Drawer, type DrawerSettings, drawerStore } from "@skeletonlabs/skeleton";
+  import {
+    Drawer,
+    type DrawerSettings,
+    drawerStore,
+  } from "@skeletonlabs/skeleton";
   import SongList from "$lib/SongList.svelte";
   import type Song from "../../models/song.model";
   import { navigate } from "../utils";
@@ -20,7 +24,7 @@
       // padding: "px-4 pt-4",
       padding: "px-[5%] py-[5%]",
       // rounded: "rounded-t-xl"
-      rounded: "rounded-3xl"
+      rounded: "rounded-3xl",
     };
     drawerStore.open(drawerSettings);
   }
@@ -32,5 +36,5 @@
 </script>
 
 <Drawer>
-  <SongList {songs} bind:selectedSongId={selectedSongId} {clickSong} />
+  <SongList {songs} bind:selectedSongId {clickSong} />
 </Drawer>

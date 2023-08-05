@@ -1,11 +1,9 @@
 <script lang="ts">
-
   import type Song from "$models/song.model";
   import ICON_MAP from "../utils";
 
   export let song: Song;
   export let pageId: number;
-
 </script>
 
 <div class="flex items-start h-screen w-full">
@@ -20,7 +18,8 @@
       {#if song?.artist}
         {ICON_MAP.artist} {song.artist}
       {/if}
-      {ICON_MAP.title} {song?.title}
+      {ICON_MAP.title}
+      {song?.title}
     </h1>
   {/if}
 </div>

@@ -12,10 +12,10 @@
 
   const name = $page.params.name;
   let settings: Settings;
-  settingsStore.subscribe(s => settings = s);
+  settingsStore.subscribe((s) => (settings = s));
 
   let songbook: Songbook;
-  songbooksStore.subscribe(songbookMap => {
+  songbooksStore.subscribe((songbookMap) => {
     songbook = songbookMap.get(name);
   });
 
@@ -32,7 +32,7 @@
   async function handleFinalize(event: CustomEvent<DndEvent<Song>>) {
     songbook.songObjects = event.detail.items;
     songbook.songs = songbook.songObjects.map((song: Song) => song.id);
-    songbooksStore.update(songbookMap => {
+    songbooksStore.update((songbookMap) => {
       songbookMap.set(songbook.name, songbook);
       return songbookMap;
     });
@@ -43,7 +43,10 @@
 <!--<SongList songs={songbook.songs} bind:selectedSongId={selectedSongId} {clickSong} />-->
 <section
   class="flex flex-wrap p-2 gap-5"
-  use:dndzone={{items: songbook.songObjects, flipDurationMs: settings.layout.animationSpeed}}
+  use:dndzone={{
+    items: songbook.songObjects,
+    flipDurationMs: settings.layout.animationSpeed,
+  }}
   on:consider={handleConsider}
   on:finalize={handleFinalize}
 >
@@ -52,17 +55,22 @@
     <a
       href="/songbooks/{name}/songs/{index}"
       class="flex flex-col card w-full md:w-1/4 lg:w-1/6 min-w-fit grow w-1/6 rounded-2xl shadow-md"
-      animate:flip={{duration: settings.layout.animationSpeed}}
+      animate:flip={{ duration: settings.layout.animationSpeed }}
       on:click|stopPropagation
     >
       <header class="p-3 space-x-2">
-        <div class="inline-flex w-8 items-center justify-center aspect-square variant-soft rounded-full">
+        <div
+          class="inline-flex w-8 items-center justify-center aspect-square variant-soft rounded-full"
+        >
           <h5 class="h5 font-bold">{index + 1}</h5>
         </div>
         <h3 class="h3 inline-block whitespace-nowrap">{song.title}</h3>
       </header>
       <!--      <hr class="opacity-50" />-->
-      <section class="flex-grow px-6 py-3 text-surface-700" on:click|preventDefault>
+      <section
+        class="flex-grow px-6 py-3 text-surface-700"
+        on:click|preventDefault
+      >
         {#if song.artist}
           <Icon name="artist">{song.artist}</Icon>
         {/if}

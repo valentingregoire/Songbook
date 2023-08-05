@@ -8,10 +8,7 @@ export default class Song {
   key?: string;
   info?: string;
 
-  constructor(
-    id: string,
-    fileType: string
-  ) {
+  constructor(id: string, fileType: string) {
     this.id = id;
     this.fileType = fileType;
     this.title = id;

@@ -16,56 +16,83 @@
     {
       name: "Songbooks",
       icon: "songbooks",
-      link: "/songbooks"
+      link: "/songbooks",
     },
     {
       name: "Songs",
       icon: "songs",
-      link: "/songs"
+      link: "/songs",
     },
     {
       name: "Settings",
       icon: "settings",
-      link: "/settings"
-    }
+      link: "/settings",
+    },
   ];
 
   let settings: Settings;
   let showSideBar: boolean;
   let showSideBarInitial: boolean;
   let songbooks: SongbookMap;
-  songbooksStore.subscribe(value => songbooks = value);
+  songbooksStore.subscribe((value) => (songbooks = value));
 
-  settingsStore.subscribe(value => settings = value);
+  settingsStore.subscribe((value) => (settings = value));
   showSideBarInitial = settings?.layout?.showSideBar;
-  $: $page.url.path, showSideBar = showSideBarInitial;
+  $: $page.url.path, (showSideBar = showSideBarInitial);
 </script>
 
 <div class="h-screen w-screen relative select-none">
   <AppBar>
     <svelte:fragment slot="lead">
-      <button type="button" class="btn-icon relative" on:click={() => showSideBar = !showSideBar}>
+      <button
+        type="button"
+        class="btn-icon relative"
+        on:click={() => (showSideBar = !showSideBar)}
+      >
         {#if showSideBar}
-          <span class="absolute" transition:fly={{x: -20, duration: settings.layout.animationSpeed, easing: cubicIn}}>
+          <span
+            class="absolute"
+            transition:fly={{
+              x: -20,
+              duration: settings.layout.animationSpeed,
+              easing: cubicIn,
+            }}
+          >
             <Icon name="left" size="h-6" />
           </span>
         {:else}
-          <span class="absolute" transition:fly={{x: 20, duration: settings.layout.animationSpeed, easing: cubicIn}}>
+          <span
+            class="absolute"
+            transition:fly={{
+              x: 20,
+              duration: settings.layout.animationSpeed,
+              easing: cubicIn,
+            }}
+          >
             <Icon name="menu" size="h-6" />
           </span>
         {/if}
       </button>
     </svelte:fragment>
     <h3 class="h3">{$page.data?.title}</h3>
-    <svelte:fragment slot="trail">
-    </svelte:fragment>
+    <svelte:fragment slot="trail" />
   </AppBar>
 
   {#key $page.url.pathname}
     {#if showSideBar}
-      <div class="flex absolute h-full z-50"
-           in:fly={{x: -200, duration: settings?.layout?.animationSpeed, easing: cubicOut}}
-           out:fly={{x:-200, duration: settings?.layout?.animationSpeed, easing: cubicIn}}>
+      <div
+        class="flex absolute h-full z-50"
+        in:fly={{
+          x: -200,
+          duration: settings?.layout?.animationSpeed,
+          easing: cubicOut,
+        }}
+        out:fly={{
+          x: -200,
+          duration: settings?.layout?.animationSpeed,
+          easing: cubicIn,
+        }}
+      >
         <AppRail>
           <svelte:fragment slot="lead">
             {#if $page.data?.back_url}
@@ -80,7 +107,10 @@
             {/if}
           </svelte:fragment>
           {#each menu as item}
-            <AppRailAnchor href={item?.link} selected={$page?.url?.pathname === item?.link}>
+            <AppRailAnchor
+              href={item?.link}
+              selected={$page?.url?.pathname === item?.link}
+            >
               <svelte:fragment slot="lead">
                 <Icon name={item.icon} size={iconSize} />
               </svelte:fragment>
@@ -101,7 +131,7 @@
     {#key $page.url.pathname}
       <div
         class="h-full overflow-clip"
-        in:fly={{y: 500, duration: settings?.layout?.animationSpeed}}
+        in:fly={{ y: 500, duration: settings?.layout?.animationSpeed }}
       >
         <slot />
       </div>

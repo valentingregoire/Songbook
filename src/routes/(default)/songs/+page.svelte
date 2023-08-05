@@ -6,11 +6,11 @@
 
   let songs: Array<Song | string>;
   let selectedSongId: number;
-  songsStore.subscribe(s => songs = Object.values(s));
+  songsStore.subscribe((s) => (songs = Object.values(s)));
 
   async function clickSong() {
     await navigate({ songId: selectedSongId });
   }
 </script>
 
-<SongList {songs} bind:selectedSongId={selectedSongId} {clickSong} />
+<SongList {songs} bind:selectedSongId {clickSong} />
