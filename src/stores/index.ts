@@ -10,8 +10,22 @@ export const songbooksStore = writable<Map<string, Songbook>>();
 export const settingsMapStore = writable<Map<SettingsType, Settings>>();
 export const settingsStore = derived(settingsMapStore, ($settingsMap: Map<SettingsType, Settings>) => {
   if (!$settingsMap) return;
+  const defaultSettings = $settingsMap.get(SettingsType.Default);
+  const userSettings = $settingsMap.get(SettingsType.User);
   return {
-    ...$settingsMap.get(SettingsType.Default),
-    ...$settingsMap.get(SettingsType.User)
+    ...defaultSettings,
+    ...userSettings,
+    layout: {
+      ...defaultSettings?.layout,
+      ...userSettings?.layout,
+      sideBar: {
+        ...defaultSettings?.layout?.sideBar,
+        ...userSettings?.layout?.sideBar
+      }
+    },
+    viewer: {
+      ...defaultSettings?.viewer,
+      ...userSettings?.viewer
+    }
   } as Settings;
 });

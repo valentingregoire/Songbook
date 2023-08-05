@@ -27,13 +27,6 @@ export const ICON_MAP = {
 
 export default ICON_MAP;
 
-export function transient(): Function {
-  return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
-    descriptor.enumerable = false;
-    descriptor.configurable = false;
-  }
-}
-
 interface NavigateOptions {
   songbookName?: string;
   songId?: number;

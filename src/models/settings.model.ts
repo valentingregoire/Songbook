@@ -5,6 +5,7 @@ export interface Settings {
 
 interface LayoutSettings {
   sideBar?: SideBarSettings;
+  animationSpeed?: number;
 }
 
 interface SideBarSettings {

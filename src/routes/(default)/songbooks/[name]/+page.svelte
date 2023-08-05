@@ -31,10 +31,7 @@
 
   async function handleFinalize(event: CustomEvent<DndEvent<Song>>) {
     songbook.songObjects = event.detail.items;
-    songbook.songs = songbook.songObjects.map(song => {
-      console.log("songId", song.id);
-      return song.id;
-    });
+    songbook.songs = songbook.songObjects.map((song: Song) => song.id);
     songbooksStore.update(songbookMap => {
       songbookMap.set(songbook.name, songbook);
       return songbookMap;
@@ -44,7 +41,6 @@
 </script>
 
 <!--<SongList songs={songbook.songs} bind:selectedSongId={selectedSongId} {clickSong} />-->
-
 <section
   class="flex flex-wrap p-2 gap-5"
   use:dndzone={{items: songbook.songObjects, flipDurationMs: settings.layout.animationSpeed}}
@@ -52,14 +48,13 @@
   on:finalize={handleFinalize}
 >
   {#each songbook.songObjects as song, index (song.id)}
-<!--    bg-surface-50-->
+    <!--    bg-surface-50-->
     <a
       href="/songbooks/{name}/songs/{index}"
       class="flex flex-col card w-full md:w-1/4 lg:w-1/6 min-w-fit grow w-1/6 rounded-2xl shadow-md"
       animate:flip={{duration: settings.layout.animationSpeed}}
       on:click|stopPropagation
     >
-      has id: {song.hasOwnProperty("id")}
       <header class="p-3 space-x-2">
         <div class="inline-flex w-8 items-center justify-center aspect-square variant-soft rounded-full">
           <h5 class="h5 font-bold">{index + 1}</h5>
@@ -71,7 +66,7 @@
         {#if song.artist}
           <Icon name="artist">{song.artist}</Icon>
         {/if}
-        {#if song.pages}
+        {#if song.pages && song.pages.length > 0}
           <Accordion
             duration={settings.layout.animationSpeed}
             padding="p-1"
@@ -92,6 +87,8 @@
               </svelte:fragment>
             </AccordionItem>
           </Accordion>
+        {:else}
+          <Icon name="page">0</Icon>
         {/if}
         {#if song.key}
           <Icon name="key">{song.key}</Icon>

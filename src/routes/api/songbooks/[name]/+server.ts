@@ -8,6 +8,7 @@ export async function POST(requestEvent: Request) {
   const { request } = requestEvent;
   const songbook: Songbook = await request.json();
 
+  delete songbook.songObjects;
   fs.writeFileSync(
     `${SONGBOOKS_PATH}/${songbookName}.json`,
     JSON.stringify(songbook, null, 2)
