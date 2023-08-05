@@ -2,7 +2,6 @@
   import { page } from "$app/stores";
   import type Songbook from "$models/songbook.model";
   import { settingsStore, songbooksStore } from "$stores";
-  import { navigate } from "$lib/utils";
   import Icon from "$lib/Icon.svelte";
   import { Accordion, AccordionItem } from "@skeletonlabs/skeleton";
   import type { Settings } from "$models/settings.model";
@@ -10,7 +9,6 @@
   import { flip } from "svelte/animate";
   import type Song from "$models/song.model";
   import { post } from "$lib/api";
-  import type { SongbookMap } from "../../../../models/songbook.model";
 
   const name = $page.params.name;
   let settings: Settings;
@@ -18,28 +16,30 @@
 
   let songbook: Songbook;
   songbooksStore.subscribe(songbookMap => {
-    songbook = songbookMap[name]
+    songbook = songbookMap.get(name);
   });
 
-  let selectedSongId: number;
+  // let selectedSongId: number;
 
-  function clickSong(id: number) {
-    navigate(`/songbooks/${name}/songs/${id}`);
-  }
+  // function clickSong(id: number) {
+  //   navigate(`/songbooks/${name}/songs/${id}`);
+  // }
 
   function handleConsider(event: CustomEvent<DndEvent<Song>>) {
-    songbook.songs = event.detail.items;
+    songbook.songObjects = event.detail.items;
   }
 
   async function handleFinalize(event: CustomEvent<DndEvent<Song>>) {
-    songbook.songs = event.detail.items;
+    songbook.songObjects = event.detail.items;
+    songbook.songs = songbook.songObjects.map(song => {
+      console.log("songId", song.id);
+      return song.id;
+    });
     songbooksStore.update(songbookMap => {
-      songbookMap[songbook.name] = songbook;
+      songbookMap.set(songbook.name, songbook);
       return songbookMap;
     });
-    const songsMapped: string[] = songbook.songs.map(song => song.title);
-    const toReturn = { ...songbook, songs: songsMapped };
-    await post(`/api/songbooks/${name}`, toReturn);
+    await post(`/api/songbooks/${name}`, songbook);
   }
 </script>
 
@@ -47,11 +47,11 @@
 
 <section
   class="flex flex-wrap p-2 gap-5"
-  use:dndzone={{items: songbook.songs, flipDurationMs: settings.layout.animationSpeed}}
+  use:dndzone={{items: songbook.songObjects, flipDurationMs: settings.layout.animationSpeed}}
   on:consider={handleConsider}
   on:finalize={handleFinalize}
 >
-  {#each songbook.songs as song, index (song.id)}
+  {#each songbook.songObjects as song, index (song.id)}
 <!--    bg-surface-50-->
     <a
       href="/songbooks/{name}/songs/{index}"
@@ -59,6 +59,7 @@
       animate:flip={{duration: settings.layout.animationSpeed}}
       on:click|stopPropagation
     >
+      has id: {song.hasOwnProperty("id")}
       <header class="p-3 space-x-2">
         <div class="inline-flex w-8 items-center justify-center aspect-square variant-soft rounded-full">
           <h5 class="h5 font-bold">{index + 1}</h5>

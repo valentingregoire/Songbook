@@ -5,14 +5,14 @@
   import { Accordion, AccordionItem } from "@skeletonlabs/skeleton";
   import { goto } from "$app/navigation";
 
-  let songbooks: Songbook[];
+  let songbooks: Map<string, Songbook>;
   songbooksStore.subscribe(s => songbooks = s);
 </script>
 
 
 <div class="flex flex-wrap relative justify-center content-center p-2 gap-5">
   {#if songbooks}
-    {#each Object.values(songbooks) as songbook}
+    {#each songbooks.values() as songbook (songbook.name)}
       <a class="card w-full md:w-1/4 lg:w-1/6 min-w-fit grow h-fit drop-shadow-md"
          href="/songbooks/{songbook.name}/songs/0?pageId=0">
         <header class="card-header flex flex-nowrap justify-between p-5">
@@ -38,7 +38,7 @@
                 <svelte:fragment slot="lead">
                 </svelte:fragment>
                 <svelte:fragment slot="summary">
-                  {songbook.songs.length} songs
+                  {songbook.songObjects.length} songs
                 </svelte:fragment>
                 <svelte:fragment slot="content">
                   <ol class="list">
