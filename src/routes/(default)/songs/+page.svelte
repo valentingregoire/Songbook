@@ -4,9 +4,9 @@
   import SongList from "$lib/SongList.svelte";
   import { navigate } from "$lib/utils";
 
-  let songs: Array<Song | string>;
+  let songs: Song[];
   let selectedSongId: number;
-  songsStore.subscribe((s) => (songs = Object.values(s)));
+  songsStore.subscribe((songMap: Map<string, Song>) => songs = [...songMap.values()]);
 
   async function clickSong() {
     await navigate({ songId: selectedSongId });
