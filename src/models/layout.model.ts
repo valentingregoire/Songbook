@@ -1,4 +1,5 @@
 export interface LayoutModel {
+  icon: string;
   title: string;
   back_url?: string;
 }

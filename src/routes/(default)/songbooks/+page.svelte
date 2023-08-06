@@ -13,7 +13,7 @@
   {#if songbooks}
     {#each songbooks.values() as songbook (songbook.name)}
       <a
-        class="card w-full md:w-1/4 lg:w-1/6 min-w-fit grow h-fit drop-shadow-md"
+        class="card w-full md:w-1/4 lg:w-1/6 min-w-fit grow h-fit rounded-2xl shadow-md"
         href="/songbooks/{songbook.name}/songs/0?pageId=0"
       >
         <header class="card-header flex flex-nowrap justify-between p-5">
@@ -22,14 +22,12 @@
           <!--          </Icon>-->
           <div class="ml-2">
             {#if songbook.default}
-              <span class="badge variant-ghost-success text-success-700"
-                >Default</span
-              >
-            {:else}
-              <label class="flex space-x-2" on:click|stopPropagation>
-                <input type="checkbox" class="checkbox input-primary" />
-                <span>Default</span>
-              </label>
+              <span class="badge variant-ghost-success text-success-700">Default</span>
+            <!--{:else}-->
+            <!--  <label class="flex space-x-2" on:click|stopPropagation>-->
+            <!--    <input type="checkbox" class="checkbox input-primary" />-->
+            <!--    <span>Default</span>-->
+            <!--  </label>-->
             {/if}
           </div>
         </header>
@@ -65,9 +63,14 @@
         </section>
         <hr class="opacity-50" />
         <footer class="card-footer p-5 flex justify-end">
+          <div class="flex w-full justify-start space-x-1">
+            {#each songbook.tags as tag}
+              <span class="chip variant-filled-primary rounded-full">{tag}</span>
+            {/each}
+          </div>
           <button
             type="button"
-            class="btn btn-sm variant-filled-secondary"
+            class="btn btn-sm variant-filled-surface"
             on:click|preventDefault={goto(`/songbooks/${songbook.name}`)}
           >
             <Icon name="edit">Edit</Icon>

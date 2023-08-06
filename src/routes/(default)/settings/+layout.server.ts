@@ -3,7 +3,8 @@ import ICON_MAP from "$lib/utils";
 
 export async function load() {
   const layoutData: LayoutModel = {
-    title: `${ICON_MAP.settings} Settings`,
+    icon: ICON_MAP.settings,
+    title: "Settings",
   };
   return layoutData;
 }

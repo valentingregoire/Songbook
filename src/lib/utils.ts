@@ -1,5 +1,6 @@
 import { goto } from "$app/navigation";
 
+export const DEFAULT_URL = "/songbooks";
 export const SONGBOOKS_PATH = "static/songbooks/";
 export const ICON_MAP = {
   title: "🎵",
@@ -34,14 +35,19 @@ interface NavigateOptions {
 }
 
 export async function navigate(options?: NavigateOptions): Promise<void> {
-  if (!options) await goto("/home");
+  if (!options) await goto(DEFAULT_URL);
   else {
-    let url = "";
+    let url: string = "";
     if (options.songbookName) {
       url = `/songbooks/${options.songbookName}`;
     }
     if (options.songId) {
-      url += `/songs/${options.songId}?pageId=${options.pageId || 0}`;
+      const songPart: string = options.songId ? `/songs/${options.songId}` : "";
+      url += songPart;
+    }
+    if (options.pageId) {
+      const pagePart: string = options.pageId ? `?pageId=${options.pageId}` : "";
+      url += pagePart;
     }
     await goto(url);
   }

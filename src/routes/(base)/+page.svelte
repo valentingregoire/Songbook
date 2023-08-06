@@ -8,10 +8,10 @@
   import { cubicOut } from "svelte/easing";
   import LoadingItem from "$lib/LoadingItem.svelte";
   import { ComponentType } from "$models/components.model";
-  import { goto } from "$app/navigation";
   import type Songbook from "$models/songbook.model";
-  import Song from "../../models/song.model";
-  import type { Settings, SettingsType } from "../../models/settings.model";
+  import Song from "$models/song.model";
+  import type { Settings, SettingsType } from "$models/settings.model";
+  import { navigate } from "$lib/utils";
 
   let songMap: Map<string, Song>;
   let totalLoaded: number = 0;
@@ -49,7 +49,7 @@
       if (totalProgress === 100) {
         await tick();
         await progress.set(100);
-        await goto("/songbooks");
+        await navigate();
       }
     })();
   }

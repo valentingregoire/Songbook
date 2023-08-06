@@ -74,7 +74,10 @@
         {/if}
       </button>
     </svelte:fragment>
-    <h3 class="h3">{$page.data?.title}</h3>
+    <h3 class="h3">
+      <Icon name={$page.data?.icon} size="h-8">{$page.data?.title}</Icon>
+    </h3>
+<!--    <h3 class="h3">{$page.data?.title}</h3>-->
     <svelte:fragment slot="trail" />
   </AppBar>
 
