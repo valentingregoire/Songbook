@@ -13,7 +13,7 @@
   {#if songbooks}
     {#each songbooks.values() as songbook (songbook.name)}
       <a
-        class="card w-full md:w-1/4 lg:w-1/6 min-w-fit grow h-fit rounded-2xl shadow-md"
+        class="card w-full md:w-1/4 lg:w-1/6 min-w-fit grow h-fit rounded-3xl shadow-md"
         href="/songbooks/{songbook.name}/songs/0?pageId=0"
       >
         <header class="card-header flex flex-nowrap justify-between p-5">

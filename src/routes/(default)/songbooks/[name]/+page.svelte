@@ -42,23 +42,32 @@
 
 <!--<SongList songs={songbook.songs} bind:selectedSongId={selectedSongId} {clickSong} />-->
 <div class="flex flex-col p-2 gap-3">
-  <SlideToggle name="default-songbook-slider" size="sm" active="bg-primary-500" bind:checked={songbook.default}>Default</SlideToggle>
-  <label class="label">
-    <span>Name</span>
-    <input type="text" class="input" bind:value={songbook.name} name="name" placeholder="Songbook Name" />
-  </label>
-  <label class="label">
-    <span>Tags</span>
-    <!--      class="card shadow-md border-0"-->
-    <InputChip
-      rounded="rounded-2xl"
-      duration={settings.layout.animationSpeed}
-      chips="variant-filled-primary rounded-full"
-      bind:value={songbook.tags}
-      name="tags"
-      placeholder="Enter a tag"
-    />
-  </label>
+  <div class="card shadow rounded-3xl">
+    <header class="card-header">
+      <h2 class="h2">Songbook</h2>
+    </header>
+    <section class="p-4">
+      <SlideToggle name="default-songbook-slider" size="sm" active="bg-primary-500" bind:checked={songbook.default}>
+        Default
+      </SlideToggle>
+      <label class="label">
+        <span>Name</span>
+        <input type="text" class="input" bind:value={songbook.name} name="name" placeholder="Songbook Name" />
+      </label>
+      <label class="label">
+        <span>Tags</span>
+        <!--      class="card shadow-md border-0"-->
+        <InputChip
+          rounded="rounded-2xl"
+          duration={settings.layout.animationSpeed}
+          chips="variant-filled-primary rounded-full"
+          bind:value={songbook.tags}
+          name="tags"
+          placeholder="Enter a tag"
+        />
+      </label>
+    </section>
+  </div>
   <label>
     <span>Songs</span>
     <section
@@ -74,7 +83,7 @@
         <!--    bg-surface-50-->
         <a
           href="/songbooks/{name}/songs/{index}"
-          class="flex flex-col card w-full md:w-1/4 lg:w-1/6 min-w-fit grow w-1/6 rounded-2xl shadow-md"
+          class="flex flex-col card w-full md:w-1/4 lg:w-1/6 min-w-fit grow w-1/6 rounded-2xl shadow"
           animate:flip={{ duration: settings.layout.animationSpeed }}
           on:click|stopPropagation
         >
@@ -134,6 +143,7 @@
           <!--      <hr class="opacity-50" />-->
           <footer class="self-end flex card-footer justify-end">
             <button class="btn btn-sm variant-filled-surface">
+<!--              <Icon name="edit" />&nbsp;Edit-->
               <Icon name="edit">Edit</Icon>
             </button>
           </footer>
@@ -141,4 +151,7 @@
       {/each}
     </section>
   </label>
+  <section class="flex gap-3 justify-end">
+    <button class="btn btn variant-filled-primary"><Icon name="save">Save</Icon></button>
+  </section>
 </div>

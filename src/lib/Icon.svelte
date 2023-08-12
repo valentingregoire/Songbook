@@ -26,74 +26,77 @@
 
   export let name: string;
   export let size: string = "h-[16px]";
+  // export let size: string = "";
   export let success: boolean = false;
   export let error: boolean = false;
   export let multiline: boolean = false;
-  export let iconClass: string = "content-left float-left items-center";
 </script>
+
 
 {#if name}
   <div
-    class="flex content-start items-center"
+    class="flex flex-row items-center overflow-hidden"
     class:text-success-700={success}
     class:text-error-600={error}
     class:items-start={multiline}
   >
-    <div class="{iconClass} {size}">
-      {#if name === "songbook"}
-        <FaBook />
-      {:else if name === "songbooks"}
-        <!--      <FaArchive />-->
-        <MdImportContacts />
-      {:else if name === "title"}
-        <FaItunesNote />
-      {:else if name === "artist"}
-        <MdGroup />
-      {:else if name === "key"}
-        <FaKey />
-      {:else if name === "bpm"}
-        <MdTimer />
-      {:else if name === "fileType"}
-        <FaFileImage />
-      {:else if name === "info"}
-        <FaInfoCircle />
-      {:else if name === "left"}
-        <FaChevronLeft />
-      {:else if name === "arrow-left"}
-        <IoMdArrowRoundBack />
-        <!--    <FaArrowLeft />-->
-      {:else if name === "save"}
-        <FaSave />
-      {:else if name === "page"}
-        <FaFileAlt />
-      {:else if name === "close"}
-        <MdClose />
-      {:else if name === "cancel"}
-        <MdCancel />
-      {:else if name === "check-circle"}
-        <FaCheckCircle />
-      {:else if name === "check"}
-        <FaCheck />
-      {:else if name === "clear"}
-        <FaTimes />
-      {:else if name === "menu"}
-        <FaBars />
-      {:else if name === "songs" || name === "song"}
-        <FaMusic />
-      {:else if name === "settings"}
-        <FaCog />
-      {:else if name === "hash"}
-        <FaHashtag />
-      {:else if name === "edit"}
-        <FaPencilAlt />
-      {:else}
-        {name}
-      {/if}
+    <div class="flex-0 flex flex-col {size}">
+      <div class="flex-1 h-full {$$props.class || ''}">
+        {#if name === "songbook"}
+          <FaBook />
+        {:else if name === "songbooks"}
+          <!--      <FaArchive />-->
+          <MdImportContacts />
+        {:else if name === "title"}
+          <FaItunesNote />
+        {:else if name === "artist"}
+          <MdGroup />
+        {:else if name === "key"}
+          <FaKey />
+        {:else if name === "bpm"}
+          <MdTimer />
+        {:else if name === "fileType"}
+          <FaFileImage />
+        {:else if name === "info"}
+          <FaInfoCircle />
+        {:else if name === "left"}
+          <FaChevronLeft />
+        {:else if name === "arrow-left"}
+          <IoMdArrowRoundBack />
+          <!--    <FaArrowLeft />-->
+        {:else if name === "save"}
+          <FaSave />
+        {:else if name === "page"}
+          <FaFileAlt />
+        {:else if name === "close"}
+          <MdClose />
+        {:else if name === "cancel"}
+          <MdCancel />
+        {:else if name === "check-circle"}
+          <FaCheckCircle />
+        {:else if name === "check"}
+          <FaCheck />
+        {:else if name === "clear"}
+          <FaTimes />
+        {:else if name === "menu"}
+          <FaBars />
+        {:else if name === "songs" || name === "song"}
+          <FaMusic />
+        {:else if name === "settings"}
+          <FaCog />
+        {:else if name === "hash"}
+          <FaHashtag />
+        {:else if name === "edit"}
+          <FaPencilAlt />
+        {:else}
+          {name}
+        {/if}
+      </div>
     </div>
     {#if $$slots.default}
-      <span class="badge-text w-full pl-2">
+      <div class="flex-none pl-2">
         <slot />
-      </span>
+      </div>
     {/if}
   </div>
 {/if}
