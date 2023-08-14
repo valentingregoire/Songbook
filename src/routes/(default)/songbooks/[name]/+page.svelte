@@ -152,6 +152,6 @@
     </section>
   </label>
   <section class="flex gap-3 justify-end">
-    <button class="btn btn variant-filled-primary"><Icon name="save">Save</Icon></button>
+    <button class="btn variant-filled-primary"><Icon name="save">Save</Icon></button>
   </section>
 </div>

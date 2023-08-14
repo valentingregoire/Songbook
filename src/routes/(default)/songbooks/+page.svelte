@@ -60,21 +60,28 @@
               </AccordionItem>
             </Accordion>
           </div>
-        </section>
-        <hr class="opacity-50" />
-        <footer class="card-footer p-5 flex justify-end">
-          <div class="flex w-full justify-start space-x-1">
-            {#each songbook.tags as tag}
-              <span class="chip variant-filled-primary rounded-full">{tag}</span>
-            {/each}
-          </div>
           <button
             type="button"
-            class="btn btn-sm variant-filled-surface"
+            class="btn variant-filled-surface"
             on:click|preventDefault={goto(`/songbooks/${songbook.name}`)}
           >
             <Icon name="edit">Edit</Icon>
           </button>
+        </section>
+        <hr class="opacity-50" />
+        <footer class="card-footer p-5">
+          <div class="w-full space-x-1">
+            {#each songbook.tags as tag}
+              <span class="chip variant-filled-primary rounded-full">{tag}</span>
+            {/each}
+            <button
+              type="button"
+              class="btn btn-sm variant-filled-surface float-right"
+              on:click|preventDefault={goto(`/songbooks/${songbook.name}`)}
+            >
+              <Icon name="edit">Edit</Icon>
+            </button>
+          </div>
         </footer>
       </a>
     {/each}
