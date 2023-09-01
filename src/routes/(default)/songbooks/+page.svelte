@@ -23,11 +23,11 @@
           <div class="ml-2">
             {#if songbook.default}
               <span class="badge variant-ghost-success text-success-700">Default</span>
-            <!--{:else}-->
-            <!--  <label class="flex space-x-2" on:click|stopPropagation>-->
-            <!--    <input type="checkbox" class="checkbox input-primary" />-->
-            <!--    <span>Default</span>-->
-            <!--  </label>-->
+              <!--{:else}-->
+              <!--  <label class="flex space-x-2" on:click|stopPropagation>-->
+              <!--    <input type="checkbox" class="checkbox input-primary" />-->
+              <!--    <span>Default</span>-->
+              <!--  </label>-->
             {/if}
           </div>
         </header>
@@ -60,23 +60,25 @@
               </AccordionItem>
             </Accordion>
           </div>
-          <button
-            type="button"
-            class="btn variant-filled-surface"
-            on:click|preventDefault={goto(`/songbooks/${songbook.name}`)}
-          >
-            <Icon name="edit">Edit</Icon>
-          </button>
+<!--          <button-->
+<!--            type="button"-->
+<!--            class="btn variant-filled-surface"-->
+<!--            on:click|preventDefault={goto(`/songbooks/${songbook.name}`)}-->
+<!--          >-->
+<!--            <Icon name="edit">Edit</Icon>-->
+<!--          </button>-->
         </section>
         <hr class="opacity-50" />
         <footer class="card-footer p-5">
-          <div class="w-full space-x-1">
-            {#each songbook.tags as tag}
-              <span class="chip variant-filled-primary rounded-full">{tag}</span>
-            {/each}
+          <div class="w-full flex items-center justify-between">
+            <div class="space-x-1">
+              {#each songbook.tags as tag}
+                <span class="chip variant-filled-primary rounded-full">{tag}</span>
+              {/each}
+            </div>
             <button
               type="button"
-              class="btn btn-sm variant-filled-surface float-right"
+              class="btn btn-sm variant-filled-surface"
               on:click|preventDefault={goto(`/songbooks/${songbook.name}`)}
             >
               <Icon name="edit">Edit</Icon>

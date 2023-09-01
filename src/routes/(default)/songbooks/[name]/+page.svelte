@@ -30,6 +30,7 @@
   }
 
   async function handleFinalize(event: CustomEvent<DndEvent<Song>>) {
+    // console.log(event);
     songbook.songObjects = event.detail.items;
     songbook.songs = songbook.songObjects.map((song: Song) => song.id);
     songbooksStore.update((songbookMap) => {
@@ -83,7 +84,7 @@
         <!--    bg-surface-50-->
         <a
           href="/songbooks/{name}/songs/{index}"
-          class="flex flex-col card w-full md:w-1/4 lg:w-1/6 min-w-fit grow w-1/6 rounded-2xl shadow"
+          class="flex flex-col card w-full md:w-1/4 lg:w-1/6 min-w-fit grow rounded-2xl shadow"
           animate:flip={{ duration: settings.layout.animationSpeed }}
           on:click|stopPropagation
         >
@@ -98,6 +99,7 @@
           <!--      <hr class="opacity-50" />-->
           <section
             class="flex-grow px-6 py-3 text-surface-700"
+            role="navigation"
             on:click|preventDefault
           >
             {#if song.artist}
