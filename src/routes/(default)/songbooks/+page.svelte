@@ -16,75 +16,96 @@
         class="card w-full md:w-1/4 lg:w-1/6 min-w-fit grow h-fit rounded-3xl shadow-md"
         href="/songbooks/{songbook.name}/songs/0?pageId=0"
       >
-        <header class="card-header flex flex-nowrap justify-between p-5">
-          <!--          <Icon name="songbook">-->
-          <h4 class="h4 whitespace-nowrap">{songbook.name}</h4>
-          <!--          </Icon>-->
-          <div class="ml-2">
-            {#if songbook.default}
-              <span class="badge variant-ghost-success text-success-700">Default</span>
-              <!--{:else}-->
-              <!--  <label class="flex space-x-2" on:click|stopPropagation>-->
-              <!--    <input type="checkbox" class="checkbox input-primary" />-->
-              <!--    <span>Default</span>-->
-              <!--  </label>-->
-            {/if}
-          </div>
-        </header>
-        <hr class="opacity-50" />
-        <section class="p-5 flex-col">
-          <div on:click|preventDefault>
-            <Accordion>
-              <AccordionItem>
-                <svelte:fragment slot="lead" />
-                <svelte:fragment slot="summary">
-                  {songbook.songObjects.length} songs
-                </svelte:fragment>
-                <svelte:fragment slot="content">
-                  <ol class="list">
-                    {#each songbook.songObjects as song, index}
-                      <li>
-                        <a
-                          class="btn btn-sm btn-hover"
-                          href="/songbooks/{songbook.name}/songs/{index}?pageId=0"
-                          on:click|preventDefault
-                        >
-                          <!--                        <Icon name="song">{index + 1} {song.title}</Icon>-->
-                          <span>{index + 1}</span>
-                          <span>{song.title}</span>
-                        </a>
-                      </li>
-                    {/each}
-                  </ol>
-                </svelte:fragment>
-              </AccordionItem>
-            </Accordion>
-          </div>
-<!--          <button-->
-<!--            type="button"-->
-<!--            class="btn variant-filled-surface"-->
-<!--            on:click|preventDefault={goto(`/songbooks/${songbook.name}`)}-->
-<!--          >-->
-<!--            <Icon name="edit">Edit</Icon>-->
-<!--          </button>-->
-        </section>
-        <hr class="opacity-50" />
-        <footer class="card-footer p-5">
-          <div class="w-full flex items-center justify-between">
-            <div class="space-x-1">
-              {#each songbook.tags as tag}
-                <span class="chip variant-filled-primary rounded-full">{tag}</span>
-              {/each}
-            </div>
+
+        <!--        <section class="p-5 flex-col">-->
+        <section class="flex flex-nowrap justify-between p-5">
+          <h3 class="h3 whitespace-nowrap">{songbook.name}</h3>
+          <!--          <div class="ml-2">-->
+          <!--          <div class="btn-group">-->
+          <div>
+            <span class="chip">
+              <Icon name="song">{songbook.songObjects.length}</Icon>
+            </span>
             <button
               type="button"
-              class="btn btn-sm variant-filled-surface"
+              class="btn-icon btn-icon-sm variant-filled-primary"
               on:click|preventDefault={goto(`/songbooks/${songbook.name}`)}
             >
-              <Icon name="edit">Edit</Icon>
+              <Icon name="edit" />
             </button>
           </div>
-        </footer>
+          <!--          </div>-->
+        </section>
+
+        <!--        <header class="card-header flex flex-nowrap justify-between p-5">-->
+        <!--          &lt;!&ndash;          <Icon name="songbook">&ndash;&gt;-->
+        <!--          <h4 class="h4 whitespace-nowrap">{songbook.name}</h4>-->
+        <!--          &lt;!&ndash;          </Icon>&ndash;&gt;-->
+        <!--          <div class="ml-2">-->
+        <!--            {#if songbook.default}-->
+        <!--              <span class="badge variant-ghost-success text-success-700">Default</span>-->
+        <!--              &lt;!&ndash;{:else}&ndash;&gt;-->
+        <!--              &lt;!&ndash;  <label class="flex space-x-2" on:click|stopPropagation>&ndash;&gt;-->
+        <!--              &lt;!&ndash;    <input type="checkbox" class="checkbox input-primary" />&ndash;&gt;-->
+        <!--              &lt;!&ndash;    <span>Default</span>&ndash;&gt;-->
+        <!--              &lt;!&ndash;  </label>&ndash;&gt;-->
+        <!--            {/if}-->
+        <!--          </div>-->
+        <!--        </header>-->
+        <!--        <hr class="opacity-50" />-->
+        <!--        <section class="p-5 flex-col">-->
+        <!--          <div on:click|preventDefault>-->
+        <!--            <Accordion>-->
+        <!--              <AccordionItem>-->
+        <!--                <svelte:fragment slot="lead" />-->
+        <!--                <svelte:fragment slot="summary">-->
+        <!--                  {songbook.songObjects.length} songs-->
+        <!--                </svelte:fragment>-->
+        <!--                <svelte:fragment slot="content">-->
+        <!--                  <ol class="list">-->
+        <!--                    {#each songbook.songObjects as song, index}-->
+        <!--                      <li>-->
+        <!--                        <a-->
+        <!--                          class="btn btn-sm btn-hover"-->
+        <!--                          href="/songbooks/{songbook.name}/songs/{index}?pageId=0"-->
+        <!--                          on:click|preventDefault-->
+        <!--                        >-->
+        <!--                          &lt;!&ndash;                        <Icon name="song">{index + 1} {song.title}</Icon>&ndash;&gt;-->
+        <!--                          <span>{index + 1}</span>-->
+        <!--                          <span>{song.title}</span>-->
+        <!--                        </a>-->
+        <!--                      </li>-->
+        <!--                    {/each}-->
+        <!--                  </ol>-->
+        <!--                </svelte:fragment>-->
+        <!--              </AccordionItem>-->
+        <!--            </Accordion>-->
+        <!--          </div>-->
+        <!--          <button-->
+        <!--            type="button"-->
+        <!--            class="btn variant-filled-surface"-->
+        <!--            on:click|preventDefault={goto(`/songbooks/${songbook.name}`)}-->
+        <!--          >-->
+        <!--            <Icon name="edit">Edit</Icon>-->
+        <!--          </button>-->
+        <!--        </section>-->
+        <!--        <hr class="opacity-50" />-->
+        <!--        <footer class="card-footer p-5">-->
+        <!--          <div class="w-full flex items-center justify-between">-->
+        <!--            <div class="space-x-1">-->
+        <!--              {#each songbook.tags as tag}-->
+        <!--                <span class="chip variant-filled-primary rounded-full">{tag}</span>-->
+        <!--              {/each}-->
+        <!--            </div>-->
+        <!--            <button-->
+        <!--              type="button"-->
+        <!--              class="btn btn-sm variant-filled-surface"-->
+        <!--              on:click|preventDefault={goto(`/songbooks/${songbook.name}`)}-->
+        <!--            >-->
+        <!--              <Icon name="edit">Edit</Icon>-->
+        <!--            </button>-->
+        <!--          </div>-->
+        <!--        </footer>-->
       </a>
     {/each}
 

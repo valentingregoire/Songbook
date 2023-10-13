@@ -13,36 +13,37 @@
   import type { Settings, SettingsType } from "$models/settings.model";
   import { navigate } from "$lib/utils";
 
-  let songMap: Map<string, Song>;
+  let songMap: Map<string, Song> = new Map();
   let totalLoaded: number = 0;
   let totalToLoad: number = 1;
   let totalProgress: number = 0;
 
   // [component, [loaded, toLoad]]
-  const loadingItems = {
-    [ComponentType.Songs]: [],
-    [ComponentType.Songbooks]: [],
-    [ComponentType.Settings]: [],
-    [ComponentType.Pages]: [],
-  };
-
-  $: loadingProgress = Object.fromEntries(
-    Object.entries(loadingItems).map(([key, value]) => {
-      return [key, value.length == 2 ? (value[0] / value[1]) * 100 : undefined];
-    })
+  const loadingItems: Map<ComponentType, number[]> = new Map([
+      [ComponentType.Songs, [1, 1]],
+      [ComponentType.Songbooks, [1, 1]],
+      [ComponentType.Settings, [1, 1]],
+      [ComponentType.Pages, [1, 1]]
+    ]
   );
+
+  $: loadingProgress = new Map([...loadingItems].map(([item, progress]) => {
+    return [item, progress.length == 2 ? (progress[0] / progress[1]) * 100 : undefined];
+  }));
 
   const progress = tweened(0, {
     duration: 300,
-    easing: cubicOut,
+    easing: cubicOut
   });
 
-  $: if (loadingItems[ComponentType.Pages]?.length === 2) {
+  $: if (loadingItems.get(ComponentType.Pages)?.length === 2) {
+    // TODO: rewrite with Map support instead of simple objects
     (async () => {
-      totalLoaded = Object.values(loadingItems).reduce((acc, cur) => {
+      const values = Array.from(loadingItems.values());
+      totalLoaded = values.reduce((acc, cur) => {
         return +acc + cur[0];
       }, 0);
-      totalToLoad = Object.values(loadingItems).reduce((acc, cur) => {
+      totalToLoad = values.reduce((acc, cur) => {
         return +acc + cur[1];
       }, 0);
       totalProgress = (totalLoaded / totalToLoad) * 100;
@@ -56,26 +57,28 @@
 
   async function songPageLoaded() {
     await tick();
-    loadingItems[ComponentType.Pages][0]++;
+    // loadingItems?.get(ComponentType.Pages)[0]++;
     totalProgress = (totalLoaded / totalToLoad) * 100;
     await progress.set(totalProgress);
   }
 
   onMount(async () => {
-    loadingItems[ComponentType.Settings] = [0, 1];
+    loadingItems.get(ComponentType.Settings)?.push(0, 1);
     get("api/settings").then((settings: Map<SettingsType, Settings>) => {
+      console.log("settings", settings);
       settingsMapStore.set(
         new Map<SettingsType, Settings>(
           Object.entries(settings) as [SettingsType, Settings][]
         )
       );
-      loadingItems[ComponentType.Settings] = [1, 1];
+      loadingItems.set(ComponentType.Settings, [1, 1]);
+      settingsMapStore.subscribe(s => console.log("settings2", s));
     });
 
-    loadingItems[ComponentType.Songs] = [0, 2];
+    loadingItems.set(ComponentType.Songs, [0, 2]);
     await get("api/songs").then((songs: Map<string, Song>) => {
-      loadingItems[ComponentType.Songs] = [1, 2];
-      songMap = new Map();
+      loadingItems.set(ComponentType.Songs, [1, 2]);
+      console.log("songs", songs);
       songMap = new Map<string, Song>(
         Object.entries(songs) as Array<[string, Song]>
       );
@@ -84,13 +87,13 @@
         (acc: number, cur: Song) => +acc + cur.pages?.length,
         0
       );
-      loadingItems[ComponentType.Pages] = [0, pagesToLoad];
-      loadingItems[ComponentType.Songs] = [2, 2];
+      loadingItems.set(ComponentType.Pages, [0, pagesToLoad]);
+      loadingItems.set(ComponentType.Songs, [2, 2]);
     });
 
-    loadingItems[ComponentType.Songbooks] = [0, 2];
+    loadingItems.set(ComponentType.Songbooks, [0, 2]);
     get("api/songbooks").then((songbooks: Map<string, Songbook>) => {
-      loadingItems[ComponentType.Songbooks] = [1, 2];
+      loadingItems.set(ComponentType.Songbooks, [1, 2]);
       const songbookMap: Map<string, Songbook> = new Map(
         Object.entries(songbooks) as Array<[string, Songbook]>
       );
@@ -102,13 +105,13 @@
         );
       });
       songbooksStore.set(songbookMap);
-      loadingItems[ComponentType.Songbooks] = [2, 2];
+      loadingItems.set(ComponentType.Songbooks, [2, 2]);
     });
   });
 </script>
 
 <svelte:head>
-  {#if loadingProgress[ComponentType.Songs] === 100}
+  {#if loadingProgress.get(ComponentType.Songs) === 100}
     {#each songMap.values() as song}
       {#each song.pages as page}
         <link
@@ -134,11 +137,12 @@
       <div class="flex mt-3 text-lg">
         <ul class="list">
           {#if loadingItems}
-            {#each Object.entries(loadingItems) as [key, value]}
+            <!--{#each Object.entries(loadingItems) as [key, value]}-->
+            {#each loadingItems as [key, value]}
               <li>
                 <div class="flex items-center">
                   <span>
-                    <LoadingItem value={loadingProgress[key]} />
+                    <LoadingItem value={loadingProgress.get(key)} />
                   </span>
                   <span class="ml-2">{key}</span>
                 </div>

@@ -1,5 +1,5 @@
 import { get, post, SONGBOOKS_NAMESPACE } from "../lib/api";
-import type { Songbook } from "../models/songbook.model";
+import type { Songbook } from "$models/songbook.model";
 
 export function getSongbooks() {
   return get(`${SONGBOOKS_NAMESPACE}`);

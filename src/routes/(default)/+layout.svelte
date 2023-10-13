@@ -9,35 +9,35 @@
   import { settingsStore, songbooksStore } from "$stores";
   import type { Settings } from "$models/settings.model";
   import { cubicIn, cubicOut } from "svelte/easing";
-  import type { SongbookMap } from "$models/songbook.model";
+  import type Songbook from "$models/songbook.model";
 
   const iconSize: string = "h-9";
   const menu = [
     {
       name: "Songbooks",
       icon: "songbooks",
-      link: "/songbooks",
+      link: "/songbooks"
     },
     {
       name: "Songs",
       icon: "songs",
-      link: "/songs",
+      link: "/songs"
     },
     {
       name: "Settings",
       icon: "settings",
-      link: "/settings",
-    },
+      link: "/settings"
+    }
   ];
 
-  let settings: Settings;
+  let settings: Settings | undefined;
   let showSideBar: boolean;
   let showSideBarInitial: boolean;
-  let songbooks: SongbookMap;
+  let songbooks: Map<String, Songbook>;
   songbooksStore.subscribe((value) => (songbooks = value));
 
   settingsStore.subscribe((value) => (settings = value));
-  showSideBarInitial = settings?.layout?.showSideBar;
+  showSideBarInitial = settings?.layout?.sideBar?.show || true;
   $: $page.url.path, (showSideBar = showSideBarInitial);
 </script>
 
@@ -54,7 +54,7 @@
             class="absolute"
             transition:fly={{
               x: -20,
-              duration: settings.layout.animationSpeed,
+              duration: settings?.layout?.animationSpeed,
               easing: cubicIn,
             }}
           >
@@ -65,7 +65,7 @@
             class="absolute"
             transition:fly={{
               x: 20,
-              duration: settings.layout.animationSpeed,
+              duration: settings?.layout?.animationSpeed,
               easing: cubicIn,
             }}
           >
@@ -77,7 +77,7 @@
     <h3 class="h3">
       <Icon name={$page.data?.icon} size="h-8">{$page.data?.title}</Icon>
     </h3>
-<!--    <h3 class="h3">{$page.data?.title}</h3>-->
+    <!--    <h3 class="h3">{$page.data?.title}</h3>-->
     <svelte:fragment slot="trail" />
   </AppBar>
 
@@ -103,7 +103,7 @@
                 <svelte:fragment slot="lead">
                   <Icon name="arrow-left" size={iconSize} />
                 </svelte:fragment>
-                {#if settings?.layout.sideBar.labels}
+                {#if settings?.layout?.sideBar?.labels}
                   <span>Back</span>
                 {/if}
               </AppRailAnchor>
@@ -117,7 +117,7 @@
               <svelte:fragment slot="lead">
                 <Icon name={item.icon} size={iconSize} />
               </svelte:fragment>
-              {#if settings?.layout.sideBar.labels}
+              {#if settings?.layout?.sideBar?.labels}
                 <span>{item.name}</span>
               {/if}
             </AppRailAnchor>

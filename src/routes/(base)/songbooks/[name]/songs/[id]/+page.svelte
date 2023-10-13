@@ -11,7 +11,7 @@
 
   const songbookName: string = $page.params.name;
 
-  let settings: Settings;
+  let settings: Settings | undefined;
   settingsStore.subscribe((s) => (settings = s));
 
   $: songId = Number($page.params.id);
@@ -27,7 +27,7 @@
 
   let songbook: Songbook;
   songbooksStore.subscribe(
-    (songbooks) => (songbook = songbooks.find((s) => s.name === songbookName))
+    (songbooks: Map<string, Songbook>) => (songbook = songbooks.get(songbookName))
   );
 </script>
 
