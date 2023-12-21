@@ -12,11 +12,11 @@
 
   const name = $page.params.name;
   let settings: Settings;
-  settingsStore.subscribe((s) => (settings = s));
+  settingsStore.subscribe(s => (settings = s));
 
   let songbook: Songbook;
   songbooksStore.subscribe((songbookMap) => {
-    songbook = songbookMap.get(name);
+    songbook = songbookMap.get(name)!;
   });
 
   // let selectedSongId: number;
@@ -60,7 +60,7 @@
         <!--      class="card shadow-md border-0"-->
         <InputChip
           rounded="rounded-2xl"
-          duration={settings.layout.animationSpeed}
+          duration={settings?.layout?.animationSpeed}
           chips="variant-filled-primary rounded-full"
           bind:value={songbook.tags}
           name="tags"
@@ -75,7 +75,7 @@
       class="flex flex-wrap gap-3"
       use:dndzone={{
     items: songbook.songObjects,
-    flipDurationMs: settings.layout.animationSpeed,
+    flipDurationMs: settings?.layout?.animationSpeed,
   }}
       on:consider={handleConsider}
       on:finalize={handleFinalize}
@@ -85,7 +85,7 @@
         <a
           href="/songbooks/{name}/songs/{index}"
           class="flex flex-col card w-full md:w-1/4 lg:w-1/6 min-w-fit grow rounded-2xl shadow"
-          animate:flip={{ duration: settings.layout.animationSpeed }}
+          animate:flip={{ duration: settings?.layout?.animationSpeed }}
           on:click|stopPropagation
         >
           <header class="p-3 space-x-2">
@@ -107,7 +107,7 @@
             {/if}
             {#if song.pages && song.pages.length > 0}
               <Accordion
-                duration={settings.layout.animationSpeed}
+                duration={settings?.layout?.animationSpeed}
                 padding="p-1"
                 regionPanel="space-y-1"
                 rounded="rounded-full"

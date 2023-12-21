@@ -2,7 +2,6 @@
   import { songbooksStore } from "$stores";
   import type Songbook from "$models/songbook.model";
   import Icon from "$lib/Icon.svelte";
-  import { Accordion, AccordionItem } from "@skeletonlabs/skeleton";
   import { goto } from "$app/navigation";
 
   let songbooks: Map<string, Songbook>;
@@ -18,24 +17,36 @@
       >
 
         <!--        <section class="p-5 flex-col">-->
-        <section class="flex flex-nowrap justify-between p-5">
+<!--        <section class="flex flex-nowrap justify-between p-5">-->
+        <section class="p-5">
           <h3 class="h3 whitespace-nowrap">{songbook.name}</h3>
           <!--          <div class="ml-2">-->
           <!--          <div class="btn-group">-->
           <div>
-            <span class="chip">
+            <span class="chip px-0">
               <Icon name="song">{songbook.songObjects.length}</Icon>
             </span>
-            <button
-              type="button"
-              class="btn-icon btn-icon-sm variant-filled-primary"
-              on:click|preventDefault={goto(`/songbooks/${songbook.name}`)}
-            >
-              <Icon name="edit" />
-            </button>
+<!--            <button-->
+<!--              type="button"-->
+<!--              class="btn-icon btn-icon-sm variant-filled-primary"-->
+<!--              on:click|preventDefault={goto(`/songbooks/${songbook.name}`)}-->
+<!--            >-->
+<!--              <Icon name="edit" />-->
+<!--            </button>-->
           </div>
           <!--          </div>-->
         </section>
+        <footer class="card-footer">
+          <div class="flex justify-end">
+            <button
+              type="button"
+              class="btn variant-filled-primary"
+              on:click|preventDefault={goto(`/songbooks/${songbook.name}`)}
+            >
+              <Icon name="edit">Edit</Icon>
+            </button>
+          </div>
+        </footer>
 
         <!--        <header class="card-header flex flex-nowrap justify-between p-5">-->
         <!--          &lt;!&ndash;          <Icon name="songbook">&ndash;&gt;-->

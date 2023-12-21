@@ -3,11 +3,11 @@
   import SideButton from "./SideButton.svelte";
   import BottomButton from "./BottomButton.svelte";
   import type Songbook from "$models/songbook.model";
-  import { Drawer } from "@skeletonlabs/skeleton";
   import { goto } from "$app/navigation";
   import { tick } from "svelte";
-  import Menu from "./Menu.svelte";
   import { Direction, Subject } from "$models/layout.model";
+  import type { Drawer } from "@skeletonlabs/skeleton";
+  import Menu from "$lib/Viewer/Menu.svelte";
 
   export let songbook: Songbook;
   export let songId: number;
@@ -15,8 +15,7 @@
 
   let menu: Drawer;
 
-  $: song = songbook?.songs[songId];
-  $: songMap = songbook?.songs;
+  $: song = songbook?.songObjects[songId];
   $: songbookSize = songbook?.songs?.length;
   $: pages = song?.pages?.length || 1;
 
@@ -25,7 +24,7 @@
       pageId == 0 ? (songId + songbookSize - 1) % songbookSize : songId;
     const pageIdNew =
       pageId == 0
-        ? songbook?.songs[songIdNew].pages?.length - 1 || 0
+        ? songbook?.songObjects[songIdNew].pages?.length - 1 || 0
         : pageId - 1;
     await navigate(songIdNew, pageIdNew, Subject.Page, Direction.Previous);
   }
@@ -72,7 +71,7 @@
     <Menu
       bind:this={menu}
       songs={songbook?.songs}
-      songbookName={songbook.name}
+      songbookName={songbook?.name}
     />
   </div>
 </div>

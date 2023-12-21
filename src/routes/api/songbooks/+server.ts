@@ -6,13 +6,11 @@ import type Songbook from "$models/songbook.model";
 export async function GET(): Promise<Response> {
   const songbookMap: Map<string, Songbook> = new Map();
   const songbookNames = fs.readdirSync(SONGBOOKS_PATH);
-  songbookNames.forEach((songbookName: string) => {
-    songbookMap.set(
-      songbookName.split(".")[0],
-      JSON.parse(
-        fs.readFileSync(`${SONGBOOKS_PATH}/${songbookName}`).toString()
-      ) as Songbook
-    );
+  songbookNames.forEach((fileName: string) => {
+    const songbook: Songbook = JSON.parse(
+      fs.readFileSync(`${SONGBOOKS_PATH}/${fileName}`).toString()
+    ) as Songbook;
+    songbookMap.set(songbook.name, songbook);
   });
   return json(Object.fromEntries(songbookMap));
 }
