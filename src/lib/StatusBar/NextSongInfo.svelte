@@ -5,7 +5,7 @@
   export let songbook: Songbook;
   export let songId: number;
 
-  $: nextSong = songbook?.songs[(songId + 1) % songbook?.songs?.length];
+  $: nextSong = songbook?.songObjects[(songId + 1) % songbook?.songs?.length];
 </script>
 
 <div class="flex">

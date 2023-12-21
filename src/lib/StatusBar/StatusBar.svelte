@@ -12,18 +12,19 @@
   export let songbook: Songbook;
   export let pageId: number;
 
-  $: song = songbook?.songs[songId];
+  $: song = songbook?.songObjects[songId];
 </script>
 
 <div>
-  <AppBar padding="p-1">
+  <AppBar padding="p-2">
+<!--  <AppBar>-->
     <svelte:fragment slot="lead">
       <a class="w-6" href="/songbooks">
-        <Icon name="arrow-left" iconClass="" />
+        <Icon name="arrow-left" size="h-full" />
       </a>
-      <a href="/songbooks/{songbook?.name}">
+<!--      <a href="/songbooks/{songbook?.name}">-->
         <CurrentInfo {song} {songbook} />
-      </a>
+<!--      </a>-->
     </svelte:fragment>
 
     <ExtraInfo {song} />

@@ -2,7 +2,7 @@
   import Info from "./Info.svelte";
   import type Songbook from "$models/songbook.model";
   import type Song from "$models/song.model";
-  import ICON_MAP from "../utils";
+  import ICON_MAP from "$lib/utils";
 
   export let songbook: Songbook;
   export let song: Song;

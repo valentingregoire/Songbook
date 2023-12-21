@@ -10,6 +10,9 @@
   import type { Settings } from "$models/settings.model";
   import { cubicIn, cubicOut } from "svelte/easing";
   import type Songbook from "$models/songbook.model";
+  import { initializeStores } from '@skeletonlabs/skeleton';
+
+  initializeStores();
 
   const iconSize: string = "h-9";
   const menu = [
