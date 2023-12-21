@@ -23,7 +23,7 @@ export const ICON_MAP = {
   save: "💾",
   cancel: "❌",
   search: "🔍",
-  hash: "#️",
+  hash: "#️"
 };
 
 export default ICON_MAP;

@@ -14,7 +14,6 @@
   import { navigate } from "$lib/utils";
 
   let songMap: Map<string, Song> = new Map();
-  let pagesLoaded: boolean = false;
 
   const loadingItems: ComponentProgress = new ComponentProgress();
 
@@ -25,25 +24,15 @@
     easing: cubicOut
   });
 
-  $: if (pagesLoaded) {
-    // $: if (loadingProgress.loadingItems[ComponentType.Pages]?.progress === 100) {
-    (async () => {
-      if (loadingItems.progress.progress === 100) {
-        await tick();
-        await progress.set(100);
-        await navigate();
-      }
-    })();
-  }
-
   async function songPageLoaded() {
     await tick();
-    loadingItems.loadingItems[ComponentType.Pages].loaded++;
+    loadingItems.load(ComponentType.Pages);
     await progress.set(loadingItems.loadingItems[ComponentType.Pages]?.progress || 0);
   }
 
   onMount(async () => {
-    get("api/settings").then((settings: Map<SettingsType, Settings>) => {
+    loadingItems.load(ComponentType.Components);
+    await get("api/settings").then((settings: Map<SettingsType, Settings>) => {
       settingsMapStore.set(
         new Map<SettingsType, Settings>(
           Object.entries(settings) as [SettingsType, Settings][]
@@ -53,7 +42,6 @@
     });
 
     await get("api/songs").then((songs: Map<string, Song>) => {
-      loadingItems.load(ComponentType.Songs);
       songMap = new Map<string, Song>(
         Object.entries(songs) as Array<[string, Song]>
       );
@@ -64,10 +52,9 @@
       );
       loadingItems.setToLoad(ComponentType.Pages, pagesToLoad);
       loadingItems.load(ComponentType.Songs);
-      pagesLoaded = true;
     });
 
-    get("api/songbooks").then((songbooks: Map<string, Songbook>) => {
+    await get("api/songbooks").then((songbooks: Map<string, Songbook>) => {
       const songbookMap: Map<string, Songbook> = new Map(
         Object.entries(songbooks) as Array<[string, Songbook]>
       );
@@ -77,11 +64,13 @@
           (songTitle: string) =>
             (songMap.get(songTitle) as Song) || new Song(songTitle, "N/A")
         );
-        loadingItems.loadingItems[ComponentType.Songbooks].loaded++;
+        loadingItems.load(ComponentType.Songbooks);
       });
       songbooksStore.set(songbookMap);
     });
-    loadingItems.load(ComponentType.Components);
+    await tick();
+    await progress.set(100);
+    await navigate();
   });
 </script>
 
@@ -100,7 +89,6 @@
   {/if}
 </svelte:head>
 
-{loadingProgress.loadingItems[ComponentType.Pages]?.progress}
 <div
   class="flex w-screen h-screen justify-center"
   in:fly={{ y: 200, duration: 250 }}
@@ -116,10 +104,7 @@
             {#each Object.entries(loadingProgress.loadingItems) as [key, value]}
               <li>
                 <div class="flex items-center">
-                  <!--{JSON.stringify(loadingItems.loadingItems.get(key))}-->
-<!--                  <span>-->
-                                         <LoadingItem value={value.progress} />
-<!--                                     </span>-->
+                  <LoadingItem value={value.progress} />
                   <span class="ml-2">{key}</span>
                 </div>
               </li>

@@ -29,8 +29,8 @@ export class ComponentLoadingProgress {
 
 export class ComponentProgress {
     loadingItems: {[key in ComponentType]: ComponentLoadingProgress} = {
-        [ComponentType.Songs]: new ComponentLoadingProgress(2),
-        [ComponentType.Songbooks]: new ComponentLoadingProgress(2),
+        [ComponentType.Songs]: new ComponentLoadingProgress(1),
+        [ComponentType.Songbooks]: new ComponentLoadingProgress(1),
         [ComponentType.Settings]: new ComponentLoadingProgress(1),
         [ComponentType.Pages]: new ComponentLoadingProgress(1),
         [ComponentType.Components]: new ComponentLoadingProgress(1),
@@ -57,5 +57,9 @@ export class ComponentProgress {
         totalProgress.loaded = loaded;
 
         return totalProgress;
+    }
+
+    get loaded(): boolean {
+        return this.progress.progress === 100;
     }
 }
