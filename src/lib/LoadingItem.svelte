@@ -21,17 +21,17 @@
   }
 </script>
 
-<div class="relative mt-[-9px] ml-[-15px]">
+<div>
   {#if $progress === 100}
-    <div class="absolute" transition:fade>
+    <div class="" transition:fade>
       <Icon name="check-circle" iconClass="badge-icon text-success-500" />
     </div>
   {:else}
-    <div class="absolute" transition:fade>
+    <div>
       <ProgressRadial
         value={value === undefined ? undefined : $progress}
-        width="w-5"
-        stroke="200"
+        width="w-4"
+        stroke={200}
         meter="stroke-primary-500"
         track="stroke-primary-300"
       />

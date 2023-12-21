@@ -15,7 +15,7 @@ export class ComponentLoadingProgress {
     }
 
     get progress(): number {
-        return this.loaded / this.toLoad;
+        return this.loaded * 100 / this.toLoad;
     }
 
     setToLoad(toLoad: number): void {
@@ -28,19 +28,27 @@ export class ComponentLoadingProgress {
 }
 
 export class ComponentProgress {
-    loadingItems: Map<ComponentType, ComponentLoadingProgress> = new Map([
-        [ComponentType.Songs, new ComponentLoadingProgress(2)],
-        [ComponentType.Songbooks, new ComponentLoadingProgress(2)],
-        [ComponentType.Settings, new ComponentLoadingProgress(1)],
-        [ComponentType.Pages, new ComponentLoadingProgress(1)]
+    loadingItems: {[key in ComponentType]: ComponentLoadingProgress} = {
+        [ComponentType.Songs]: new ComponentLoadingProgress(2),
+        [ComponentType.Songbooks]: new ComponentLoadingProgress(2),
+        [ComponentType.Settings]: new ComponentLoadingProgress(1),
+        [ComponentType.Pages]: new ComponentLoadingProgress(1),
+        [ComponentType.Components]: new ComponentLoadingProgress(1),
+    }
 
-    ]);
+    load(componentType: ComponentType): void {
+        this.loadingItems[componentType].load();
+    }
+
+    setToLoad(componentType: ComponentType, toLoad: number): void {
+        this.loadingItems[componentType].setToLoad(toLoad);
+    }
 
     get progress(): ComponentLoadingProgress {
         let loaded: number = 0;
         let toLoad: number = 1;
 
-        this.loadingItems.forEach((value: ComponentLoadingProgress) => {
+        Object.values(this.loadingItems).forEach((value: ComponentLoadingProgress) => {
             loaded += value.loaded;
             toLoad += value.toLoad;
         });
