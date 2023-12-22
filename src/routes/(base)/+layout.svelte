@@ -1,7 +1,7 @@
 <script lang="ts">
-  import "$src/theme.pcss";
-  import "@skeletonlabs/skeleton/styles/skeleton.css";
-  import "$src/app.css";
+  // import "$src/theme.pcss";
+  // import "@skeletonlabs/skeleton/styles/skeleton.css";
+  import "$src/app.pcss";
   import { fly } from "svelte/transition";
   import type { Settings } from "$models/settings.model";
   import { settingsStore } from "$stores";

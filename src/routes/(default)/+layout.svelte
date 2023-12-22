@@ -1,7 +1,7 @@
 <script lang="ts">
-  import "$src/theme.pcss";
-  import "@skeletonlabs/skeleton/styles/skeleton.css";
-  import "$src/app.css";
+  // import "$src/theme.pcss";
+  // import "@skeletonlabs/skeleton/styles/skeleton.css";
+  import "$src/app.pcss";
   import { AppBar, AppRail, AppRailAnchor } from "@skeletonlabs/skeleton";
   import Icon from "$lib/Icon.svelte";
   import { page } from "$app/stores";
@@ -10,7 +10,7 @@
   import type { Settings } from "$models/settings.model";
   import { cubicIn, cubicOut } from "svelte/easing";
   import type Songbook from "$models/songbook.model";
-  import { initializeStores } from '@skeletonlabs/skeleton';
+  import { initializeStores } from "@skeletonlabs/skeleton";
 
   initializeStores();
 

@@ -1,15 +1,13 @@
 <script lang="ts">
-  import {
-    Drawer,
-    // type DrawerSettings,
-    drawerStore,
-  } from "@skeletonlabs/skeleton";
   import SongList from "$lib/SongList.svelte";
   import type Song from "$models/song.model";
   import { navigate } from "$lib/utils";
+  import { Drawer, getDrawerStore } from "@skeletonlabs/skeleton";
 
   export let songs: Array<Song | string> = [];
   export let songbookName: string | undefined;
+
+  const drawerStore = getDrawerStore();
   let selectedSongId: number;
 
   // export function openMenuDrawer(): void {

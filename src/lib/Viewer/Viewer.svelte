@@ -13,7 +13,7 @@
   export let songId: number;
   export let pageId: number;
 
-  let menu: Drawer;
+  let drawer: Drawer;
 
   $: song = songbook?.songObjects[songId];
   $: songbookSize = songbook?.songs?.length;
@@ -67,9 +67,9 @@
     <SideButton classes="top-0 right-0" on:click={nextSong} />
     <SideButton classes="bottom-0 left-0" on:click={previousPage} />
     <SideButton classes="bottom-0 right-0" on:click={nextPage} />
-    <BottomButton on:click={menu.openMenuDrawer} />
+    <BottomButton on:click={drawer.openMenuDrawer} />
     <Menu
-      bind:this={menu}
+      bind:this={drawer}
       songs={songbook?.songs}
       songbookName={songbook?.name}
     />
