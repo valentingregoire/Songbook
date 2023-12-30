@@ -2,13 +2,20 @@
   import SongList from "$lib/SongList.svelte";
   import type Song from "$models/song.model";
   import { navigate } from "$lib/utils";
-  import { Drawer, getDrawerStore } from "@skeletonlabs/skeleton";
-
-  export let songs: Array<Song | string> = [];
-  export let songbookName: string | undefined;
+  import { type DrawerSettings, getDrawerStore } from "@skeletonlabs/skeleton";
 
   const drawerStore = getDrawerStore();
-  let selectedSongId: number;
+
+  // export let songs: Array<Song | string> = [];
+  export let songbookName: string | undefined;
+  const settings: DrawerSettings = {
+    meta: {
+      songbookName
+    }
+  };
+  drawerStore.open(settings);
+
+  // let selectedSongId: number;
 
   // export function openMenuDrawer(): void {
   //   const drawerSettings: DrawerSettings = {
@@ -27,12 +34,12 @@
   //   drawerStore.open(drawerSettings);
   // }
 
-  async function clickSong(): Promise<void> {
-    drawerStore.close();
-    await navigate({ songbookName, songId: selectedSongId });
-  }
+  // async function clickSong(): Promise<void> {
+  //   drawerStore.close();
+  //   await navigate({ songbookName, songId: selectedSongId });
+  // }
 </script>
 
-<Drawer>
-  <SongList {songs} bind:selectedSongId {clickSong} />
-</Drawer>
+<slot>
+  HALLO
+</slot>

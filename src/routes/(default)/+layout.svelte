@@ -12,7 +12,7 @@
   import type Songbook from "$models/songbook.model";
   import { initializeStores } from "@skeletonlabs/skeleton";
 
-  initializeStores();
+  // initializeStores();
 
   const iconSize: string = "h-9";
   const menu = [

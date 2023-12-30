@@ -6,14 +6,14 @@
   import { goto } from "$app/navigation";
   import { tick } from "svelte";
   import { Direction, Subject } from "$models/layout.model";
-  import type { Drawer } from "@skeletonlabs/skeleton";
+  import { type Drawer, getDrawerStore } from "@skeletonlabs/skeleton";
   import Menu from "$lib/Viewer/Menu.svelte";
+
+  const drawerStore = getDrawerStore();
 
   export let songbook: Songbook;
   export let songId: number;
   export let pageId: number;
-
-  let drawer: Drawer;
 
   $: song = songbook?.songObjects[songId];
   $: songbookSize = songbook?.songs?.length;
@@ -58,6 +58,21 @@
       { replaceState: true }
     );
   }
+
+  function openDrawer(): void {
+    const drawerSettings = {
+      id: "drawer",
+      // position: "bottom",
+      meta: {
+        "data-test": "drawer"
+      }
+    }
+    console.log("closing")
+    drawerStore.close();
+    console.log("opening")
+    drawerStore.open(drawerSettings);
+    console.log("opened")
+  }
 </script>
 
 <div class="grid grid-cols-1 w-full relative h-screen justify-items-center">
@@ -67,11 +82,11 @@
     <SideButton classes="top-0 right-0" on:click={nextSong} />
     <SideButton classes="bottom-0 left-0" on:click={previousPage} />
     <SideButton classes="bottom-0 right-0" on:click={nextPage} />
-    <BottomButton on:click={drawer.openMenuDrawer} />
-    <Menu
-      bind:this={drawer}
-      songs={songbook?.songs}
-      songbookName={songbook?.name}
-    />
+    <BottomButton on:click={openDrawer} />
+<!--    <Menu-->
+<!--      bind:this={drawer}-->
+<!--      songs={songbook?.songs}-->
+<!--      songbookName={songbook?.name}-->
+<!--    />-->
   </div>
 </div>
