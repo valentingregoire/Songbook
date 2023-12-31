@@ -62,9 +62,9 @@
   function openDrawer(): void {
     const drawerSettings = {
       id: "drawer",
-      // position: "bottom",
+      position: "bottom",
       meta: {
-        "data-test": "drawer"
+        dataTest: "drawer"
       }
     }
     console.log("closing")
