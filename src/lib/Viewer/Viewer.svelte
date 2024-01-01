@@ -6,14 +6,19 @@
   import { goto } from "$app/navigation";
   import { tick } from "svelte";
   import { Direction, Subject } from "$models/layout.model";
-  import { type Drawer, getDrawerStore } from "@skeletonlabs/skeleton";
-  import Menu from "$lib/Viewer/Menu.svelte";
+  import { Drawer, type DrawerSettings, getDrawerStore } from "@skeletonlabs/skeleton";
+  import type { Settings } from "$models/settings.model";
+  import { settingsStore } from "$stores";
+  import SongbookOverview from "$lib/SongbookOverview.svelte";
 
   const drawerStore = getDrawerStore();
 
   export let songbook: Songbook;
   export let songId: number;
   export let pageId: number;
+
+  let settings: Settings | undefined;
+  settingsStore.subscribe((s: Settings | undefined) => settings = s);
 
   $: song = songbook?.songObjects[songId];
   $: songbookSize = songbook?.songs?.length;
@@ -60,18 +65,23 @@
   }
 
   function openDrawer(): void {
-    const drawerSettings = {
-      id: "drawer",
+    const drawerSettings: DrawerSettings = {
+      id: "bottom-menu",
       position: "bottom",
+      bgDrawer: "bg-surface-50",
+      bgBackdrop: "bg-surface-50/50",
+      // bgBackdrop: "bg-white",
+      width: "w-full",
+      height: "h-4/5",
+      border: "border-2 border-surface-400",
+      rounded: "rounded-xl",
+      duration: settings?.layout?.animationSpeed,
+      padding: "p-4",
       meta: {
         dataTest: "drawer"
       }
     }
-    console.log("closing")
-    drawerStore.close();
-    console.log("opening")
     drawerStore.open(drawerSettings);
-    console.log("opened")
   }
 </script>
 
@@ -83,6 +93,12 @@
     <SideButton classes="bottom-0 left-0" on:click={previousPage} />
     <SideButton classes="bottom-0 right-0" on:click={nextPage} />
     <BottomButton on:click={openDrawer} />
+    <Drawer>
+      <div class="m-2">
+<!--        <SongbookOverview songbook={songbook} />-->
+
+      </div>
+    </Drawer>
 <!--    <Menu-->
 <!--      bind:this={drawer}-->
 <!--      songs={songbook?.songs}-->

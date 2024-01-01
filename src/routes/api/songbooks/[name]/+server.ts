@@ -3,7 +3,7 @@ import type Songbook from "$models/songbook.model";
 import { SONGBOOKS_PATH } from "$lib/utils";
 import { json } from "@sveltejs/kit";
 
-export async function POST(requestEvent: Request) {
+export async function POST(requestEvent: Request): Promise<Response> {
   const songbookName = requestEvent.params.name;
   const { request } = requestEvent;
   const songbook: Songbook = await request.json();

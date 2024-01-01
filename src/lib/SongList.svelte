@@ -1,11 +1,12 @@
 <script lang="ts">
-  import ICON_MAP from "$lib/utils.ts";
   import type { TableSource } from "@skeletonlabs/skeleton";
   import { Table, tableMapperValues } from "@skeletonlabs/skeleton";
   import type Song from "$models/song.model";
+  import ICON_MAP from "$lib/utils";
   // import { goto } from "$app/navigation";
 
-  export let songs: Array<Song | string>;
+  // export let songs: Array<Song | string>;
+  export let songs: Song[];
   export let selectedSongId: number;
   export let clickSong: Function;
   export let artist: boolean = true;

@@ -13,7 +13,7 @@
 
 <slot>
 <!--  <Drawer />-->
-  <Drawer>
-    <div>This is a drawer</div>
-  </Drawer>
+<!--  <Drawer>-->
+<!--    <div>This is a drawer</div>-->
+<!--  </Drawer>-->
 </slot>

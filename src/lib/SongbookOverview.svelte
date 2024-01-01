@@ -1,13 +1,13 @@
 <script lang="ts">
   import type Songbook from "$models/songbook.model";
-  import ICON_MAP from "$lib/utils.ts";
+  import ICON_MAP from "$lib/utils";
 
   export let songbook: Songbook;
 </script>
 
 {#if songbook}
   <dl class="list-dl">
-    {#each songbook.songs as song, i}
+    {#each songbook.songObjects as song, i}
       <dt>
         <span class="badge bg-primary-200">{i + 1}</span>
         {song.title}
