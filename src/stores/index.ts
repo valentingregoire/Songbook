@@ -11,8 +11,8 @@ export const settingsMapStore = writable<Map<SettingsType, Settings>>();
 export const settingsStore = derived(
   settingsMapStore,
   ($settingsMap: Map<SettingsType, Settings>) => {
-    if (!$settingsMap) return;
-    const defaultSettings = $settingsMap.get(SettingsType.Default);
+    // if (!$settingsMap) return;
+    const defaultSettings = $settingsMap.get(SettingsType.Default)!;
     const userSettings = $settingsMap.get(SettingsType.User);
     return {
       ...defaultSettings,

@@ -1,17 +1,16 @@
 <script lang="ts">
   import { page } from "$app/stores";
-  import { songbooksStore } from "$stores";
+  import { settingsStore, songbooksStore } from "$stores";
   import StatusBar from "$lib/StatusBar/StatusBar.svelte";
   import Viewer from "$lib/Viewer/Viewer.svelte";
   import { fly } from "svelte/transition";
   import { Direction } from "$models/layout.model.js";
   import type { Settings } from "$models/settings.model";
-  import { settingsStore } from "$stores";
   import type Songbook from "$models/songbook.model";
 
   const songbookName: string = $page.params?.name;
 
-  let settings: Settings | undefined;
+  let settings: Settings;
   settingsStore.subscribe((s) => (settings = s));
 
   $: songId = Number($page.params.id);
@@ -22,8 +21,8 @@
     direction === Direction.Next
       ? 2000
       : direction === Direction.Previous
-      ? -2000
-      : 0;
+        ? -2000
+        : 0;
 
   let songbook: Songbook;
   songbooksStore.subscribe(

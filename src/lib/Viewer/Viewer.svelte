@@ -9,7 +9,6 @@
   import { Drawer, type DrawerSettings, getDrawerStore } from "@skeletonlabs/skeleton";
   import type { Settings } from "$models/settings.model";
   import { settingsStore } from "$stores";
-  import SongbookOverview from "$lib/SongbookOverview.svelte";
 
   const drawerStore = getDrawerStore();
 
@@ -17,10 +16,10 @@
   export let songId: number;
   export let pageId: number;
 
-  let settings: Settings | undefined;
-  settingsStore.subscribe((s: Settings | undefined) => settings = s);
+  let settings: Settings;
+  settingsStore.subscribe((s: Settings) => settings = s);
 
-  $: song = songbook?.songObjects[songId];
+  $: song = songbook?.songObjects![songId];
   $: songbookSize = songbook?.songs?.length;
   $: pages = song?.pages?.length || 1;
 
@@ -29,7 +28,7 @@
       pageId == 0 ? (songId + songbookSize - 1) % songbookSize : songId;
     const pageIdNew =
       pageId == 0
-        ? songbook?.songObjects[songIdNew].pages?.length - 1 || 0
+        ? songbook?.songObjects![songIdNew].pages?.length - 1 || 0
         : pageId - 1;
     await navigate(songIdNew, pageIdNew, Subject.Page, Direction.Previous);
   }
@@ -80,7 +79,7 @@
       meta: {
         dataTest: "drawer"
       }
-    }
+    };
     drawerStore.open(drawerSettings);
   }
 </script>
@@ -95,14 +94,14 @@
     <BottomButton on:click={openDrawer} />
     <Drawer>
       <div class="m-2">
-<!--        <SongbookOverview songbook={songbook} />-->
+        <!--        <SongbookOverview songbook={songbook} />-->
 
       </div>
     </Drawer>
-<!--    <Menu-->
-<!--      bind:this={drawer}-->
-<!--      songs={songbook?.songs}-->
-<!--      songbookName={songbook?.name}-->
-<!--    />-->
+    <!--    <Menu-->
+    <!--      bind:this={drawer}-->
+    <!--      songs={songbook?.songs}-->
+    <!--      songbookName={songbook?.name}-->
+    <!--    />-->
   </div>
 </div>

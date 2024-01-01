@@ -6,11 +6,9 @@
   import Icon from "$lib/Icon.svelte";
   import { page } from "$app/stores";
   import { fly } from "svelte/transition";
-  import { settingsStore, songbooksStore } from "$stores";
+  import { settingsStore } from "$stores";
   import type { Settings } from "$models/settings.model";
   import { cubicIn, cubicOut } from "svelte/easing";
-  import type Songbook from "$models/songbook.model";
-  import { initializeStores } from "@skeletonlabs/skeleton";
 
   // initializeStores();
 
@@ -33,15 +31,17 @@
     }
   ];
 
-  let settings: Settings | undefined;
+  let settings: Settings;
   let showSideBar: boolean;
   let showSideBarInitial: boolean;
-  let songbooks: Map<String, Songbook>;
-  songbooksStore.subscribe((value) => (songbooks = value));
+  // let songbooks: Map<String, Songbook>;
+  // songbooksStore.subscribe((value) => (songbooks = value));
 
-  settingsStore.subscribe((value) => (settings = value));
-  showSideBarInitial = settings?.layout?.sideBar?.show || true;
-  $: $page.url.path, (showSideBar = showSideBarInitial);
+  settingsStore.subscribe((value) => {
+    settings = value;
+    showSideBarInitial = settings.layout?.sideBar?.show || true;
+  });
+  $: $page.url.href, (showSideBar = showSideBarInitial);
 </script>
 
 <div class="h-screen w-screen relative select-none">

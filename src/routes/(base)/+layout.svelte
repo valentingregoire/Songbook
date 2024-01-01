@@ -7,9 +7,12 @@
   import { settingsStore } from "$stores";
 
   let settings: Settings;
+  let animationSpeed: number;
 
-  settingsStore.subscribe((s) => (settings = s));
-  const animationSpeed = settings?.layout?.animationSpeed;
+  settingsStore.subscribe((s: Settings) => {
+    settings = s;
+    animationSpeed = settings.layout!.animationSpeed!;
+  });
 </script>
 
 <main>

@@ -45,16 +45,18 @@
 <div class="flex flex-col p-2 gap-3">
   <div class="card shadow rounded-3xl">
     <header class="card-header">
-      <h2 class="h2">Songbook</h2>
+      <h2 class="h2">
+        <input type="text" class="input" bind:value={songbook.name} name="name" placeholder="Songbook Name" />
+      </h2>
     </header>
     <section class="p-4">
       <SlideToggle name="default-songbook-slider" size="sm" active="bg-primary-500" bind:checked={songbook.default}>
         Default
       </SlideToggle>
-      <label class="label">
-        <span>Name</span>
-        <input type="text" class="input" bind:value={songbook.name} name="name" placeholder="Songbook Name" />
-      </label>
+<!--      <label class="label">-->
+<!--        <span>Name</span>-->
+<!--        <input type="text" class="input" bind:value={songbook.name} name="name" placeholder="Songbook Name" />-->
+<!--      </label>-->
       <label class="label">
         <span>Tags</span>
         <!--      class="card shadow-md border-0"-->
